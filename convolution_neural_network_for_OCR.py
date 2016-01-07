@@ -29,7 +29,7 @@ For convenience we pickled the dataset to make it easier to use in python.
 
 from __future__ import absolute_import
 from __future__ import print_function
-import numpy as np
+import numpy as np, os
 np.random.seed(31415)  # for reproducibility
 
 from keras.datasets import mnist
@@ -40,6 +40,7 @@ from keras.layers.convolutional import Convolution2D, MaxPooling2D
 from keras.utils import np_utils
 
 from keras.regularizers import l2, activity_l2
+from sys import platform as _platform
 
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
@@ -49,6 +50,15 @@ import gzip
 import cPickle
 
 APP_NAME = "mnist"
+if _platform == "linux" or _platform == "linux2":
+    # linux
+    ossys = 'linux'
+elif _platform == "darwin":
+    # OS X
+    ossys = 'mac'
+elif _platform == "win32":
+    # Windows...
+    ossys = 'windows'
 
 # Define basic parameters
 batch_size = 128
@@ -64,10 +74,18 @@ nb_pool = 2
 # convolution kernel size
 nb_conv = 3
 
+"""
+# The following is to save MNIST data into a pickle file
+import pickle
+(X_train, y_train), (X_test, y_test) = mnist.load_data()
+data = {'MNIST_OCR_Data_(xtrain,ytrain)_(xtest,ytest)': ((X_train, y_train), (X_test, y_test))}
+pickle.dump(data, open("mnist.p", "wb" ))
+"""
+
 # Load data
-f = gzip.open("./test_data/mnist.pkl.gz", "rb")
-(X_train, y_train), (X_test, y_test), _ = cPickle.load(f)
-X_train, y_train = X_train[:1000], y_train[:1000] #remove!!!
+f = gzip.open("./test_data/mnist.p.gz", "rb")
+mnistdict = cPickle.load(f)
+(X_train, y_train), (X_test, y_test) = mnistdict[mnistdict.keys()[0]]
 f.close()
 nb_classes = len(np.unique(y_train)) #nb_classes = 10 # number of y-lables, 10 digits
 
@@ -80,12 +98,13 @@ X_test = X_test.astype("float32")
 X_train /= 255.0
 X_test /= 255.0
 
-# Plot 5 sample graphs
-for i in range(5):
-    xd_2 = X_train[i,0,:,:]
-    imgplot = plt.imshow(np.array(xd_2), interpolation='nearest', cmap=cm.binary)
-    plt.show()
-    plt.close()
+if ossys != 'linux':
+    # Plot 10 sample graphs
+    for i in range(10):
+        xd_2 = X_train[i,0,:,:]
+        imgplot = plt.imshow(np.array(xd_2), interpolation='nearest', cmap=cm.binary)
+        plt.show()
+        plt.close()
 
 print(X_train.shape[0], 'train samples')
 print(X_test.shape[0], 'test samples')
@@ -121,7 +140,7 @@ model.add(Flatten())
 # full, valid, maxpool then full, valid, maxpool
 n_neurons = nb_filters * (img_rows/nb_pool/nb_pool) * (img_cols/nb_pool/nb_pool)
 
-print(n_neurons)
+print("There are %i neurons." %n_neurons)
 model.add(Dense(128))  # flattens n_neuron connections per neuron in the fully connected layer
                                   # here, the fully connected layer is defined to have 128 neurons
                                   # therefore all n_neurons inputs from the previous layer connecting to each
@@ -144,7 +163,7 @@ model.compile(loss='categorical_crossentropy', optimizer='adadelta')
 model.fit(X_train, Y_train, nb_epoch=nb_epoch, batch_size=batch_size,
             #alidation_data=(X_test, Y_test),
             show_accuracy=True, verbose=1,
-            validation_split=0.1)
+            validation_split=0.15)
 
 # Evaluate Spark model by evaluating the underlying model using Test/Training Data
 score = model.evaluate(X_train, Y_train, show_accuracy=True, verbose=2)
