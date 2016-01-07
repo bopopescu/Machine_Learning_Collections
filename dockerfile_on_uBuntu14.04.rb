@@ -3,6 +3,8 @@ FROM ubuntu:14.04
 MAINTAINER Kai Arulkumaran <design@kaixhin.com>
 
 # Install build-essential, git, python-dev, pip and other dependencies
+# NEED TO BE UNDER ROOT
+
 RUN apt-get update && apt-get install -y \
   build-essential \
   git \
