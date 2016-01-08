@@ -10,7 +10,7 @@ report = data.frame(zone=NA,month=NA,MAPE=NA,wMAPE=NA,OverEst=NA);
 tempreport = report;
 report = report[0,];
 
-load('Data_for_ShortTerm_Forecast.RData');
+load(file.path(getwd(),'test_data/Data_for_ShortTerm_Forecast.RData'));
 
 modeldata$Weekday = as.factor(modeldata$Weekday);
 
