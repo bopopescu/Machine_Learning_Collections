@@ -1,4 +1,4 @@
-##  This Program has wMAPE value of ##
+##  This Program has wMAPE value of 0.0218324 ##
 
 library(gbm)
 library(parallel)
@@ -27,8 +27,8 @@ stm = Sys.time();
 
 gbmmodel = gbm(myformula,
                data=modeldata[modeldata$Partition=='Train',allFieldsinModel], 
-               distribution = "laplace", interaction.depth = min(10,length(features)),
-               bag.fraction = (1-1/3) , shrinkage = 0.0075, n.minobsinnode =1, n.trees = 20000, 
+               distribution = "laplace", interaction.depth = min(15,length(features)),
+               bag.fraction = 0.5 , shrinkage = 0.005, n.minobsinnode =1, n.trees = 20000, 
                keep.data=FALSE, cv.folds = parallel::detectCores());
 time_for_training = Sys.time() - stm;
 time_for_training;

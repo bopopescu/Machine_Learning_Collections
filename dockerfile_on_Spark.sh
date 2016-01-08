@@ -24,7 +24,7 @@ sudo apt-get -y install openssl libssl-dev postgresql-9.3-postgis-2.1 odbc-postg
 sudo apt-get -y install postgresql-9.3 postgresql-server-dev-9.3 libxml2-dev libproj-dev libjson0-dev
 sudo apt-get -y install xsltproc docbook-xsl docbook-mathml libgdal1-dev postgresql-contrib-9.3 libpq-dev
 sudo apt-get -y install python-dev python-setuptools python-pip python-numpy python-scipy libatlas-dev
-sudo apt-get -y install libatlas3gf-base git-core
+sudo apt-get -y install libatlas3gf-base git-core liblapack-dev libblas-dev gfortran
 
 sudo apt-get install -y git python-dev python-nose python-scipy
 sudo apt-get install -y python-scrapy python-matplotlib
