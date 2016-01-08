@@ -28,7 +28,7 @@ sudo apt-get -y install libatlas3gf-base git-core
 
 sudo apt-get install -y git python-dev python-nose python-scipy
 sudo apt-get install -y python-scrapy python-matplotlib
-sudo pip install pandas pandasql boto s4cmd awscli
+sudo pip install pandas pandasql boto s4cmd awscli flask
 sudo pip install pyvirtualdisplay selenium virtualenv sklearn keras elephas
 sudo pip install --upgrade --no-deps git+git://github.com/Theano/Theano.git
 

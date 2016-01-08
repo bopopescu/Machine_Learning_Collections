@@ -177,7 +177,7 @@ rdd = to_simple_rdd(sc, X_train, Y_train)
 spark_model = SparkModel(sc,model)
 
 # Train Spark model
-spark_model.train(rdd, nb_epoch=nb_epoch, batch_size=batch_size, verbose=1, validation_split=0.15, num_workers=num_workers)
+spark_model.train(rdd, nb_epoch=nb_epoch, batch_size=batch_size, verbose=1, validation_split=0.15) # num_workers might not work in early spark version
 
 # Evaluate Spark model by evaluating the underlying model
 score = spark_model.get_network().evaluate(X_test, Y_test, show_accuracy=True, verbose=2)
