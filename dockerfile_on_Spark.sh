@@ -1,0 +1,52 @@
+#!/bin/bash
+# This script is needed as separate Path (no , separator) to add
+    #bootstrap commands all instances in the cluster
+
+# Docker Image is on
+docker pull pengma/spark_deeplearning
+
+# The image is built based on Ubuntu
+# v1.0: Basic packages, R, C/C++ compilers, Spark. Basic image was pulled from sequenceiq/spark
+# v2.0: Add some frequently used Python packages, including Theano.
+
+#---------------- On Ubuntu ----------------
+# Commands
+# Pull base image
+docker pull sequenceiq/spark:1.3.1-ubuntu
+sudo docker run -it sequenceiq/spark:1.3.1-ubuntu bash
+
+# Build Image
+sudo apt-get install nano wget
+sudo apt-get -y install build-essential
+sudo apt-get -y update && sudo apt-get dist-upgrade
+sudo apt-get -y install apache2 r-base r-base-dev
+sudo apt-get -y install openssl libssl-dev postgresql-9.3-postgis-2.1 odbc-postgresql python-psycopg2
+sudo apt-get -y install postgresql-9.3 postgresql-server-dev-9.3 libxml2-dev libproj-dev libjson0-dev
+sudo apt-get -y install xsltproc docbook-xsl docbook-mathml libgdal1-dev postgresql-contrib-9.3 libpq-dev
+sudo apt-get -y install python-dev python-setuptools python-pip python-numpy python-scipy libatlas-dev
+sudo apt-get -y install libatlas3gf-base git-core
+
+sudo apt-get install -y git python-dev python-nose python-scipy
+sudo apt-get install -y python-scrapy python-matplotlib
+sudo pip install pandas pandasql boto s4cmd awscli
+sudo pip install pyvirtualdisplay selenium virtualenv sklearn keras elephas
+sudo pip install --upgrade --no-deps git+git://github.com/Theano/Theano.git
+
+#---------------- On CentOS ----------------
+# Warning: Some issue with Python2.7. The default CentOS python version is 2.6.
+
+# Commands
+# Pull base image
+docker pull sequenceiq/spark:1.5.1
+sudo docker run -it sequenceiq/spark:1.5.1 bash
+
+# Build Image
+sudo yum update -y
+sudo yum groupinstall -y "Development Tools" "Development Libraries"
+sudo yum install gcc uuid-devel Cython libffi-devel -y
+sudo yum install -y centos-release-SCL nano
+sudo yum install make automake gcc-c++ kernel-devel git-core -y
+sudo yum install wget tar -y
+
+sudo yum install python27 python27-python-devel -y
+python -V # this checks which default python version it is using
