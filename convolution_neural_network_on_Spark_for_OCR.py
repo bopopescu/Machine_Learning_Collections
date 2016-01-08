@@ -13,13 +13,10 @@ Execute Spark on Docker, the docker envrionment is CentOS
 Test Spark on Docker
     bash-4.1# cd /usr/local/spark
     bash-4.1# cp conf/spark-env.sh.template conf/spark-env.sh
-    bash-4.1# yum install nano -y
-    bash-4.1# nano conf/spark-env.sh
-    export SPARK_LOCAL_IP=172.17.0.109     # or use 127.0.0.1 as localhost for both IPs here
-    export SPARK_MASTER_IP=172.17.0.109
+    # nano conf/spark-env.sh
 
     bash-4.1# ./sbin/start-master.sh
-    bash-4.1# ./sbin/start-slave.sh spark:172.17.0.109:7077
+    bash-4.1# ./sbin/start-slave.sh spark:172.17.0.109:7077 # the ip is the spark master ip
 
 Turn On Browser for your current IP:8080
     # run spark pi.py for a test
@@ -30,6 +27,11 @@ Turn On Browser for your current IP:8080
     Pi is roughly 3.148900
 
     bash-4.1# ./sbin/stop-all.sh
+
+Test run this CNN network
+    ../bin/spark-submit convolution_neural_network_on_Spark_for_OCR.py --master local[*] --driver-memory 3g
+        # where local[30] splits tasks into 30 local nodes/executors. This is used in local mode
+        # local[*] uses up all possible logical cores
 
 """
 
@@ -62,7 +64,7 @@ from elephas.utils.rdd_utils import to_simple_rdd
 from pyspark import SparkContext, SparkConf
 
 APP_NAME = "mnist"
-MASTER_IP = 'local[24]'
+MASTER_IP = 'local[24]' #No need to set it here, can be set outside of this program file
 
 if _platform == "linux" or _platform == "linux2":
     # linux
@@ -167,7 +169,7 @@ model.compile(loss='categorical_crossentropy', optimizer='adadelta')
 # model.compile(loss='categorical_crossentropy', optimizer='sgd' or 'adam or 'adadelta')
 
 ## spark
-conf = SparkConf().setAppName(APP_NAME).setMaster(MASTER_IP)
+conf = SparkConf().setAppName(APP_NAME) #.setMaster(MASTER_IP)
 sc = SparkContext(conf=conf)
 
 # Build RDD from numpy features and labels
