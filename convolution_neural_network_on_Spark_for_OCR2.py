@@ -48,7 +48,7 @@ from keras.datasets import mnist
 from keras.models import Sequential, Graph
 from keras.layers.core import Dense, Dropout, Activation, Flatten
 from keras.optimizers import SGD, Adam, RMSprop
-from keras.layers.convolutional import Convolution2D, MaxPooling2D
+from keras.layers.convolutional import Convolution2D, MaxPooling2D, Convolution1D, MaxPooling1D
 from keras.utils import np_utils
 
 from keras.regularizers import l2, activity_l2
