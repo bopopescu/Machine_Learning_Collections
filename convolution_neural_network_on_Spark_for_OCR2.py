@@ -35,6 +35,7 @@ Test run this CNN network
     # No hungup run
     nohup /bin/sh -c '../bin/spark-submit convolution_neural_network_on_Spark_for_OCR2.py --master local[*] --driver-memory 3g' &
 
+To use the Spark MLib Dataframe features, inputs must be reshaped into one-dimensional
 """
 
 
@@ -137,7 +138,7 @@ Y_test = np_utils.to_categorical(y_test, nb_classes)
 
 inputshape = X_train.shape[1:]
 if len(inputshape) == 1:
-    inputshape = inputshape[0]
+    inputshape = (inputshape)
 
 # Model Training
 # Check out the http://keras.io/layers/convolutional/ 
