@@ -29,9 +29,11 @@ Turn On Browser for your current IP:8080
     bash-4.1# ./sbin/stop-all.sh
 
 Test run this CNN network
-    ../bin/spark-submit convolution_neural_network_on_Spark_for_OCR.py --master local[*] --driver-memory 3g
+    ../bin/spark-submit convolution_neural_network_on_Spark_for_OCR2.py --master local[*] --driver-memory 3g
         # where local[30] splits tasks into 30 local nodes/executors. This is used in local mode
         # local[*] uses up all possible logical cores
+    # No hungup run
+    nohup /bin/sh -c '../bin/spark-submit convolution_neural_network_on_Spark_for_OCR2.py --master local[*] --driver-memory 3g' &
 
 """
 
