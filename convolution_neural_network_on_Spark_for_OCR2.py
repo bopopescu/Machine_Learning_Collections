@@ -137,28 +137,24 @@ Y_train = np_utils.to_categorical(y_train, nb_classes)
 Y_test = np_utils.to_categorical(y_test, nb_classes)
 
 inputshape = X_train.shape[1:]
-if len(inputshape) == 1:
-    inputshape = (inputshape)
 
 # Model Training
 # Check out the http://keras.io/layers/convolutional/ 
 #grapher = Graph() #for plotting the network
 model = Sequential()
-model.add(Convolution2D(nb_filters, nb_conv, nb_conv,
-                        border_mode='valid',
-                        input_shape=inputshape))
+model.add(Convolution1D(nb_filters, nb_conv*nb_conv))
 model.add(Activation('relu'))  # relu is the activation function, Rectified Linear Unit (ReLU)
-model.add(Convolution2D(nb_filters, nb_conv, nb_conv))
+model.add(Convolution1D(nb_filters, nb_conv*nb_conv))
 model.add(Activation('relu'))
 #the maxpool is used in some bleeding-edge Theano version
-model.add(MaxPooling2D(pool_size=(nb_pool, nb_pool)))
+model.add(MaxPooling1D(nb_pool * nb_pool))
 model.add(Dropout(0.25)) #dropout (of neurons) feature for regularization
 
-model.add(Convolution2D(nb_filters, nb_conv, nb_conv, border_mode='valid'))
+model.add(Convolution1D(nb_filters, nb_conv*nb_conv))
 model.add(Activation('relu'))
-model.add(Convolution2D(nb_filters, nb_conv, nb_conv))
+model.add(Convolution1D(nb_filters, nb_conv*nb_conv))
 model.add(Activation('relu'))
-model.add(MaxPooling2D(pool_size=(nb_pool, nb_pool)))
+model.add(MaxPooling1D(nb_pool * nb_pool))
 model.add(Dropout(0.25))
 
 model.add(Flatten())
