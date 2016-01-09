@@ -136,13 +136,13 @@ print(X_test.shape[0], 'test samples')
 Y_train = np_utils.to_categorical(y_train, nb_classes)
 Y_test = np_utils.to_categorical(y_test, nb_classes)
 
-inputshape = X_train.shape[1:]
+inputshape = X_train.shape[1:][0]
 
 # Model Training
 # Check out the http://keras.io/layers/convolutional/ 
 #grapher = Graph() #for plotting the network
 model = Sequential()
-model.add(Convolution1D(nb_filters, nb_conv*nb_conv))
+model.add(Convolution1D(nb_filters, nb_conv*nb_conv, input_dim=inputshape))
 model.add(Activation('relu'))  # relu is the activation function, Rectified Linear Unit (ReLU)
 model.add(Convolution1D(nb_filters, nb_conv*nb_conv))
 model.add(Activation('relu'))
