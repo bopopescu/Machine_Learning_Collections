@@ -107,8 +107,12 @@ f.close()
 nb_classes = len(np.unique(y_train)) #nb_classes = 10 # number of y-lables, 10 digits
 
 # added 1 in the second place for grayscale image, Use 3 for RGB image
-X_train = X_train.reshape(X_train.shape[0], 1, img_rows, img_cols)
-X_test = X_test.reshape(X_test.shape[0], 1, img_rows, img_cols)
+    # Since it will be used in dataframe below
+    # it will have to convert all dimensions to one dimension
+#X_train = X_train.reshape(X_train.shape[0], 1, img_rows, img_cols)
+#X_test = X_test.reshape(X_test.shape[0], 1, img_rows, img_cols)
+X_train = X_train.reshape(X_train.shape[0], 1 * img_rows * img_cols)
+X_test = X_test.reshape(X_test.shape[0], 1 * img_rows *img_cols)
 
 X_train = X_train.astype("float32")
 X_test = X_test.astype("float32")
@@ -131,13 +135,17 @@ print(X_test.shape[0], 'test samples')
 Y_train = np_utils.to_categorical(y_train, nb_classes)
 Y_test = np_utils.to_categorical(y_test, nb_classes)
 
+inputshape = X_train.shape[1:]
+if len(inputshape) == 1:
+    inputshape = inputshape[0]
+
 # Model Training
 # Check out the http://keras.io/layers/convolutional/ 
 #grapher = Graph() #for plotting the network
 model = Sequential()
 model.add(Convolution2D(nb_filters, nb_conv, nb_conv,
                         border_mode='valid',
-                        input_shape=(1, img_rows, img_cols)))
+                        input_shape=inputshape))
 model.add(Activation('relu'))  # relu is the activation function, Rectified Linear Unit (ReLU)
 model.add(Convolution2D(nb_filters, nb_conv, nb_conv))
 model.add(Activation('relu'))
