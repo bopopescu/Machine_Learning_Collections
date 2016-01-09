@@ -35,7 +35,7 @@ Test run this CNN network
     # No hungup run
     nohup /bin/sh -c '../bin/spark-submit convolution_neural_network_on_Spark_for_OCR2.py --master local[*] --driver-memory 3g' &
 
-To use the Spark MLib Dataframe features, inputs must be reshaped into one-dimensional
+To use the Spark MLib Dataframe features, inputs must be reshaped into one-dimensional. No flattern needed
 """
 
 
@@ -157,7 +157,6 @@ model.add(Activation('relu'))
 model.add(MaxPooling1D(nb_pool * nb_pool))
 model.add(Dropout(0.25))
 
-model.add(Flatten())
 # three convolutional layers chained together -- might work for larger images
 # full, valid, maxpool then full, valid, maxpool
 n_neurons = nb_filters * (img_rows/nb_pool/nb_pool) * (img_cols/nb_pool/nb_pool)
