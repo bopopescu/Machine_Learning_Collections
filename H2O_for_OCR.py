@@ -20,6 +20,7 @@ except:
 
 # Start H2O cluster with all available cores (default)
 h2o.init()
+# h2o.init(ip = "127.0.0.1", port = 54321) # default setting
 
 # both gz files are CSV files with 785 values on each row, where
     # 784 of them are 28X28 digital images, which can be transformed
@@ -39,6 +40,13 @@ test = h2o.import_file(os.path.join(os.getcwd(),"test_data/mnist_csv_files/test.
 train.describe()
 test.describe()
 
+# To convert train test H2O dataframe to array-like list, use
+# test_list = test.as_data_frame()
+#     The data will look like [['C1', '0', '0', ......],
+#                               ['C2', '0', '0', ......]]
+#         where the first C1, C2 are the column names
+
+
 # Specify the response and predictor columns
 
 all_col_names = train.names
@@ -52,7 +60,7 @@ train[y] = train[y].asfactor()
 test[y] = test[y].asfactor()
 
 
-##########################
+##############################################################################
 # Train Deep Learning model and validate on test set
 model = H2ODeepLearningEstimator(distribution="multinomial",
             activation="RectifierWithDropout",
@@ -60,7 +68,8 @@ model = H2ODeepLearningEstimator(distribution="multinomial",
             input_dropout_ratio=0.2, #regularization
             sparse=True, # since the majority data values are 0
             l1=1e-5, # L1 regularization value
-            epochs=10) # number of epochs to run
+            epochs=100, # number of epochs to run
+            variable_importances=True) # show variable importance
 
 model.train(x=x, y=y, training_frame=train, validation_frame=test)
 
@@ -72,9 +81,29 @@ model # display all performance metrics
 
 model.model_performance(train=True) # training metrics
 model.mse(valid=True) # get Mean Squared Error only
+
+# Classify the test set (predict class labels)
+# This also returns the probability for each class
+pred = model.predict(test)
+
+# Take a look at the predictions of 10 predictions
+pred.head()
+
+# Show prediction and original test data Y values in list
+# pred_list = pred.as_data_frame()[0]
+# test_list = test.as_data_frame()[-1]
+
+# the model object can not be pickled dump to a file because it is an
+    # instance method
+
+# Show top 20 variable importance
+model.varimp()[:20]
+model_path = h2o.save_model(model, './mnist_dp_model/') # one can save it to local, s3, hdfs
+h2o.loadModel(model_path) #model is saved in a folder specifies in model_path
 #############
 
-##########################
+
+##############################################################################
 # Perform 5-fold cross-validation on training_frame
 model_cv = H2ODeepLearningEstimator(distribution="multinomial",
                 activation="RectifierWithDropout",
@@ -88,8 +117,30 @@ model_cv = H2ODeepLearningEstimator(distribution="multinomial",
 model_cv.train(x=x,y=y,training_frame=train)
 model.model_performance(valid=True) # validation metrics
 model_cv.mse(xval=True) # Cross-validated MSE
+##############
 
 
+##############################################################################
+# Perform a grid-search for best parameter settings
+hidden_opt = [[32,32],[32,16,8],[100]] #hidden layer structures to test
+l1_opt = [1e-4,1e-3] # l1 regularization test
+
+hyper_parameters = {"hidden":hidden_opt, "l1":l1_opt} # tells model to use hidden layers and l1 regularization
+
+from h2o.grid.grid_search import H2OGridSearch
+
+model_grid = H2OGridSearch(H2ODeepLearningEstimator, hyper_params=hyper_parameters)
+
+model_grid.train(x=x, y=y, distribution="multinomial", epochs=1000,
+                training_frame=train, validation_frame=test, score_interval=2,stopping_rounds=3,
+                stopping_tolerance=0.05, stopping_metric="misclassification")
+
+# print model grid search results
+model_grid
+for model in model_grid:
+    print model.model_id + " mse: " + str(model.mse())
+
+##############################################################################
 """
 Output is like
 
