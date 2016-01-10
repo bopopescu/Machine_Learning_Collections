@@ -5,8 +5,10 @@
 This is a MNIST Digital Handwriting example in Python
 """
 
+import os
 import h2o
 from h2o.estimators.deeplearning import H2ODeepLearningEstimator
+
 
 # Start H2O cluster with all available cores (default)
 h2o.init()
@@ -15,8 +17,15 @@ h2o.init()
     # 784 of them are 28X28 digital images, which can be transformed
     # by the numpy.reshape function easily
     # The last row is the prediction 1,2,3...0
-train = h2o.import_file("https://h2o-public-test-data.s3.amazonaws.com/bigdata/laptop/mnist/train.csv.gz")
-test = h2o.import_file("https://h2o-public-test-data.s3.amazonaws.com/bigdata/laptop/mnist/test.csv.gz")
+
+
+# Load Data from S3
+#train = h2o.import_file("https://h2o-public-test-data.s3.amazonaws.com/bigdata/laptop/mnist/train.csv.gz")
+#test = h2o.import_file("https://h2o-public-test-data.s3.amazonaws.com/bigdata/laptop/mnist/test.csv.gz")
+
+# Load Data
+train = h2o.import_file(os.path.join(os.getcwd(),"test_data/mnist_csv_files/train.csv.gz"),sep=",")
+test = h2o.import_file(os.path.join(os.getcwd(),"test_data/mnist_csv_files/test.csv.gz"),sep=",")
 
 # type(train) shows it is H2O DataFrame format
 train.describe()
@@ -71,6 +80,14 @@ model # display all performance metrics
 model.model_performance(train=True) # training metrics
 model.model_performance(valid=True) # validation metrics
 
+
+# Get MSE only
+model.mse(valid=True)
+
+# Cross-validated MSE
+model_cv.mse(xval=True)
+
+
 """
 Output is like
 
@@ -111,9 +128,3 @@ k    hit_ratio
 9    0.999091
 10   1
 """
-# Get MSE only
-model.mse(valid=True)
-
-# Cross-validated MSE
-model_cv.mse(xval=True)
-
