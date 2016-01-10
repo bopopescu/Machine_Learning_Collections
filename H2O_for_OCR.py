@@ -4,7 +4,13 @@
 
 This is a MNIST Digital Handwriting example in Python
 
-The details of H2O usage are on its booklets from its website
+The details of H2O usage are on its booklets from its website.
+Installation of H2O
+$ /root/anaconda/bin/pip install requests
+$ /root/anaconda/bin/pip install tabulate
+$ /root/anaconda/bin/pip uninstall h2o
+$ /root/anaconda/bin/pip install http://h2o-release.s3.amazonaws.com/h2o/rel-tibshirani/8/Python/h2o-3.6.0.8-py2.py3-none-any.whl
+
 """
 
 import os
