@@ -3,12 +3,20 @@
 @author: pm
 
 This is a MNIST Digital Handwriting example in Python
+
+The details of H2O usage are on its booklets from its website
 """
 
 import os
 import h2o
 from h2o.estimators.deeplearning import H2ODeepLearningEstimator
 
+
+try:
+    # shutdown the H2O instance running at localhost:54321 In case there is one running
+    h2o.shutdown(prompt=False)
+except:
+    pass
 
 # Start H2O cluster with all available cores (default)
 h2o.init()
@@ -48,13 +56,22 @@ test[y] = test[y].asfactor()
 # Train Deep Learning model and validate on test set
 model = H2ODeepLearningEstimator(distribution="multinomial",
             activation="RectifierWithDropout",
-            hidden=[200,128,32, 10],
-            input_dropout_ratio=0.25, #regularization
+            hidden=[200,200, 200, 200, 200, 200],
+            input_dropout_ratio=0.2, #regularization
             sparse=True, # since the majority data values are 0
             l1=1e-5, # L1 regularization value
             epochs=10) # number of epochs to run
 
 model.train(x=x, y=y, training_frame=train, validation_frame=test)
+
+# View specified parameters of the Deep Learning model
+model.params
+
+# Examine the performance of the trained model
+model # display all performance metrics
+
+model.model_performance(train=True) # training metrics
+model.mse(valid=True) # get Mean Squared Error only
 #############
 
 ##########################
@@ -69,23 +86,8 @@ model_cv = H2ODeepLearningEstimator(distribution="multinomial",
                 nfolds=5)
 
 model_cv.train(x=x,y=y,training_frame=train)
-
-
-# View specified parameters of the Deep Learning model
-model.params
-
-# Examine the performance of the trained model
-model # display all performance metrics
-
-model.model_performance(train=True) # training metrics
 model.model_performance(valid=True) # validation metrics
-
-
-# Get MSE only
-model.mse(valid=True)
-
-# Cross-validated MSE
-model_cv.mse(xval=True)
+model_cv.mse(xval=True) # Cross-validated MSE
 
 
 """
