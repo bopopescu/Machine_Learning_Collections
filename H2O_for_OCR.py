@@ -71,7 +71,7 @@ test[y] = test[y].asfactor()
 # Train Deep Learning model and validate on test set
 model = H2ODeepLearningEstimator(distribution="multinomial",
             activation="Rectifier", # or RectifierWithDropout
-            hidden=[2*ncols, 2*ncols, 2*ncols],
+            hidden=[10*ncols, 10*ncols, 10*ncols],
             input_dropout_ratio=0.2, #regularization
             sparse=True, # since the majority data values are 0
             l1=1e-5, # L1 regularization value
