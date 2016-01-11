@@ -147,8 +147,17 @@ model_grid.train(x=x, y=y, distribution="multinomial", epochs=1000,
 
 # print model grid search results
 model_grid
+
+mse_min = 1e30
 for model in model_grid:
+    mse = model.mse()
+    if mse < mse_min:
+        mse_min = mse+0
+        best_model = model
     print model.model_id + " mse: " + str(model.mse())
+
+print "Smallest MSE from candidnate models is %i" %best_model.mse()
+print "hidden:",best_model.full_parameters['hidden']['actual_value'], " ; l1",best_model.full_parameters['l1']['actual_value']
 
 ##############################################################################
 """
