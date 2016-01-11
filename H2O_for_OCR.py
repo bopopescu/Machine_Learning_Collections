@@ -59,6 +59,7 @@ all_col_names = train.names
 #y = "C785" # the last column, C785
 y = all_col_names[-1]
 x = train.names[0:784]
+ncols = len(x)
 
 # Encode the response column as categorical for multinomial classification
     # for Categorical type of problems, change them into factors, as in R
@@ -69,12 +70,12 @@ test[y] = test[y].asfactor()
 ##############################################################################
 # Train Deep Learning model and validate on test set
 model = H2ODeepLearningEstimator(distribution="multinomial",
-            activation="RectifierWithDropout",
-            hidden=[200,200, 200, 200, 200, 200],
+            activation="Rectifier", # or RectifierWithDropout
+            hidden=[2*ncols, 2*ncols, 2*ncols],
             input_dropout_ratio=0.2, #regularization
             sparse=True, # since the majority data values are 0
             l1=1e-5, # L1 regularization value
-            epochs=100, # number of epochs to run
+            epochs=10000, # number of epochs to run
             variable_importances=True) # show variable importance
 
 model.train(x=x, y=y, training_frame=train, validation_frame=test)
@@ -91,6 +92,9 @@ model.mse(valid=True) # get Mean Squared Error only
 # Classify the test set (predict class labels)
 # This also returns the probability for each class
 pred = model.predict(test)
+test_pred =pred.as_data_frame()[0][1:]
+test_y = test[y].as_data_frame()[0][1:]
+print "Testing accuracy is %f" %(sum(map(lambda t: t[0] != t[1],zip(test_pred,test_y)))*1.0/len(test_y))
 
 # Take a look at the predictions of 10 predictions
 pred.head()
