@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 @author: pm
+
 This is a Day-ahead regression task using H2O Deep Learning
+
+The Weighted MAPE value on testing is 0.017739
 
 The details of H2O usage are on its booklets from its website.
 
@@ -77,14 +80,14 @@ model = H2ODeepLearningEstimator(
                 model_id="regression_model_dayahead",
                 distribution="laplace",
                 loss = "Absolute",
-                activation="Rectifier", #other options are Rectifier, Tanh
-                hidden=[10*ncols, 10*ncols, 10*ncols],
+                activation="Rectifier", #other options are Rectifier, Tanh, TanhWithDropout, RectifierWithDropout
+                hidden=[ncols, ncols, ncols, ncols, ncols, ncols, ncols, ncols],
                 adaptive_rate = True, # use ADADELTA for learning rate
-                #input_dropout_ratio=0.2, #regularization
+                input_dropout_ratio=0.05, #regularization
                 sparse=False, # since the majority data values are 0
-                l1=1e-5, # L1 regularization value
+                l1=1e-4, # L1 regularization value
                 epochs=10000, # number of epochs to run
-                nfolds = 10,
+                nfolds = 7,
                 variable_importances=True) # show variable importance
 
 model.train(x=x, y=y, training_frame=train, validation_frame=test)
@@ -124,7 +127,7 @@ model.varimp()[:20]
 
 # The following is to use grid-search to find the best parameters #
 ##############################################################################
-hidden_opt = [[32,32,32],[2*ncols, 2*ncols, 2*ncols, 2*ncols]] #hidden layer structures to test
+hidden_opt = [[ncols, ncols, ncols],[2*ncols, 2*ncols, 2*ncols, 2*ncols]] #hidden layer structures to test
 l1_opt = [1e-4,1e-3, 1e-5] # l1 regularization test
 
 hyper_parameters = {"hidden":hidden_opt, "l1":l1_opt} # tells model to use hidden layers and l1 regularization
@@ -136,7 +139,7 @@ model_grid = H2OGridSearch(H2ODeepLearningEstimator, hyper_params=hyper_paramete
 model_grid.train(x=x, y=y, distribution="laplace", epochs=1000, 
                 loss = "Absolute", activation="Rectifier",
                 training_frame=train, validation_frame=test, #stopping_rounds=10,
-                stopping_tolerance=0.001)
+                stopping_tolerance=0.001, stopping_metric="MSE")
 
 # print model grid search results
 model_grid

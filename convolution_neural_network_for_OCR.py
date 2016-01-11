@@ -2,6 +2,8 @@
 This program is for identifying the handwriting based on    
     images using Convolution Neural Network.
 
+The CNN network so far gives an error rate of 0.83 percent on testing data
+
 http://deeplearning.net/tutorial/gettingstarted.html
 https://www.microway.com/hpc-tech-tips/keras-theano-deep-learning-frameworks/
 https://github.com/julienr/ipynb_playground/blob/master/keras/convmnist/keras_cnn_mnist.ipynb

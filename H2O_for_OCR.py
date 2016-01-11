@@ -2,7 +2,11 @@
 """
 @author: pm
 
-This is a MNIST Digital Handwriting example in Python
+This is a MNIST Digital Handwriting example in Python.
+
+Rule of thum is that the total Neurons should not be over 10 billion
+
+The error rate on testing data is percent.
 
 The details of H2O usage are on its booklets from its website.
 Installation of H2O
@@ -70,13 +74,15 @@ test[y] = test[y].asfactor()
 ##############################################################################
 # Train Deep Learning model and validate on test set
 model = H2ODeepLearningEstimator(distribution="multinomial",
-            activation="Rectifier", # or RectifierWithDropout
-            hidden=[10*ncols, 10*ncols, 10*ncols],
-            input_dropout_ratio=0.2, #regularization
+            activation="Rectifier", #other options are Rectifier, Tanh, TanhWithDropout, RectifierWithDropout
+            hidden=[ncols, ncols, ncols],
+            input_dropout_ratio=0.05, #regularization
             sparse=True, # since the majority data values are 0
             l1=1e-5, # L1 regularization value
             epochs=10000, # number of epochs to run
-            variable_importances=True) # show variable importance
+            adaptive_rate = True,
+            variable_importances=True, # show variable importance
+            nfolds=7)
 
 model.train(x=x, y=y, training_frame=train, validation_frame=test)
 
@@ -94,7 +100,7 @@ model.mse(valid=True) # get Mean Squared Error only
 pred = model.predict(test)
 test_pred =pred.as_data_frame()[0][1:]
 test_y = test[y].as_data_frame()[0][1:]
-print "Testing accuracy is %f" %(sum(map(lambda t: t[0] != t[1],zip(test_pred,test_y)))*1.0/len(test_y))
+print "Testing error is %f" %(sum(map(lambda t: t[0] != t[1],zip(test_pred,test_y)))*1.0/len(test_y))
 
 # Take a look at the predictions of 10 predictions
 pred.head()
@@ -132,8 +138,8 @@ model_cv.mse(xval=True) # Cross-validated MSE
 
 ##############################################################################
 # Perform a grid-search for best parameter settings
-hidden_opt = [[32,32],[32,16,8],[100]] #hidden layer structures to test
-l1_opt = [1e-4,1e-3] # l1 regularization test
+hidden_opt = [[50, 50, 50],[100, 100, 100],[200, 100, 50]] #hidden layer structures to test
+l1_opt = [1e-4,1e-3, 1e-5] # l1 regularization test
 
 hyper_parameters = {"hidden":hidden_opt, "l1":l1_opt} # tells model to use hidden layers and l1 regularization
 
@@ -141,8 +147,8 @@ from h2o.grid.grid_search import H2OGridSearch
 
 model_grid = H2OGridSearch(H2ODeepLearningEstimator, hyper_params=hyper_parameters)
 
-model_grid.train(x=x, y=y, distribution="multinomial", epochs=1000,
-                training_frame=train, validation_frame=test, score_interval=2,stopping_rounds=3,
+model_grid.train(x=x, y=y, distribution="multinomial", epochs=1,
+                training_frame=train, validation_frame=test, score_interval=2, #stopping_rounds=3,
                 stopping_tolerance=0.05, stopping_metric="misclassification")
 
 # print model grid search results
