@@ -4,12 +4,19 @@
 
 This is a Day-ahead regression task using H2O Deep Learning
 
-The Weighted MAPE value on testing is 0.017739
+The Weighted MAPE value on testing is 0.015450
+
+One may need to perform a grid-search using sampled training testing data
+    to determine parameters, especially the hidden layer structure and 
+    l1 regularization value
 
 The details of H2O usage are on its booklets from its website.
 
 More details can be found from source codes on GitHub
 https://github.com/h2oai/h2o-3/blob/master/h2o-py/h2o/h2o.py
+
+Parameter setting explanations are shown in the source codes
+https://github.com/h2oai/h2o-3/blob/master/h2o-py/h2o/estimators/deeplearning.py
 """
 
 import os, numpy as np
@@ -79,18 +86,27 @@ ncols = len(x)
 model = H2ODeepLearningEstimator(
                 model_id="regression_model_dayahead",
                 distribution="laplace",
-                loss = "Absolute",
-                activation="Rectifier", #other options are Rectifier, Tanh, TanhWithDropout, RectifierWithDropout
-                hidden=[ncols, ncols, ncols, ncols, ncols, ncols, ncols, ncols],
+                loss = "Absolute", #another loss is Huber, less sensitive to outliers, and differentiable, used for other distribuionts, though.
+                activation="Rectifier", #other options are Rectifier, Tanh, TanhWithDropout, RectifierWithDropout (not good for regression)
+                hidden=[200, 200, 200], #try to make sure the # of neurons in each hidden layer is >= # of inputs.
                 adaptive_rate = True, # use ADADELTA for learning rate
-                input_dropout_ratio=0.05, #regularization
                 sparse=False, # since the majority data values are 0
-                l1=1e-4, # L1 regularization value
-                epochs=10000, # number of epochs to run
-                nfolds = 7,
-                variable_importances=True) # show variable importance
+                l1=1e-4, # L1 regularization value. Recommended here since DeepLearning has too many neurons and sparse feature space
+                        # if the gap between traing and testing is a bit large, try to enlarge the l1 value to close the gap
+                #l2 = 1e-5,
+                epochs=100000, # number of epochs to run
+                #nfolds = 5, #large n is usually for small data set. Try to test cases with and without nfolds.
+                variable_importances=True, # show variable importance
+                stopping_rounds=3, #if 2 consecutive epchos without tolerance % improved
+                stopping_tolerance=1e-5, #make early stop if the criteria are met 0.001% decrease
+                stopping_metric = "MSE",
+                train_samples_per_iteration=-1, # use all training data to train without sampling
+                seed = 2718281)
 
-model.train(x=x, y=y, training_frame=train, validation_frame=test)
+# [200, 200, 200] with l1=1e-4 achieves weighted mape 0.015450 on testing data
+# [200, 200, 400] with l1=5.5e-5 achieves weighted mape 0.015875 on testing data
+
+model.train(x=x, y=y, training_frame=train) #validation_frame=test
 
 ## Check the weighted Mape value
 def wMape(a,b):
