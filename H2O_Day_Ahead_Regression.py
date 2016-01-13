@@ -98,10 +98,11 @@ model = H2ODeepLearningEstimator(
                 #nfolds = 5, #large n is usually for small data set. Try to test cases with and without nfolds.
                 variable_importances=True, # show variable importance
                 stopping_rounds=3, #if 2 consecutive epchos without tolerance % improved
-                stopping_tolerance=1e-5, #make early stop if the criteria are met 0.001% decrease
+                stopping_tolerance=1e-4, #make early stop if the criteria are met 0.001% decrease
                 stopping_metric = "MSE",
                 train_samples_per_iteration=-1, # use all training data to train without sampling
-                seed = 2718281)
+                #seed = 2718281
+                )
 
 # [200, 200, 200] with l1=1e-4 achieves weighted mape 0.015450 on testing data
 # [200, 200, 400] with l1=5.5e-5 achieves weighted mape 0.015875 on testing data
@@ -165,8 +166,7 @@ def ModelGridSearch(train, test, x, y, hyperparameters, epochs_gridsearch = 100)
                             stopping_rounds=3,
                             stopping_tolerance=1e-3,
                             stopping_metric = "MSE",
-                            train_samples_per_iteration=-1,
-                            seed = 2718281)
+                            train_samples_per_iteration=-1)
             model.train(x=x, y=y, training_frame=train) #validation_frame=test
             pred = model.predict(test)
             test_pred =pred.as_data_frame()[0][1:]
