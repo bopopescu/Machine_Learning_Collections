@@ -138,10 +138,75 @@ model.mse(train=True)
 
 # Show top 20 variable importance
 model.varimp()[:20]
-###############
 
 
+
+##############################################################################
+# The following is the grid search for the best hyper-parameter tuning #
+##############################################################################
+def ModelGridSearch(train, test, x, y, hyperparameters, epochs_gridsearch = 100):
+    result = {}
+    counter = 1
+   
+    for i in range(len(hyperparameters['hidden'])):
+        for j in range(len(hyperparameters['l1'])):
+            hidden = hyperparameters['hidden'][i]
+            l1 = hyperparameters['l1'][j]
+            model = H2ODeepLearningEstimator(
+                            distribution="laplace",
+                            loss = "Absolute",
+                            activation="Rectifier",
+                            hidden=hidden,
+                            adaptive_rate = True,
+                            sparse=False,
+                            l1=l1,
+                            epochs=epochs_gridsearch,
+                            variable_importances=True,
+                            stopping_rounds=3,
+                            stopping_tolerance=1e-3,
+                            stopping_metric = "MSE",
+                            train_samples_per_iteration=-1,
+                            seed = 2718281)
+            model.train(x=x, y=y, training_frame=train) #validation_frame=test
+            pred = model.predict(test)
+            test_pred =pred.as_data_frame()[0][1:]
+            test_y = test[y].as_data_frame()[0][1:]
+            result[counter]= {'hidden': hidden}
+            result[counter]['l1'] = l1
+            result[counter]['wmape'] = wMape(test_pred, test_y)
+            print "Weighted MAPE value on # %i run on Testing is %f" %(counter, result[counter]['wmape'])
+            counter += 1
+    
+    getRes = lambda x: x[1]
+    mapes = zip(result.keys(), map(lambda t: result[t]['wmape'], result.keys()))
+    mapes.sort(key=getRes)
+    best_mape = mapes[0]
+    secondbest_mape = mapes[1]
+    print "Best Structure is %s" %result[best_mape[0]]
+    print "2nd Best Structure is %s" %result[secondbest_mape[0]]
+
+## If possible, try to use the train, test data as small as possible by samping
+    # for fast grid search purpose. Limit to 5000 rows first.
+## The first run is to determine which hidden structure is better, the l1 tunning
+    # will be done in 2nd stage once hidden structure is determined
+hyperparameters = {'hidden':[[200,200,200],[200,400,800]],
+                    'l1':[1e-4, 1e-5, 1e-6, 1e-7]}
+ModelGridSearch(train, test, x, y, hyperparameters, epochs_gridsearch = 100)
+## Recommend to run hyperparameters first, decide on hidden structure,
+    # then fix hidden structure, grid search l1.
+hyperparameters = {'hidden':[[200,200,200]],
+                    'l1':[1e-4, 1e-5, 1e-6, 1e-7]}
+ModelGridSearch(train, test, x, y, hyperparameters, epochs_gridsearch = 500)
+# Refine the range of L1 searches
+hyperparameters = {'hidden':[[200,200,200]],
+                    'l1':[5e-4, 4e-4, 3e-4, 2e-4, 1e-4, 9e-5, 8e-5, 7e-5, 6e-5, 5e-5]}
+ModelGridSearch(train, test, x, y, hyperparameters, epochs_gridsearch = 500)
+
+
+
+##############################################################################
 # The following is to use grid-search to find the best parameters #
+# The following is deprecated #
 ##############################################################################
 hidden_opt = [[ncols, ncols, ncols],[2*ncols, 2*ncols, 2*ncols, 2*ncols]] #hidden layer structures to test
 l1_opt = [1e-4,1e-3, 1e-5] # l1 regularization test
