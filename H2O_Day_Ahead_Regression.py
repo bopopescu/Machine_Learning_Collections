@@ -191,7 +191,7 @@ def ModelGridSearch(train, test, x, y, hyperparameters, epochs_gridsearch = 100)
     # will be done in 2nd stage once hidden structure is determined
 hyperparameters = {'hidden':[[200,200,200],[200,400,800]],
                     'l1':[1e-4, 1e-5, 1e-6, 1e-7]}
-ModelGridSearch(train, test, x, y, hyperparameters, epochs_gridsearch = 100)
+ModelGridSearch(train, test, x, y, hyperparameters, epochs_gridsearch = 500)
 ## Recommend to run hyperparameters first, decide on hidden structure,
     # then fix hidden structure, grid search l1.
 hyperparameters = {'hidden':[[200,200,200]],
