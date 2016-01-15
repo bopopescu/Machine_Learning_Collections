@@ -39,7 +39,7 @@ mnistdict = cPickle.load(f)
 (trainX, trainY), (testX, testY) = mnistdict[mnistdict.keys()[0]]
 f.close()
 
-img_rows, img_cols = 28, 28
+img_rows, img_cols = trainX.shape[1:] #which is 28X28
 
 trainX = trainX.reshape(trainX.shape[0], img_rows * img_cols)
 testX = testX.reshape(testX.shape[0], img_rows*img_cols)
@@ -81,8 +81,10 @@ testX /= 255.0
 dbn = DBN(
     layer_sizes = [trainX.shape[1], 800, 10], # trainX.shape[1] is the input layer, 10 is output layer
                                             # 300 is the hidden layer
+                                            # use -1 as last layer if one does not know how many labels
+                                            # are there
     output_act_funct = "Softmax",
-    dropouts = 0.0,
+    dropouts = 0.5,
     use_re_lu=True,
     l2_costs=0.0001,
     learn_rates = 0.3,
