@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<!-- saved from url=(0373)http://disqus.com/embed/comments/?base=default&version=af1a2e2611136ef6c314afec2806cef3&f=bugra&t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&s_o=default -->
+<html lang="en" dir="ltr" class="js no-touch localstorage sessionstorage contenteditable use-opacity-transitions"><!--<![endif]--><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Disqus Comments</title>
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    
+    
+    <style>
+        html {
+            overflow: hidden;
+        }
+
+        
+    </style>
+
+<link rel="stylesheet" href="./lounge.f668c82e65f78693a6a62a5c7d3e54b8.css"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="remote/config" src="./config.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="common.bundle" src="./common.bundle.8f85318914f232543b0bed8eb6f6e74a.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="lounge.bundle" src="./lounge.bundle.fe2b2c667f5c2639e3afea2d56bab4c9.js"></script><style id="css_1462222495212"></style><!--<base target="_parent">--><base href="." target="_parent"><link rel="stylesheet" href="./discovery.449c10a436c997c3eee5afd5021da3a2.css"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="ga" src="./ga(1).js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="discovery/main" src="./discovery.bundle.64ff1dd947a642df4e7351a9f772d125.js"></script></head>
+<body class="serif">
+    
+
+    
+    <!--[if lt IE 10]><p style="color: #fff; background-color: #f05f70; padding: 10px; margin-top: 20px;">
+        You're using a browser that Disqus plans to stop supporting soon. For more information, visit our list of 
+        <a href="https://help.disqus.com/customer/portal/articles/466228-which-browsers-does-disqus-work-with-" style="color: #fff; text-decoration: underline;">supported browsers</a>
+        and consider upgrading.
+    </p><![endif]-->
+    <div id="error" style="display:none; text-align: center">
+        <p>We were unable to load Disqus. If you are a moderator please see our <a href="https://docs.disqus.com/help/83/"> troubleshooting guide</a>. </p>
+    </div>
+
+    
+    <script type="text/json" id="disqus-forumData">{"session":{"canModerate":false,"audienceSyncVerified":false,"mustVerify":false,"canReply":true,"mustVerifyEmail":false},"features":{},"forum":{"category":"Tech","description":"\u003cp>My notes on mainly Machine Learning, Data Analysis, Natural Language Processing and Python\u003c/p>","founder":"16588725","twitterName":"bugraa","url":"http://bugra.github.io/","raw_description":"My notes on mainly Machine Learning, Data Analysis, Natural Language Processing and Python","guidelines":null,"favicon":{"permalink":"http://disqus.com/api/forums/favicons/bugra.jpg","cache":"//a.disquscdn.com/uploads/forums/293/927/favicon.png"},"raw_guidelines":null,"language":"en","daysThreadAlive":0,"avatar":{"small":{"permalink":"http://disqus.com/api/forums/avatars/bugra.jpg?size=32","cache":"//a.disquscdn.com/1461795174/images/noavatar32.png"},"large":{"permalink":"http://disqus.com/api/forums/avatars/bugra.jpg?size=92","cache":"//a.disquscdn.com/1461795174/images/noavatar92.png"}},"channel":null,"daysAlive":0,"pk":"2930927","signedUrl":"http://disq.us/?url=http%3A%2F%2Fbugra.github.io%2F&key=2-_5ttvUOeWwxZ6CfClf3Q","settings":{"supportLevel":0,"adsDRNativeEnabled":false,"disable3rdPartyTrackers":false,"adsVideoEnabled":false,"adsProductVideoEnabled":false,"adsPositionTopEnabled":false,"ssoRequired":false,"linkAffiliationEnabled":true,"adsProductLinksThumbnailsEnabled":false,"adsProductStoriesEnabled":false,"organicDiscoveryEnabled":true,"allowMedia":true,"discoveryMax":false,"discoveryLocked":false,"moderatorText":"","adsEnabled":false,"allowAnonPost":false,"hasCustomAvatar":false,"adultContent":false,"promotedDiscoveryEnabled":false,"allowAnonVotes":false,"mustVerify":true,"colorScheme":"light","adsSettingsLocked":false,"mustVerifyEmail":true,"audienceSyncEnabled":false,"typeface":"auto","adsPositionBottomEnabled":false,"mediaembedEnabled":true,"adsProductLinksEnabled":false,"discoveryThumbnailsEnabled":false,"isVIP":false},"id":"bugra","createdAt":"2014-03-29T15:37:49.756716","name":"bugra.github.io"}}</script>
+
+    
+    <script type="text/json" id="disqus-threadData">{"cursor":{"hasPrev":false,"prev":null,"total":3,"hasNext":false,"next":"1:0:0"},"code":0,"response":{"lastModified":1461935545,"posts":[{"forum":"bugra","parent":null,"isApproved":true,"author":{"username":"diaoibrahima","about":"","name":"Diao ibrahima","disable3rdPartyTrackers":false,"isPowerContributor":false,"isAnonymous":false,"rep":1.232124,"profileUrl":"https://disqus.com/by/diaoibrahima/","url":"","reputation":1.232124,"location":"","isPrivate":false,"signedUrl":"","isPrimary":true,"joinedAt":"2016-04-29T13:11:12","id":"206275802","avatar":{"small":{"permalink":"http://disqus.com/api/users/avatars/diaoibrahima.jpg","cache":"//a.disquscdn.com/1461795174/images/noavatar32.png"},"isCustom":false,"permalink":"http://disqus.com/api/users/avatars/diaoibrahima.jpg","cache":"//a.disquscdn.com/1461795174/images/noavatar92.png","large":{"permalink":"http://disqus.com/api/users/avatars/diaoibrahima.jpg","cache":"//a.disquscdn.com/1461795174/images/noavatar92.png"}}},"media":[],"isDeleted":false,"isFlagged":false,"dislikes":0,"raw_message":"thank you for sharing this nice tutoriel","createdAt":"2016-04-29T13:12:25","id":"2649081233","thread":"3252324306","depth":0,"numReports":0,"isDeletedByAuthor":false,"likes":0,"isEdited":false,"message":"\u003cp>thank you for sharing this nice tutoriel\u003c/p>","isSpam":false,"isHighlighted":false,"points":0},{"forum":"bugra","parent":null,"isApproved":true,"author":{"username":"isuranirmal","about":"","name":"Isura Nirmal","disable3rdPartyTrackers":false,"isPowerContributor":false,"isAnonymous":false,"rep":1.290887,"profileUrl":"https://disqus.com/by/isuranirmal/","url":"http://staryblogger.blogspot.com","reputation":1.290887,"location":"Colombo","isPrivate":false,"signedUrl":"http://disq.us/?url=http%3A%2F%2Fstaryblogger.blogspot.com&key=KxGuVFdlg-z7PVdEk_VM4g","isPrimary":true,"joinedAt":"2010-11-05T01:55:29","id":"5200369","avatar":{"small":{"permalink":"http://disqus.com/api/users/avatars/isuranirmal.jpg","cache":"//a.disquscdn.com/uploads/users/520/369/avatar32.jpg?1452055632"},"isCustom":true,"permalink":"http://disqus.com/api/users/avatars/isuranirmal.jpg","cache":"//a.disquscdn.com/uploads/users/520/369/avatar92.jpg?1452055632","large":{"permalink":"http://disqus.com/api/users/avatars/isuranirmal.jpg","cache":"//a.disquscdn.com/uploads/users/520/369/avatar92.jpg?1452055632"}}},"media":[],"isDeleted":false,"isFlagged":false,"dislikes":0,"raw_message":"Hi, Thank you for sharing this nice tutorial, I learned much from this. But I have two questions, \n\nHow can we use the ROC in sklearn to work with multiclass classification? I came across many examples but many of them are providing the binary classification ? could you please let me know that can we extend the existing codes to do that?\n\n\nMy other question to calculate the Out of BAg error in the current models. Is there any direct function or do we have to create a custom function to do so. ?","createdAt":"2015-10-26T15:03:55","id":"2327453710","thread":"3252324306","depth":0,"numReports":0,"isDeletedByAuthor":false,"likes":0,"isEdited":false,"message":"\u003cp>Hi, Thank you for sharing this nice tutorial, I learned much from this. But I have two questions,\u003c/p>\u003cp>How can we use the ROC in sklearn to work with multiclass classification? I came across many examples but many of them are providing the binary classification ? could you please let me know that can we extend the existing codes to do that?\u003c/p>\u003cp>My other question to calculate the Out of BAg error in the current models. Is there any direct function or do we have to create a custom function to do so. ?\u003c/p>","isSpam":false,"isHighlighted":false,"points":0},{"forum":"bugra","parent":2327453710,"isApproved":true,"author":{"username":"bugra","about":"","name":"bugra","disable3rdPartyTrackers":false,"isPowerContributor":false,"isAnonymous":false,"rep":1.244122,"profileUrl":"https://disqus.com/by/bugra/","url":"","reputation":1.244122,"location":"","isPrivate":false,"signedUrl":"","isPrimary":true,"joinedAt":"2011-09-09T06:36:03","id":"16588725","avatar":{"small":{"permalink":"http://disqus.com/api/users/avatars/bugra.jpg","cache":"//a.disquscdn.com/uploads/users/1658/8725/avatar32.jpg?1446322682"},"isCustom":true,"permalink":"http://disqus.com/api/users/avatars/bugra.jpg","cache":"//a.disquscdn.com/uploads/users/1658/8725/avatar92.jpg?1446322682","large":{"permalink":"http://disqus.com/api/users/avatars/bugra.jpg","cache":"//a.disquscdn.com/uploads/users/1658/8725/avatar92.jpg?1446322682"}}},"media":[],"isDeleted":false,"isFlagged":false,"dislikes":0,"raw_message":"Hi, \n\nThanks for the kind words.\n\n1. There is an example  of ROC for multiclass classification in Scikit-learn documentation. http://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html\n\n\n\n2. As far as I know, RandomForestRegressor and RandomForestClassifier provides out of bag errors in their current models, but other models you need to implement yourself if you want to get the OOB error.\n\n\n\n\nBugra","createdAt":"2015-10-31T19:58:14","id":"2336852832","thread":"3252324306","depth":1,"numReports":0,"isDeletedByAuthor":false,"likes":0,"isEdited":true,"message":"\u003cp>Hi,\u003c/p>\u003cp>Thanks for the kind words.\u003c/p>\u003cp>1. There is an example  of ROC for multiclass classification in Scikit-learn documentation. \u003ca href=\"http://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html\" rel=\"nofollow\">http://scikit-learn.org/stable...\u003c/a>\u003c/p>\u003cp>2. As far as I know, RandomForestRegressor and RandomForestClassifier provides out of bag errors in their current models, but other models you need to implement yourself if you want to get the OOB error.\u003c/p>\u003cp>Bugra\u003c/p>","isSpam":false,"isHighlighted":false,"points":0}],"thread":{"feed":"https://bugra.disqus.com/an_introduction_to_supervised_learning_via_scikit_learn_15/latest.rss","identifiers":[],"dislikes":0,"likes":1,"message":"","id":"3252324306","isDeleted":false,"category":"2975005","author":"16588725","userScore":0,"userSubscription":false,"isSpam":false,"signedLink":"http://disq.us/?url=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&key=QFsf83hz9_YReuRiQTIXRg","createdAt":"2014-11-22T17:01:02","hasStreaming":false,"raw_message":"","isClosed":false,"link":"http://bugra.github.io/work/notes/2014-11-22/an-introduction-to-supervised-learning-scikit-learn/","slug":"an_introduction_to_supervised_learning_via_scikit_learn_15","forum":"bugra","clean_title":"An Introduction to Supervised Learning via Scikit Learn","posts":3,"moderators":[16588725],"title":"An Introduction to Supervised Learning via Scikit Learn","highlightedPost":null}},"order":"popular"}</script>
+
+    
+
+    <div id="fixed-content"></div>
+
+
+    
+        
+        <!--[if lte IE 8]>
+<script src="//a.disquscdn.com/1461795174/build/vendor/ie8.js"></script>
+<![endif]-->
+<!--[if IE 9]>
+<script src="//a.disquscdn.com/1461795174/build/vendor/ie9.js"></script>
+<![endif]-->
+
+        
+<script type="text/json" id="disqus-urls">{
+    "root":"//disqus.com",
+    "next":"//a.disquscdn.com/next/current/embed"
+}</script>
+
+        <script src="./lounge.load.af1a2e2611136ef6c314afec2806cef3.js" id="bootstrap-script" data-app="lounge" async=""></script>
+    
+
+
+<div id="layout" data-tracking-area="layout">
+
+<div id="onboard" data-tracking-area="onboard"></div>
+
+<div id="highlighted-post" data-tracking-area="highlighted" class="highlighted-post" style="display: none;"></div>
+
+<div id="global-alert"></div>
+
+<header id="main-nav" data-tracking-area="main-nav">
+<nav class="nav nav-primary">
+<ul>
+<li class="tab-conversation active" data-role="post-count"><a class="publisher-nav-color">
+<span class="comment-count">
+3 comments
+</span>
+
+<span class="comment-count-placeholder">
+Comments
+</span>
+</a>
+</li>
+<li class="tab-community">
+<a href="https://disqus.com/home/forums/bugra/" class="publisher-nav-color" data-action="community-sidebar" data-forum="bugra" id="community-tab">
+<span class="community-name">
+<strong>bugra.github.io</strong>
+
+</span>
+
+<strong class="community-name-placeholder">Community</strong>
+</a>
+</li>
+<li class="dropdown user-menu" data-role="logout"><a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" class="dropdown-toggle" data-toggle="dropdown">
+<span class="dropdown-toggle-wrapper">
+
+<span>
+Login
+</span>
+
+</span> <span class="caret"></span>
+</a>
+<ul class="dropdown-menu">
+
+
+<li>
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="auth:disqus">Disqus</a>
+</li>
+<li>
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="auth:facebook">Facebook</a>
+</li>
+<li>
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="auth:twitter">Twitter</a>
+</li>
+<li>
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="auth:google">Google</a>
+</li>
+
+
+
+</ul>
+</li>
+<li class="notification-menu unread" data-role="notification-menu"><a href="https://disqus.com/home/inbox/" class="notification-container" data-action="home" data-home-path="home/inbox/">
+<span class="notification-icon icon-comment" aria-hidden=""></span>
+<span class="notification-count" data-role="notification-count">1</span>
+</a>
+</li>
+</ul>
+</nav>
+</header>
+
+<section id="conversation" data-role="main" data-tracking-area="main">
+<div class="nav nav-secondary" data-tracking-area="secondary-nav">
+<ul>
+<li id="recommend-button" class="recommend dropdown">
+<div class="thread-likes"><a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="recommend" title="Recommend this discussion" class="dropdown-toggle ">
+<span class="icon-heart"></span>
+<span class="label label-default">Recommend</span>
+<span class="label label-recommended">Recommended</span>
+<span class="label label-count">1</span>
+</a>
+<ul class="dropdown-menu coachmark">
+<li>
+<h2>Discussion Recommended!</h2>
+<p>Recommending means this is a discussion worth sharing. It gets shared to your followers' Disqus feeds, and gives the creator kudos!</p>
+<a href="http://disqus.com/home/?utm_source=disqus_embed&amp;utm_content=recommend_btn" class="btn btn-primary" target="_blank">
+ Find More Discussions 
+</a>
+</li>
+</ul>
+</div></li>
+<li id="thread-share-menu" class="dropdown share-menu hidden-sm"><a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" class="dropdown-toggle" data-toggle="dropdown" title="Share">
+<span class="icon-export"></span>
+<span class="label">Share</span>
+</a>
+<ul class="share-menu dropdown-menu">
+<li class="share">Share this discussion on
+<ul>
+<li class="twitter">
+<a data-action="share:twitter" href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#">Twitter</a>
+</li>
+<li class="facebook">
+<a data-action="share:facebook" href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#">Facebook</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li data-role="post-sort" class="dropdown sorting pull-right">
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" class="dropdown-toggle" data-toggle="dropdown">
+Sort by Best
+
+
+<span class="caret"></span>
+</a>
+<ul class="dropdown-menu pull-right">
+<li class="selected">
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="sort" data-sort="popular">Best<i aria-hidden="true" class="icon-checkmark"></i></a>
+</li>
+
+<li>
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="sort" data-sort="desc">Newest<i aria-hidden="true" class="icon-checkmark"></i></a>
+</li>
+
+<li>
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="sort" data-sort="asc">Oldest<i aria-hidden="true" class="icon-checkmark"></i></a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div id="posts">
+<div id="form"><form class="reply">
+<div class="postbox">
+<div role="alert"></div>
+<div class="avatar">
+<span class="user">
+<img data-role="user-avatar" src="./noavatar92.4549c5353ccf103d32a8b81a856576ed.png" alt="Avatar">
+</span>
+</div>
+
+<div class="textarea-wrapper" data-role="textarea" dir="auto"><div><span class="placeholder">Join the discussion…</span><div class="textarea" tabindex="0" role="textbox" aria-multiline="true" contenteditable="PLAINTEXT-ONLY" data-role="editable" aria-label="Join the discussion…" style="overflow: auto; max-height: 350px;"><p><br></p></div><div style="display: none;"><ul class="suggestions">
+<li class="header">
+<h5>in this conversation</h5>
+</li>
+</ul>
+</div></div>
+<div data-role="drag-drop-placeholder" class="media-drag-hover" style="display: none">
+<div class="drag-text">
+⬇ Drag and drop your images here to upload them.
+</div>
+</div>
+<div class="media-preview empty" data-role="media-preview"><ul data-role="media-legacy-list"></ul>
+<ul data-role="media-progress-list"></ul>
+<ul data-role="media-rich-list"></ul>
+<div class="media-expanded empty" data-role="media-preview-expanded">
+<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-role="media-preview-expanded-image" alt="Media preview placeholder">
+</div>
+</div>
+<div class="edit-alert" role="postbox-alert"></div>
+<div class="post-actions">
+<ul class="wysiwyg">
+<li data-role="media-uploader"><a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" tabindex="-1" data-action="attach" class="attach" title="Upload Images"><span>Attach</span></a>
+<input type="file" data-role="media-upload" tabindex="-1" accept="image/*">
+</li>
+</ul>
+</div>
+</div>
+
+<div data-role="login-form"><div><section class="auth-section logged-out">
+<div class="connect">
+<h6>Log in with</h6>
+<ul data-role="login-menu" class="services login-buttons">
+
+
+<li class="auth-disqus">
+<button type="button" data-action="auth:disqus" title="Disqus"><i class="icon-disqus"></i></button>
+</li>
+<li class="auth-facebook">
+<button type="button" data-action="auth:facebook" title="Facebook"><i class="icon-facebook-circle"></i></button>
+</li>
+<li class="auth-twitter">
+<button type="button" data-action="auth:twitter" title="Twitter"><i class="icon-twitter-circle"></i></button>
+</li>
+<li class="auth-google">
+<button type="button" data-action="auth:google" title="Google"><i class="icon-google-plus-circle"></i></button>
+</li>
+</ul>
+</div>
+<div class="guest">
+<h6 class="guest-form-title">
+<span class="register-text"> or sign up with Disqus </span>
+<span class="guest-text"> or pick a name </span>
+</h6>
+
+<div class="what-is-disqus help-icon">
+<div id="rules" class="tooltip show">
+<h3>Disqus is a discussion network</h3>
+<ul>
+<li><span>Disqus never moderates or censors. The rules on this community are its own.</span></li>
+<li><span>Your email is safe with us. It's only used for moderation and optional notifications.</span></li>
+<li><span>Don't be a jerk or do anything illegal. Everything is easier that way.</span></li>
+</ul>
+<p class="clearfix"><a href="https://docs.disqus.com/kb/terms-and-policies/" class="btn btn-small" target="_blank">Read full terms and conditions</a></p>
+</div>
+</div>
+
+<p class="input-wrapper">
+<input dir="auto" type="text" placeholder="Name" name="display_name" id="view38_display_name" maxlength="30">
+</p>
+
+<div class="guest-details " data-role="guest-details">
+<p class="input-wrapper">
+<input dir="auto" type="email" placeholder="Email" name="email" id="view38_email">
+</p>
+
+<p class="input-wrapper">
+<input dir="auto" type="password" class="register-text" placeholder="Password" name="password" id="view38_password">
+</p>
+
+<div class="acceptance-wrapper register-text">
+By signing up, you agree to the Disqus <a target="_blank" href="https://help.disqus.com/customer/portal/articles/1753105-basic-rules-for-disqus-powered-profiles-and-discussions">Basic Rules</a>, <a target="_blank" href="https://help.disqus.com/customer/portal/articles/466260-terms-of-service">Terms of Service</a>, and <a target="_blank" href="https://help.disqus.com/customer/portal/articles/466259-privacy-policy">Privacy Policy</a>.
+</div>
+<div class="acceptance-wrapper guest-text">
+By posting, you agree to the Disqus <a target="_blank" href="https://help.disqus.com/customer/portal/articles/1753105-basic-rules-for-disqus-powered-profiles-and-discussions">Basic Rules</a>, <a target="_blank" href="https://help.disqus.com/customer/portal/articles/466260-terms-of-service">Terms of Service</a>, and <a target="_blank" href="https://help.disqus.com/customer/portal/articles/466259-privacy-policy">Privacy Policy</a>.
+</div>
+
+<input type="checkbox" name="author-guest" style="display:none">
+
+<div class="proceed" data-role="submit-btn-container">
+<button type="submit" class="btn submit" aria-label="Next"><span class="icon-proceed"></span><div class="spinner"></div></button>
+</div>
+</div>
+</div>
+</section>
+
+</div></div>
+</div>
+</form></div>
+
+<button class="alert realtime" style="display: none" data-role="realtime-notification">
+</button>
+
+<div id="no-posts" style="display:none"></div>
+
+<ul id="post-list" class="post-list"><li class="post" id="post-2649081233"><div role="alert"></div>
+<div data-role="post-content" class="post-content">
+<ul class="post-menu dropdown" data-role="menu">
+<li class="collapse">
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="collapse" title="Collapse"><span>−</span></a>
+</li>
+<li class="expand">
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="collapse" title="Expand"><span>+</span></a>
+</li>
+
+<li class="" role="menu">
+<a class="dropdown-toggle" href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="flag" data-role="flag" title="Flag as inappropriate">
+<i aria-hidden="true" class="icon icon-flag"></i>
+</a>
+</li>
+</ul>
+<div class="indicator"></div>
+
+<div class="avatar hovercard">
+<a href="https://disqus.com/by/diaoibrahima/" class="user" data-action="profile" data-username="diaoibrahima">
+<img data-role="user-avatar" data-user="206275802" src="./noavatar92.png" alt="Avatar">
+</a>
+</div>
+<div class="post-body">
+<header>
+<span class="post-byline">
+<span class="author publisher-anchor-color"><a href="https://disqus.com/by/diaoibrahima/" data-action="profile" data-username="diaoibrahima" data-role="username">Diao ibrahima</a></span>
+
+</span>
+
+<span class="post-meta">
+<span class="bullet time-ago-bullet" aria-hidden="true">•</span>
+
+<a href="http://bugra.github.io/work/notes/2014-11-22/an-introduction-to-supervised-learning-scikit-learn/#comment-2649081233" data-role="relative-time" class="time-ago" title="Friday, April 29, 2016 9:12 AM">3 days ago</a>
+</span>
+
+</header>
+
+<div class="post-body-inner">
+<div class="post-message-container" data-role="message-container">
+<div class="publisher-anchor-color" data-role="message-content">
+<div class="post-message " data-role="message" dir="auto">
+<p>thank you for sharing this nice tutoriel</p>
+</div>
+
+<span class="post-media"><ul data-role="post-media-list"></ul></span>
+</div>
+</div>
+<a class="see-more hidden" title="see more" data-action="see-more">see more</a>
+</div>
+
+<footer>
+<menu>
+
+<li class="voting" data-role="voting">
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" class="vote-up  count-0" data-action="upvote" title="Vote up">
+
+<span class="updatable count" data-role="likes">0</span>
+<span class="control"><i aria-hidden="true" class="icon icon-arrow-2"></i></span>
+</a>
+<span role="button" class="vote-down  count-0" data-action="downvote" title="Vote down">
+
+<span class="control"><i aria-hidden="true" class="icon icon-arrow"></i></span>
+</span>
+</li>
+<li class="bullet" aria-hidden="true">•</li>
+
+
+<li class="reply" data-role="reply-link">
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="reply">
+<i class="icon icon-mobile icon-reply"></i><span class="text">Reply</span></a></li>
+<li class="bullet" aria-hidden="true">•</li>
+
+
+<li class="share">
+<a class="toggle"><i class="icon icon-mobile icon-share"></i><span class="text">Share ›</span></a>
+<ul>
+<li class="twitter"><a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="share:twitter">Twitter</a></li>
+<li class="facebook"><a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="share:facebook">Facebook</a></li>
+<li class="link"><a href="http://bugra.github.io/work/notes/2014-11-22/an-introduction-to-supervised-learning-scikit-learn/#comment-2649081233">Link</a></li>
+</ul>
+</li>
+
+<li class="realtime" data-role="realtime-notification:2649081233">
+<span style="display:none;" class="realtime-replies"></span>
+<a style="display:none;" href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" class="btn btn-small"></a>
+</li>
+
+</menu>
+</footer>
+</div>
+
+<div data-role="blacklist-form"></div>
+<div class="reply-form-container" data-role="reply-form"></div>
+</div>
+
+<ul data-role="children" class="children"></ul>
+
+</li><li class="post" id="post-2327453710"><div role="alert"></div>
+<div data-role="post-content" class="post-content">
+<ul class="post-menu dropdown" data-role="menu">
+<li class="collapse">
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="collapse" title="Collapse"><span>−</span></a>
+</li>
+<li class="expand">
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="collapse" title="Expand"><span>+</span></a>
+</li>
+
+<li class="" role="menu">
+<a class="dropdown-toggle" href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="flag" data-role="flag" title="Flag as inappropriate">
+<i aria-hidden="true" class="icon icon-flag"></i>
+</a>
+</li>
+</ul>
+<div class="indicator"></div>
+
+<div class="avatar hovercard">
+<a href="https://disqus.com/by/isuranirmal/" class="user" data-action="profile" data-username="isuranirmal">
+<img data-role="user-avatar" data-user="5200369" src="./avatar92.jpg" alt="Avatar">
+</a>
+</div>
+<div class="post-body">
+<header>
+<span class="post-byline">
+<span class="author publisher-anchor-color"><a href="https://disqus.com/by/isuranirmal/" data-action="profile" data-username="isuranirmal" data-role="username">Isura Nirmal</a></span>
+
+</span>
+
+<span class="post-meta">
+<span class="bullet time-ago-bullet" aria-hidden="true">•</span>
+
+<a href="http://bugra.github.io/work/notes/2014-11-22/an-introduction-to-supervised-learning-scikit-learn/#comment-2327453710" data-role="relative-time" class="time-ago" title="Monday, October 26, 2015 11:03 AM">6 months ago</a>
+</span>
+
+</header>
+
+<div class="post-body-inner">
+<div class="post-message-container" data-role="message-container">
+<div class="publisher-anchor-color" data-role="message-content">
+<div class="post-message " data-role="message" dir="auto">
+<p>Hi, Thank you for sharing this nice tutorial, I learned much from this. But I have two questions,</p><p>How can we use the ROC in sklearn to work with multiclass classification? I came across many examples but many of them are providing the binary classification ? could you please let me know that can we extend the existing codes to do that?</p><p>My other question to calculate the Out of BAg error in the current models. Is there any direct function or do we have to create a custom function to do so. ?</p>
+</div>
+
+<span class="post-media"><ul data-role="post-media-list"></ul></span>
+</div>
+</div>
+<a class="see-more hidden" title="see more" data-action="see-more">see more</a>
+</div>
+
+<footer>
+<menu>
+
+<li class="voting" data-role="voting">
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" class="vote-up  count-0" data-action="upvote" title="Vote up">
+
+<span class="updatable count" data-role="likes">0</span>
+<span class="control"><i aria-hidden="true" class="icon icon-arrow-2"></i></span>
+</a>
+<span role="button" class="vote-down  count-0" data-action="downvote" title="Vote down">
+
+<span class="control"><i aria-hidden="true" class="icon icon-arrow"></i></span>
+</span>
+</li>
+<li class="bullet" aria-hidden="true">•</li>
+
+
+<li class="reply" data-role="reply-link">
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="reply">
+<i class="icon icon-mobile icon-reply"></i><span class="text">Reply</span></a></li>
+<li class="bullet" aria-hidden="true">•</li>
+
+
+<li class="share">
+<a class="toggle"><i class="icon icon-mobile icon-share"></i><span class="text">Share ›</span></a>
+<ul>
+<li class="twitter"><a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="share:twitter">Twitter</a></li>
+<li class="facebook"><a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="share:facebook">Facebook</a></li>
+<li class="link"><a href="http://bugra.github.io/work/notes/2014-11-22/an-introduction-to-supervised-learning-scikit-learn/#comment-2327453710">Link</a></li>
+</ul>
+</li>
+
+<li class="realtime" data-role="realtime-notification:2327453710">
+<span style="display:none;" class="realtime-replies"></span>
+<a style="display:none;" href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" class="btn btn-small"></a>
+</li>
+
+</menu>
+</footer>
+</div>
+
+<div data-role="blacklist-form"></div>
+<div class="reply-form-container" data-role="reply-form"></div>
+</div>
+
+<ul data-role="children" class="children"><li class="post" id="post-2336852832"><div role="alert"></div>
+<div data-role="post-content" class="post-content">
+<ul class="post-menu dropdown" data-role="menu">
+<li class="collapse">
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="collapse" title="Collapse"><span>−</span></a>
+</li>
+<li class="expand">
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="collapse" title="Expand"><span>+</span></a>
+</li>
+
+<li class="" role="menu">
+<a class="dropdown-toggle" href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="flag" data-role="flag" title="Flag as inappropriate">
+<i aria-hidden="true" class="icon icon-flag"></i>
+</a>
+</li>
+</ul>
+<div class="indicator"></div>
+
+<div class="avatar hovercard">
+<a href="https://disqus.com/by/bugra/" class="user" data-action="profile" data-username="bugra">
+<img data-role="user-avatar" data-user="16588725" src="./avatar92(1).jpg" alt="Avatar">
+</a>
+</div>
+<div class="post-body">
+<header>
+<span class="post-byline">
+<span class="author publisher-anchor-color"><a href="https://disqus.com/by/bugra/" data-action="profile" data-username="bugra" data-role="username">bugra</a></span>
+<span class="badge moderator">Mod</span>
+
+<span><a href="http://bugra.github.io/work/notes/2014-11-22/an-introduction-to-supervised-learning-scikit-learn/#comment-2327453710" class="parent-link" data-role="parent-link"><i aria-hidden="true" class="icon-forward" title="in reply to"></i> Isura Nirmal</a></span>
+</span>
+
+<span class="post-meta">
+<span class="bullet time-ago-bullet" aria-hidden="true">•</span>
+
+<a href="http://bugra.github.io/work/notes/2014-11-22/an-introduction-to-supervised-learning-scikit-learn/#comment-2336852832" data-role="relative-time" class="time-ago" title="Saturday, October 31, 2015 3:58 PM">6 months ago</a>
+</span>
+
+</header>
+
+<div class="post-body-inner">
+<div class="post-message-container" data-role="message-container">
+<div class="publisher-anchor-color" data-role="message-content">
+<div class="post-message " data-role="message" dir="auto">
+<p>Hi,</p><p>Thanks for the kind words.</p><p>1. There is an example  of ROC for multiclass classification in Scikit-learn documentation. <a href="http://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html" rel="nofollow">http://scikit-learn.org/stable...</a></p><p>2. As far as I know, RandomForestRegressor and RandomForestClassifier provides out of bag errors in their current models, but other models you need to implement yourself if you want to get the OOB error.</p><p>Bugra</p>
+</div>
+
+<span class="post-media"><ul data-role="post-media-list"></ul></span>
+</div>
+</div>
+<a class="see-more hidden" title="see more" data-action="see-more">see more</a>
+</div>
+
+<footer>
+<menu>
+
+<li class="voting" data-role="voting">
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" class="vote-up  count-0" data-action="upvote" title="Vote up">
+
+<span class="updatable count" data-role="likes">0</span>
+<span class="control"><i aria-hidden="true" class="icon icon-arrow-2"></i></span>
+</a>
+<span role="button" class="vote-down  count-0" data-action="downvote" title="Vote down">
+
+<span class="control"><i aria-hidden="true" class="icon icon-arrow"></i></span>
+</span>
+</li>
+<li class="bullet" aria-hidden="true">•</li>
+
+
+<li class="reply" data-role="reply-link">
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="reply">
+<i class="icon icon-mobile icon-reply"></i><span class="text">Reply</span></a></li>
+<li class="bullet" aria-hidden="true">•</li>
+
+
+<li class="share">
+<a class="toggle"><i class="icon icon-mobile icon-share"></i><span class="text">Share ›</span></a>
+<ul>
+<li class="twitter"><a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="share:twitter">Twitter</a></li>
+<li class="facebook"><a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="share:facebook">Facebook</a></li>
+<li class="link"><a href="http://bugra.github.io/work/notes/2014-11-22/an-introduction-to-supervised-learning-scikit-learn/#comment-2336852832">Link</a></li>
+</ul>
+</li>
+
+<li class="realtime" data-role="realtime-notification:2336852832">
+<span style="display:none;" class="realtime-replies"></span>
+<a style="display:none;" href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" class="btn btn-small"></a>
+</li>
+
+</menu>
+</footer>
+</div>
+
+<div data-role="blacklist-form"></div>
+<div class="reply-form-container" data-role="reply-form"></div>
+</div>
+
+<ul data-role="children" class="children"></ul>
+
+</li></ul>
+
+</li></ul>
+
+<div class="load-more" data-role="more" style="display:none">
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" data-action="more-posts" class="btn">Load more comments</a>
+</div>
+</div>
+
+</section>
+
+<div id="placement-bottom" data-tracking-area="discovery-south"><div class="post-list" style="height: auto; visibility: visible;"><div style="display: block; width: 100%;"><div id="discovery-main-c100" class="discovery-main">
+
+<section id="col-organic-c118" class="col-organic">
+<header class="discovery-col-header">
+<h2>Also on <strong>bugra.github.io</strong>
+</h2>
+</header>
+<ul class="discovery-posts" data-role="discovery-posts"><li class="discovery-post post-0" id="discovery-link-organic-2553062938">
+<a href="http://disq.us/url?url=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2012-09-01%2FPhase-Detection%2F%3ABQKGv-w0w6Z8Q5fv75vsn4p4P54&amp;imp=20ntlkieoga0f&amp;prev_imp&amp;forum_id=2930927&amp;forum=bugra&amp;thread_id=3252324306&amp;thread=2553062938&amp;zone=thread&amp;area=bottom&amp;object_type=thread&amp;object_id=2553062938" class="publisher-anchor-color">
+
+<header class="discovery-post-header">
+<h3 title="Phase Detection in Digital Signals">
+<span data-role="discovery-thread-title" class="title line-truncate" data-line-truncate="2">
+Phase Detection in Digital Signals
+</span>
+</h3>
+
+<ul class="meta">
+<li class="comments">
+1 comment
+</li>
+<li class="time">2 years ago</li>
+</ul>
+</header>
+
+</a><a href="http://disq.us/url?url=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2012-09-01%2FPhase-Detection%2F%3ABQKGv-w0w6Z8Q5fv75vsn4p4P54&amp;imp=20ntlkieoga0f&amp;prev_imp&amp;forum_id=2930927&amp;forum=bugra&amp;thread_id=3252324306&amp;thread=2553062938&amp;zone=thread&amp;area=bottom&amp;object_type=thread&amp;object_id=2553062938" class="top-comment" data-role="discovery-top-comment">
+<img data-src="//a.disquscdn.com/uploads/users/101/9228/avatar92.jpg?1452068980" alt="Avatar" data-role="discovery-avatar">
+<p><span class="user" data-role="discovery-top-comment-author">gromas</span> — <span data-role="discovery-top-comment-snippet" class="line-truncate" data-line-truncate="3">Awesome. Thanks.</span></p>
+</a>
+
+</li>
+<li class="discovery-post post-1" id="discovery-link-organic-2547456969">
+<a href="http://disq.us/url?url=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-03-16%2Fjensen-shannon-divergence-matrix-multi-dimensional-scaling%2F%3ALRYQtLo5dxYPt1O22ajv54624i8&amp;imp=20ntlkieoga0f&amp;prev_imp&amp;forum_id=2930927&amp;forum=bugra&amp;thread_id=3252324306&amp;thread=2547456969&amp;zone=thread&amp;area=bottom&amp;object_type=thread&amp;object_id=2547456969" class="publisher-anchor-color">
+
+<header class="discovery-post-header">
+<h3 title="Document Visualization with JS Divergence Matrix and Multi Dimensional Scaling">
+<span data-role="discovery-thread-title" class="title line-truncate" data-line-truncate="2">
+Document Visualization with JS Divergence Matrix and Multi Dimensional Scaling
+</span>
+</h3>
+
+<ul class="meta">
+<li class="comments">
+1 comment
+</li>
+<li class="time">2 years ago</li>
+</ul>
+</header>
+
+</a><a href="http://disq.us/url?url=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-03-16%2Fjensen-shannon-divergence-matrix-multi-dimensional-scaling%2F%3ALRYQtLo5dxYPt1O22ajv54624i8&amp;imp=20ntlkieoga0f&amp;prev_imp&amp;forum_id=2930927&amp;forum=bugra&amp;thread_id=3252324306&amp;thread=2547456969&amp;zone=thread&amp;area=bottom&amp;object_type=thread&amp;object_id=2547456969" class="top-comment" data-role="discovery-top-comment">
+<img data-src="//a.disquscdn.com/uploads/users/6738/9238/avatar92.jpg?1458388072" alt="Avatar" data-role="discovery-avatar">
+<p><span class="user" data-role="discovery-top-comment-author">Sunny</span> — <span data-role="discovery-top-comment-snippet" class="line-truncate" data-line-truncate="3"> Hi, very helpful blog post to understand application of JS divergence on text data. Do you have the interactive app up and running somewhere? or at least its code hosted …</span></p>
+</a>
+
+</li>
+<li class="discovery-post post-2" id="discovery-link-organic-3386985787">
+<a href="http://disq.us/url?url=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2015-01-03%2Fi-wish-i-knew-these-things-when-i-first-learned-python%2F%3AiVN902zLNZ4nUOeStAgFe473uHU&amp;imp=20ntlkieoga0f&amp;prev_imp&amp;forum_id=2930927&amp;forum=bugra&amp;thread_id=3252324306&amp;thread=3386985787&amp;zone=thread&amp;area=bottom&amp;object_type=thread&amp;object_id=3386985787" class="publisher-anchor-color">
+
+<header class="discovery-post-header">
+<h3 title="I wish I knew these things when I learned Python">
+<span data-role="discovery-thread-title" class="title line-truncate" data-line-truncate="2">
+I wish I knew these things when I learned Python
+</span>
+</h3>
+
+<ul class="meta">
+<li class="comments">
+6 comments
+</li>
+<li class="time">a year ago</li>
+</ul>
+</header>
+
+</a><a href="http://disq.us/url?url=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2015-01-03%2Fi-wish-i-knew-these-things-when-i-first-learned-python%2F%3AiVN902zLNZ4nUOeStAgFe473uHU&amp;imp=20ntlkieoga0f&amp;prev_imp&amp;forum_id=2930927&amp;forum=bugra&amp;thread_id=3252324306&amp;thread=3386985787&amp;zone=thread&amp;area=bottom&amp;object_type=thread&amp;object_id=3386985787" class="top-comment" data-role="discovery-top-comment">
+<img data-src="//a.disquscdn.com/1461795174/images/noavatar92.png" alt="Avatar" data-role="discovery-avatar">
+<p><span class="user" data-role="discovery-top-comment-author">Guest</span> — <span data-role="discovery-top-comment-snippet" class="line-truncate" data-line-truncate="3">I see that you are a Python 2 user. This is not a bug since the code runs just fine in Python 3.</span></p>
+</a>
+
+</li>
+<li class="discovery-post post-3" id="discovery-link-organic-3142089083">
+<a href="http://disq.us/url?url=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-10-20%2Fscala-basics-continued-for-python-developers%2F%3AyiG397ne9ejVNw_5ZY7l5KOo-vY&amp;imp=20ntlkieoga0f&amp;prev_imp&amp;forum_id=2930927&amp;forum=bugra&amp;thread_id=3252324306&amp;thread=3142089083&amp;zone=thread&amp;area=bottom&amp;object_type=thread&amp;object_id=3142089083" class="publisher-anchor-color">
+
+<header class="discovery-post-header">
+<h3 title="Scala Basics Continued for Python Developers">
+<span data-role="discovery-thread-title" class="title line-truncate" data-line-truncate="2">
+Scala Basics Continued for Python Developers
+</span>
+</h3>
+
+<ul class="meta">
+<li class="comments">
+1 comment
+</li>
+<li class="time">2 years ago</li>
+</ul>
+</header>
+
+</a><a href="http://disq.us/url?url=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-10-20%2Fscala-basics-continued-for-python-developers%2F%3AyiG397ne9ejVNw_5ZY7l5KOo-vY&amp;imp=20ntlkieoga0f&amp;prev_imp&amp;forum_id=2930927&amp;forum=bugra&amp;thread_id=3252324306&amp;thread=3142089083&amp;zone=thread&amp;area=bottom&amp;object_type=thread&amp;object_id=3142089083" class="top-comment" data-role="discovery-top-comment">
+<img data-src="//a.disquscdn.com/uploads/users/12997/6374/avatar92.jpg?1455006391" alt="Avatar" data-role="discovery-avatar">
+<p><span class="user" data-role="discovery-top-comment-author">Michael Arthur Bucko</span> — <span data-role="discovery-top-comment-snippet" class="line-truncate" data-line-truncate="3">Thanks for sharing great content.</span></p>
+</a>
+
+</li>
+</ul>
+</section>
+
+</div>
+</div></div></div>
+
+<div id="footer" data-tracking-area="footer">
+<ul class="disqus-footer">
+<li class="logo disqus-footer__item"><a href="https://disqus.com/" rel="nofollow" title="Powered by Disqus">Powered by Disqus</a></li>
+<li id="thread-subscribe-button" class="email disqus-footer__item"> 
+<div class="default">
+<a href="http://disqus.com/embed/comments/?base=default&amp;version=af1a2e2611136ef6c314afec2806cef3&amp;f=bugra&amp;t_u=http%3A%2F%2Fbugra.github.io%2Fwork%2Fnotes%2F2014-11-22%2Fan-introduction-to-supervised-learning-scikit-learn%2F&amp;t_d=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;t_t=An%20Introduction%20to%20Supervised%20Learning%20via%20Scikit%20Learn&amp;s_o=default#" rel="nofollow" data-action="subscribe" title="Subscribe and get email updates from this discussion"><i aria-hidden="true" class="icon icon-mail"></i><span class="clip">Subscribe</span> <i aria-hidden="true" class="icon icon-checkmark"></i></a>
+</div>
+<div class="form">
+<div class="input-wrapper"><input id="thread-subscribe-email" type="email" placeholder="yourname@email.com"></div>
+</div>
+</li>
+<li class="install disqus-footer__item">
+<a href="https://publishers.disqus.com/engage?utm_source=bugra&amp;utm_medium=Disqus-Footer" rel="nofollow" target="_blank">
+<i aria-hidden="true" class="icon icon-disqus"></i>
+<span class="clip hidden-sm">Add Disqus to your site</span>
+<span class="clip visible-sm hidden-xs">Add Disqus</span>
+<span class="clip visible-xs">Add</span>
+</a>
+</li>
+<li class="privacy disqus-footer__item">
+<a href="https://help.disqus.com/customer/portal/articles/1657951?utm_source=disqus&amp;utm_medium=embed-footer&amp;utm_content=privacy-btn" rel="nofollow" target="_blank">
+<i aria-hidden="true" class="icon icon-lock"></i>
+<span class="clip">Privacy</span>
+</a>
+</li>
+</ul>
+</div>
+</div></body></html>
