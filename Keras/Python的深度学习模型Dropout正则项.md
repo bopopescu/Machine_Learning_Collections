@@ -32,7 +32,6 @@ Dropout的实现很简单，在每轮权重更新时随机选择一定比例（�
 完整的基准模型代码如下所示:
 
 ```python
-
 import numpy
 import pandas
 from keras.models import Sequential
@@ -48,6 +47,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.grid_search import GridSearchCV
 from sklearn.pipeline import Pipeline
 from sklearn.grid_search import GridSearchCV
+
 # fix random seed for reproducibility
 seed = 7
 numpy.random.seed(seed)
@@ -64,15 +64,15 @@ encoded_Y = encoder.transform(Y)
 
 # baseline
 def create_baseline():
-# create model
-model = Sequential()
-model.add(Dense(60, input_dim=60, init='normal', activation='relu'))
- model.add(Dense(30, init='normal', activation='relu'))
-model.add(Dense(1, init='normal', activation='sigmoid'))
-# Compile model
-sgd = SGD(lr=0.01, momentum=0.8, decay=0.0, nesterov=False)
-model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
-return model
+  # create model
+  model = Sequential()
+  model.add(Dense(60, input_dim=60, init='normal', activation='relu'))
+  model.add(Dense(30, init='normal', activation='relu'))
+  model.add(Dense(1, init='normal', activation='sigmoid'))
+  # Compile model
+  sgd = SGD(lr=0.01, momentum=0.8, decay=0.0, nesterov=False)
+  model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
+  return model
 
 numpy.random.seed(seed)
 estimators = []
@@ -96,3 +96,80 @@ Dropout可用于输入神经元，即可见层。
 学习率提高了一个数量级，冲量增加到0.9。这也是那篇Dropout论文的原文中所推荐的做法。
 
 顺着上面基准模型的例子，下面的代码是包含输入层dropout的网络模型。
+
+```python
+# dropout in the input layer with weight constraint
+def create_model1():
+  # create model
+  model = Sequential()
+  model.add(Dropout(0.2, input_shape=(60,)))
+  model.add(Dense(60, init='normal', activation='relu', W_constraint=maxnorm(3)))
+  model.add(Dense(30, init='normal', activation='relu', W_constraint=maxnorm(3)))
+  model.add(Dense(1, init='normal', activation='sigmoid'))
+  # Compile model
+  sgd = SGD(lr=0.1, momentum=0.9, decay=0.0, nesterov=False)
+  model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
+  return model
+
+numpy.random.seed(seed)
+estimators = []
+estimators.append(('standardize', StandardScaler()))
+estimators.append(('mlp', KerasClassifier(build_fn=create_model1, nb_epoch=300, batch_size=16, verbose=0)))
+pipeline = Pipeline(estimators)
+kfold = StratifiedKFold(y=encoded_Y, n_folds=10, shuffle=True, random_state=seed)
+results = cross_val_score(pipeline, X, encoded_Y, cv=kfold)
+print("Accuracy: %.2f%% (%.2f%%)" % (results.mean()*100, results.std()*100))
+```
+
+运行这段代码，分类准确率完美地提升到了86%。
+
+# 在隐藏层使用Dropout
+Dropout也可用于模型内的隐藏层节点。
+
+下面这个例子里，Dropout被用于两个隐藏层之间和隐藏层与输出层之间。丢弃率同样设为20%，且使用权重限制。
+```python
+# dropout in hidden layers with weight constraint
+def create_model2():
+    # create model
+    model = Sequential()
+    model.add(Dense(60, input_dim=60, init='normal', activation='relu', W_constraint=maxnorm(3)))
+    model.add(Dropout(0.2))
+    model.add(Dense(30, init='normal', activation='relu', W_constraint=maxnorm(3)))
+    model.add(Dropout(0.2))
+    model.add(Dense(1, init='normal', activation='sigmoid'))
+    # Compile model
+    sgd = SGD(lr=0.1, momentum=0.9, decay=0.0, nesterov=False)
+    model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy'])
+    return model
+
+numpy.random.seed(seed)
+estimators = []
+estimators.append(('standardize', StandardScaler()))
+estimators.append(('mlp', KerasClassifier(build_fn=create_model2, nb_epoch=300, batch_size=16, verbose=0)))
+pipeline = Pipeline(estimators)
+kfold = StratifiedKFold(y=encoded_Y, n_folds=10, shuffle=True, random_state=seed)
+results = cross_val_score(pipeline, X, encoded_Y, cv=kfold)
+print("Accuracy: %.2f%% (%.2f%%)" % (results.mean()*100, results.std()*100))
+```
+我们观察到，对于这个问题以及所设置的模型配置参数，在隐藏层使用dropout并不能提升模型效果。事实上，效果反而比基准更差。有可能需要增加训练迭代次数，或者是更多地调优学习率。Accuracy: 82.16% (6.16%)
+
+# 使用Dropout的小技巧
+提出Dropout的那篇论文提供了一些在标准机器学习问题上得到的实践性结论。这些结论在dropout的实际应用中会带来帮助。
+  * 通常丢弃率控制在20%~50%比较好，可以从20%开始尝试。如果比例太低则起不到效果，比例太高则会导致模型的欠学习。
+  * 在大的网络模型上应用。当dropout用在较大的网络模型时更有可能得到效果的提升，模型有更多的机会学习到多种独立的表征。
+  * 在输入层（可见层）和隐藏层都使用dropout。在每层都应用dropout被证明会取得好的效果。
+  * 增加学习率和冲量。把学习率扩大10~100倍，冲量值调高到0.9~0.99.
+  * 限制网络模型的权重。大的学习率往往导致大的权重值。对网络的权重值做最大范数正则化等方法被证明会提升效果。
+
+# 有关Dropout的更多资源
+下面这些资料也是关于dropout在神经网络和深度学习模型中应用。
+  * Dropout: A Simple Way to Prevent Neural Networks from Overfitting(原论文)
+  * Improving neural networks by preventing co-adaptation of feature detectors.
+  * How does the dropout method work in deep learning?来自Quora
+
+# 总结
+
+通过本文，我们讨论了dropout正则化技术在深度学习模型中的应用。你应该掌握了：
+  * dropout的含义和原理
+  * 如何在自己的深度学习模型中使用dropout
+  * 使用dropout的小技巧
