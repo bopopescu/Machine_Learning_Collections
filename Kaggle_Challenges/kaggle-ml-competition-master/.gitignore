@@ -1,0 +1,10 @@
+# Remove solution file from git repo
+target/
+fa/
+raw/
+kyleSolution.m
+extractFeatures.m
+reduceDimensions.m
+compareMethods.m
+getAuc.m
+*.asv
