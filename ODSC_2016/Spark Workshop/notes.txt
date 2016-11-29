@@ -1,0 +1,24 @@
+Tim Hunter
+
+https://spark-summit.org/eu-2016/events/tensorframes-deep-learning-with-tensorflow-on-apache-spark/
+
+TensorFrames ~ Spark + DataFrames + TensorFlow [ + GPU ]
+
+https://www.youtube.com/watch?v=gXItObf-qaI
+
+
+-----
+
+Hollin Wilkins (Combust.ML) & Mikhail Semeniuk (Shift)
+
+https://spark-summit.org/eu-2016/events/mleap-and-combustml-deploying-machine-learning-models-to-production/
+
+MLeap and CombustML (Productionize Spark ML Pipelines outside of Spark)
+
+https://www.youtube.com/watch?v=MGZDF6E41r4
+
+-----
+
+Sparkling Water 2.0
+
+https://spark-summit.org/eu-2016/events/sparkling-water-20-the-next-generation-of-machine-learning-on-apache-spark/
