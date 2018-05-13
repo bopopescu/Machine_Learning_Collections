@@ -5,13 +5,13 @@ require(stringr)
 
 ###########################################################################
 # COMMONLY USED FUNCTIONS
-cross_validate_prediciton <- function(data_X,  params,  seed,  best_iter,  nfolds,
+cross_validate_prediciton <- function(data_X,  params,  seed,  n_iters,  nfolds,
                                     labels,  weights, save_cv_models=TRUE,
                                     model_persist_dir = NULL,
                                     model_persist_name = NULL) {
     ############
     # ENSURE the
-    #   data_X, params, seed, best_iter, nfolds,
+    #   data_X, params, seed, n_iters, nfolds,
     #   (labels, weights are the same label and weight, data_X is data X-Matrix)
     #   is used same as xgb.cv model tuning
 
@@ -44,6 +44,7 @@ cross_validate_prediciton <- function(data_X,  params,  seed,  best_iter,  nfold
     scores = rep(-999999, nrow(df_))
     OOB_metric = NULL
     OOB_metric_db = list()
+	xgb_models_list = NULL
     for (foldid in folds) {
         print(paste0("Processing foldid ", foldid, " out of ", length(folds)," folds for CV predictions"))
         train_idx_ = df_[, which(cv_foldid != foldid)]
@@ -57,7 +58,7 @@ cross_validate_prediciton <- function(data_X,  params,  seed,  best_iter,  nfold
                                 weight = weights[test_idx_],
                                 missing = NA)
         set.seed(seed)
-        alliter = min(round(best_iter * 1.3), best_iter + 100)
+        alliter = min(round(n_iters * 1.3), n_iters + 100)
         bst_ <- xgb.train(
             data = d_train_,
             params = params,
@@ -66,7 +67,8 @@ cross_validate_prediciton <- function(data_X,  params,  seed,  best_iter,  nfold
             print_every_n = 100
             )
         OOB_metric_db[[paste0(foldid)]] = bst_$evaluation_log
-        scores[test_idx_] = predict(bst_, d_test_)
+		eval(parse(text=paste0("bst_",foldid, " <- bst_")))
+		xgb_models_list <- c(xgb_models_list, paste0("bst_",foldid))
         if (save_cv_models) {
             if (is.null(model_persist_dir)) {
                 dir.create("XGBoost_CV_Model_Save", showWarnings = F)
@@ -87,8 +89,7 @@ cross_validate_prediciton <- function(data_X,  params,  seed,  best_iter,  nfold
         }
         rm(bst_, train_idx_, test_idx_, d_train_, d_test_)
     }
-    rm(df_)
-    bestiter_ = best_iter
+    bestiter_ = n_iters
     if (is.null(params[['maximize']])) {maximize = TRUE} else {maximize=params[['maximize']]}
     if (maximize) {best_metric = -1 * (1e20)} else {best_metric = 1e20}
     for (i in seq(round(alliter*0.6), alliter)) {
@@ -114,6 +115,13 @@ cross_validate_prediciton <- function(data_X,  params,  seed,  best_iter,  nfold
         dt = OOB_metric_db[[key]]
         OOB_metric = c(OOB_metric, dt[bestiter_, get(colnames(dt)[ncol(dt)])])
     }
+	# Score on OOB folds
+	for (foldid in folds) {
+	    eval(parse(text=paste0("bst_ <- bst_",foldid)))
+		test_idx_ = df_[, which(cv_foldid == foldid)]
+		d_test_ <- xgb.DMatrix(data = data_X[test_idx_,], missing = NA)
+		scores[test_idx_] = predict(bst_, d_test_, ntreelimit=bestiter_)
+	}
     print(paste0("error_metric values on each OOB (CV oob fold) are:  ",
             paste0(OOB_metric, collapse=", "), " with best_iteration ", bestiter_))
     # save best iteration number
@@ -127,7 +135,7 @@ cross_validate_prediciton <- function(data_X,  params,  seed,  best_iter,  nfold
 }
 
 
-function(full_list, pattern) {
+find_elements_with_pattern = function(full_list, pattern) {
     # sample usage
     # find_elements_with_pattern(c("ab", "cdef", "abcef"), "*a*b*")
     return(full_list[grepl(glob2rx(pattern), full_list)])
@@ -199,10 +207,15 @@ xgb_cv <- xgb.cv(
     data = d_train,
     nfold = N_FOLDS,
     params = params,
+    prediction = TRUE,
     nrounds = 5000,
     early_stopping_rounds = 50,
     print_every_n = 50
     )
+cv_predictions_by_xgbcv = xgb_cv$pred
+gini = NormalizedWeightedGini(solution = labels, weights = weights, submission = cv_predictions_by_xgbcv)
+print(paste0("Cross Validated AUC on Training Data is ", round(0.5*(1+gini),4)))
+rm(gini)
 best_iter = xgb_cv$best_iteration
 
 
@@ -211,13 +224,15 @@ best_iter = xgb_cv$best_iteration
 ###########################################################################
 ########## Score on Train and New Data ##########
 # data_X is the train data that we score on for validation
-cv_predictions = cross_validate_prediciton(data_X,  params,  seed,  best_iter,  nfolds=N_FOLDS,
+cv_predictions = cross_validate_prediciton(data_X,  params,  seed,  n_iters=best_iter,  nfolds=N_FOLDS,
                                 labels,  weights, save_cv_models=TRUE,
                                 model_persist_dir = "E:/_temp_/trash/cvoutputs",
                                 model_persist_name = "XGBoost_FirstCut")
+gini = NormalizedWeightedGini(solution = labels, weights = weights, submission = cv_predictions)
+print(paste0("Cross Validated AUC by cross_validate_prediciton function on Training Data is ",
+        round(0.5*(1+gini),4)))
 # data_submit is brand new data
 new_predictions = cross_validate_prediciton_OOB(model_persist_dir = "E:/_temp_/trash/cvoutputs",
                         model_persist_name = "XGBoost_FirstCut",
                         data_submit  = data_X,
                         best_iter = 253)
-
