@@ -308,6 +308,8 @@ fits <- cv.glmnet(x = x_matrix[train_index, ],
 best_lambda = fits$lambda.min
 preds = predict(fits, newx = x_matrix, type='response', s=best_lambda,
                 offset=data[, log(get(pred_pp_offset_variable))])
+# If we need to check model performance, the cv_preds is cross-valided scores that will be
+# used for checking model performance through CV
 cv_preds = exp(fits$fit.preval[, which(abs(fits$lambda - best_lambda)<1e-5)])
 
 # Check the GINI and Lift After the Stacking
