@@ -44,7 +44,7 @@ cross_validate_prediciton <- function(data_X,  params,  seed,  n_iters,  nfolds,
     scores = rep(-999999, nrow(df_))
     OOB_metric = NULL
     OOB_metric_db = list()
-	xgb_models_list = NULL
+    xgb_models_list = NULL
     for (foldid in folds) {
         print(paste0("Processing foldid ", foldid, " out of ", length(folds)," folds for CV predictions"))
         train_idx_ = df_[, which(cv_foldid != foldid)]
@@ -67,8 +67,8 @@ cross_validate_prediciton <- function(data_X,  params,  seed,  n_iters,  nfolds,
             print_every_n = 100
             )
         OOB_metric_db[[paste0(foldid)]] = bst_$evaluation_log
-		eval(parse(text=paste0("bst_",foldid, " <- bst_")))
-		xgb_models_list <- c(xgb_models_list, paste0("bst_",foldid))
+        eval(parse(text=paste0("bst_",foldid, " <- bst_")))
+        xgb_models_list <- c(xgb_models_list, paste0("bst_",foldid))
         if (save_cv_models) {
             if (is.null(model_persist_dir)) {
                 dir.create("XGBoost_CV_Model_Save", showWarnings = F)
@@ -115,13 +115,13 @@ cross_validate_prediciton <- function(data_X,  params,  seed,  n_iters,  nfolds,
         dt = OOB_metric_db[[key]]
         OOB_metric = c(OOB_metric, dt[bestiter_, get(colnames(dt)[ncol(dt)])])
     }
-	# Score on OOB folds
-	for (foldid in folds) {
-	    eval(parse(text=paste0("bst_ <- bst_",foldid)))
-		test_idx_ = df_[, which(cv_foldid == foldid)]
-		d_test_ <- xgb.DMatrix(data = data_X[test_idx_,], missing = NA)
-		scores[test_idx_] = predict(bst_, d_test_, ntreelimit=bestiter_)
-	}
+    # Score on OOB folds
+    for (foldid in folds) {
+        eval(parse(text=paste0("bst_ <- bst_",foldid)))
+        test_idx_ = df_[, which(cv_foldid == foldid)]
+        d_test_ <- xgb.DMatrix(data = data_X[test_idx_,], missing = NA)
+        scores[test_idx_] = predict(bst_, d_test_, ntreelimit=bestiter_)
+    }
     print(paste0("error_metric values on each OOB (CV oob fold) are:  ",
             paste0(OOB_metric, collapse=", "), " with best_iteration ", bestiter_))
     # save best iteration number
@@ -175,7 +175,6 @@ pred_pp_offset_variable = "pp_pred_offset" # Rest of variables in data are censu
 
 predictors = setdiff(colnames(data), c(loss_field))
 data_X <- data.matrix(data[, predictors, with = F])
-#data_X <- data.matrix(data[, c(exposure_field, pred_pp_offset_variable), with = F])
 
 ############################
 # Define the binary cutoff
@@ -236,3 +235,102 @@ new_predictions = cross_validate_prediciton_OOB(model_persist_dir = "E:/_temp_/t
                         model_persist_name = "XGBoost_FirstCut",
                         data_submit  = data_X,
                         best_iter = 253)
+
+########## Pure Premium Model Checks ##########
+data_X <- data.matrix(data[, setdiff(predictors, pred_pp_offset_variable), with = F])
+# Create the Binary Classfication by Severity Cutoffs
+cutoffs = c(0,  468, 734, 1309, 1969, 2920, 4100, 5781, 8940, 15324, 36859, 73377, 183975)
+counter = 1
+for (Y_BINARY_CUTOFF in cutoffs) {
+    print(paste0("Creating the binary classfications by cutoff ",Y_BINARY_CUTOFF))
+    # Define the binary cutoff of target y
+    N_FOLDS = 10
+    labels = data[, 1*(get(loss_field) > Y_BINARY_CUTOFF)]
+    weights = data[, get(exposure_field)]
+    d_train <- xgb.DMatrix(data = data_X,
+                            label = labels,
+                            weight = weights,
+                            missing = NA)
+    params <- list(
+        objective = 'binary:logistic',
+        eval_metric = 'auc',
+        max_depth = 3,
+        subsample = 0.6,
+        colsample_bytree = 1,
+        alpha = 1,
+        lambda =100,
+        eta = 0.1,
+        maximize = TRUE)
+    set.seed(seed)
+    xgb_cv <- xgb.cv(
+        data = d_train,
+        nfold = N_FOLDS,
+        params = params,
+        prediction = TRUE,
+        nrounds = 5000,
+        early_stopping_rounds = 50,
+        print_every_n = 100
+        )
+    cv_predictions_by_xgbcv = xgb_cv$pred
+    var_new = paste0("freq_pred_", counter)
+    data[, paste0(var_new) := cv_predictions_by_xgbcv / weights]
+    counter = counter + 1
+}
+
+freq_pred_var_names = paste0("freq_pred_", seq(1,counter-1))
+
+
+######################################
+# Run Elastic Net PP Model
+set.seed(seed)
+require(sqldf)
+require(glmnet)
+sample_size <- floor(0.5 * nrow(data))
+train_index <- sample(seq_len(nrow(data)), size = sample_size)
+train_index = sort(train_index)
+test_index <- setdiff(seq_len(nrow(data)), train_index)
+
+predictors =  freq_pred_var_names
+x_matrix <- log(data.matrix(data[, predictors, with = F]))
+y_matrix <- data[, get(loss_field)/get(exposure_field)]
+
+fits <- cv.glmnet(x = x_matrix[train_index, ],
+               y = y_matrix[train_index],
+               family = "poisson",
+               weights = weights[train_index],
+               offset = data[train_index, log(get(pred_pp_offset_variable))],
+               standardize = T,
+               nfolds = 20,
+               alpha = 1,
+               thresh = 1e-5,
+               parallel = TRUE)
+best_lambda = fits$lambda.min
+preds = predict(fits, newx = x_matrix, type='response', s=best_lambda,
+                offset=data[, log(get(pred_pp_offset_variable))])
+
+# Check the GINI and Lift After the Stacking
+mylift2(preds[train_index], preds[train_index],
+        data[train_index, get(loss_field)/get(exposure_field)],
+        data[train_index,get(exposure_field)], 10,
+        image_name="zzzzz_stacking_train.png",
+        image_title = "train")
+mylift2(preds[test_index], preds[test_index],
+        data[test_index, get(loss_field)/get(exposure_field)],
+        data[test_index,get(exposure_field)], 10,
+        image_name="zzzzz_stacking_test.png",
+        image_title = "test")
+
+# Check the GINI and Lift before introducing new variables
+mylift2(data[train_index, get(pred_pp_offset_variable)],
+        data[train_index, get(pred_pp_offset_variable)],
+        data[train_index, get(loss_field)/get(exposure_field)],
+        data[train_index,get(exposure_field)], 10,
+        image_name="zzzzz_train.png",
+        image_title = "train")
+mylift2(data[test_index, get(pred_pp_offset_variable)],
+        data[test_index, get(pred_pp_offset_variable)],
+        data[test_index, get(loss_field)/get(exposure_field)],
+        data[test_index,get(exposure_field)], 10,
+        image_name="zzzzz_test.png",
+        image_title = "test")
+
