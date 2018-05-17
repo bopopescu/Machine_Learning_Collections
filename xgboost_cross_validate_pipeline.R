@@ -162,6 +162,46 @@ cross_validate_prediciton_OOB = function(model_persist_dir, model_persist_name,
     return(cvscores_)
 }
 
+
+log_new <- function(x) {
+    # log of vector x. if min of x is <=0, move to 1 first
+    min_ = min(x)
+    if (min_ <= 0) {
+        res = log(x + 1 - min_)
+    } else {
+        res = log(x)
+    }
+    return(res)
+}
+
+
+b_spline_generate <- function(data, colname, knot_percentiles=seq(0,1, by = 0.2)) {
+    # This function creates the object for natural cubic splines of column 'colname'
+    # and return the resulting data
+    # Sample usage
+    # > data = data.table(a=c(1,1,2,5,1,9))
+    # > res = b_spline_generate(data, colname="a")
+    # > res$spline  # the spline function created
+    # > res$data_table  # the data table for the specific task
+    # Prediciton
+    # > data.table(predict(res$spline, newx = data[, unique(get(col))]))
+    # here the newx is the new vector to apply spline to recreate the spline basis
+    col = colname # legacy
+    probs = knot_percentiles
+    df = data[, col, with=F]
+    if (sum(is.na(df[, get(col)])) >0) {
+        stop(paste0("Column ", colname, " has missing values."))
+    }
+    knots = quantile(df[,get(col)], probs=setdiff(probs,1), na.rm=T)
+    knots = unique(knots)
+    df_sp = splines::ns(x = df[,get(col)],df = 3,knots = knots)
+    df2 = data.table(df_sp)
+    setnames(df2, colnames(df2), paste0(col, "_sp", colnames(df2)))
+    rm(df)
+    res = list(spline=df_sp, data_table=df2)
+    return(res)
+}
+
 #  END OF FUNCTIONS
 ###########################################################################
 
@@ -291,14 +331,38 @@ train_index = sort(train_index)
 test_index <- setdiff(seq_len(nrow(data)), train_index)
 
 predictors =  freq_pred_var_names
-x_matrix <- log(data.matrix(data[, predictors, with = F]))
+#x_matrix <- log(data.matrix(data[, predictors, with = F]))
+counter = 0
+for (c_ in predictors) {
+    data[, paste0(c_, "_log") := log_new(get(c_))]
+    if (counter == 0) {
+        xmatrix_df = b_spline_generate(data, colname=paste0(c_, "_log"), knot_percentiles=seq(0,1, by = 0.2))
+        xmatrix_df = xmatrix_df$data_table
+        xmatrix_df = cbind(data[, paste0(c_, "_log"), with=F], xmatrix_df)
+    } else {
+        x_ = b_spline_generate(data, colname=paste0(c_, "_log"), knot_percentiles=seq(0,1, by = 0.2))
+        xmatrix_df = cbind(xmatrix_df, x_$data_table)
+        xmatrix_df = cbind(data[, paste0(c_, "_log"), with=F], xmatrix_df)
+        rm(x_); gc();
+    }
+    counter = counter +1
+}
+
+x_matrix <- data.matrix(xmatrix_df)
 y_matrix <- data[, get(loss_field)/get(exposure_field)]
 
-fits <- cv.glmnet(x = x_matrix[train_index, ],
-               y = y_matrix[train_index],
+cols = colnames(x_matrix)
+# get vars with no zero coefs
+if (FALSE) {
+    cols =coef(fits, s=best_lambda)
+    cols = intersect(colnames(x_matrix), row.names(as.matrix(cols))[which(as.matrix(cols)[,1] != 0)])
+}
+
+fits <- cv.glmnet(x = x_matrix[, cols],
+               y = y_matrix,
                family = "poisson",
-               weights = weights[train_index],
-               offset = data[train_index, log(get(pred_pp_offset_variable))],
+               weights = weights,
+               offset = data[, log(get(pred_pp_offset_variable))],
                standardize = T,
                nfolds = 20,
                alpha = 1,
@@ -307,10 +371,10 @@ fits <- cv.glmnet(x = x_matrix[train_index, ],
                parallel = TRUE)
 best_lambda = fits$lambda.min
 preds = predict(fits, newx = x_matrix, type='response', s=best_lambda,
-                offset=data[, log(get(pred_pp_offset_variable))])
+                offset=data[, log(get(pred_pp_offset_variable))])  # or use newoffset in regular R version
 # If we need to check model performance, the cv_preds is cross-valided scores that will be
 # used for checking model performance through CV
-cv_preds = exp(fits$fit.preval[, which(abs(fits$lambda - best_lambda)<1e-5)])
+cv_preds = exp(fits$fit.preval[, which(abs(fits$lambda - best_lambda) == min(abs(fits$lambda - best_lambda)))])
 
 # Check the GINI and Lift After the Stacking
 mylift2(preds[train_index], preds[train_index],
