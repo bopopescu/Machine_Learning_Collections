@@ -5,6 +5,168 @@ require(stringr)
 
 ###########################################################################
 # COMMONLY USED FUNCTIONS
+xgb_fit_transform <- function(data_X, params, seed, labels, weights,
+                            data_score = NULL,
+                            max_iters=5000, nfolds=10, save_xgb_models=TRUE,
+                            keep_train_preditions = TRUE,
+                            model_persist_dir = NULL,
+                            model_persist_name = NULL) {
+    ############
+    # This is to both fit and score(i.e. transform) the model and score data
+    # The pipeline is similar to scikit learn model fit transform pipeline
+
+    # ENSURE the
+    #   data_X, params, seed, n_iters, nfolds,
+    #   (labels, weights are the same label and weight, data_X is data X-Matrix)
+    #   is used same as xgb.cv model tuning
+    #   data_score is the new score to be scored based on best xgboost model
+    #   max_iters is max number of iterations used in xgb.cv tuning step
+    #   nfolds is # of folds in xgb.cv tuning step
+    #   save_xgb_models boolean is to for save xgboost model
+    #   keep_train_preditions boolean is to save the cross-validated oob predictions
+    #        of data_X
+    #   model_persist_dir, model_persist_name sets directory and name of xgboost
+    #        model object to be saved
+
+    # For example
+    # params <- list(
+    #     objective = 'binary:logistic',
+    #     eval_metric = 'auc',
+    #     scale_pos_weight = pos_weight_adj, # adjust positive weight
+    #     max_depth = 3,
+    #     subsample = 0.6,
+    #     colsample_bytree = 1,
+    #     alpha = 1,
+    #     lambda =100,
+    #     eta = 0.1,
+    #     maximize = TRUE)
+    # set.seed(seed)
+    # xgb_cv <- xgb.cv(
+    #     data = d_train,
+    #     nfold = nfolds,
+    #     params = params,
+    #     nrounds = 5000,
+    #     early_stopping_rounds = 50,
+    #     print_every_n = 50
+    #     )
+    set.seed(seed)
+    df_ = data.table(cv_foldid = runif(nrow(data_X)))
+    df_[, cv_foldid := ceiling(cv_foldid * nfolds)]
+    folds = df_[, sort(unique(cv_foldid))]
+
+    # save model
+    if (save_xgb_models) {
+        if (is.null(model_persist_dir)) {
+            dir.create("XGBoost_Model_Save", showWarnings = F)
+            model_persist_dir = "./XGBoost_Model_Save/"
+        } else {
+            if (!file.exists(model_persist_dir)) {
+                dir.create(model_persist_dir, showWarnings = F)
+            }
+        }
+        if (is.null(model_persist_name)) {
+            cvmodelname = "xgb_model"
+        } else {
+            cvmodelname = model_persist_name
+        }
+        #foldid_new = stringr::str_pad(foldid, nchar(as.character(10)), pad = "0")
+        #xgb.save(xgb_, file.path(model_persist_dir, paste0(cvmodelname, foldid_new,".model")))
+        # load binary model to R
+        #bst2 <- xgb.load("xgboost.model")
+    }
+
+    d_full <- xgb.DMatrix(data = data_X,
+                            label = labels,
+                            weight = weights,
+                            missing = NA)
+    set.seed(seed)
+    xgb_cv <- xgb.cv(
+        data = d_full,
+        nfold = nfolds,
+        params = params,
+        nrounds = max_iters,
+        prediction = keep_train_preditions,
+        early_stopping_rounds = 50,
+        print_every_n = 100
+        )
+    xgb_cv_log = xgb_cv$evaluation_log
+    cv_iters = xgb_cv$best_iteration
+    best_train_metric_mean = as.data.frame(xgb_cv_log)[cv_iters, 2]
+
+    set.seed(seed)
+    xgbmodel <- xgb.train(
+        data = d_full,
+        params = params,
+        watchlist = list(train=d_full),
+        nrounds = round(cv_iters * 1.5),
+        print_every_n = 10000
+        )
+
+    xgblog = xgbmodel$evaluation_log
+    xgblog_train_metrics = xgblog[, get(colnames(xgblog)[2])]
+    best_iter = which(abs(xgblog_train_metrics - best_train_metric_mean) == min(abs(xgblog_train_metrics - best_train_metric_mean)))
+    rm(xgbmodel)
+    set.seed(seed)
+    xgbmodel <- xgb.train(
+        data = d_full,
+        params = params,
+        watchlist = list(train=d_full),
+        nrounds = best_iter,
+        print_every_n = 100
+        )
+
+    if (save_xgb_models){
+        xgb.save(xgbmodel, file.path(model_persist_dir, paste0(cvmodelname,".model")))
+    }
+    res = list()
+    if (!is.null(data_score)) {
+        new_data_scores = predict(xgbmodel, data_score)
+        res[["data_score"]] = new_data_scores
+    }
+    if (keep_train_preditions) {
+        cv_predictions_by_xgbcv = xgb_cv$pred
+        res[["train_oob_predictions"]] = cv_predictions_by_xgbcv
+    }
+    return(res)
+}
+
+# Unit Test
+if (FALSE) {
+    set.seed(1011)
+    n = 1000000
+    labels = rbinom(n,1,0.1)
+    labels_raw = labels + 0
+    weights = rep(1, n)
+    data_X = cbind(t(t(labels+10*rnorm(n))), t(t(labels+10*runif(n))), t(t(rnorm(n)*runif(n))))
+    data_score = data_X[(n/2+1):n, ]
+    data_X = data_X[1:(n/2), ]
+    labels = labels[1:(n/2)]
+    weights = rep(1, n/2)
+    params <- list(
+        objective = 'binary:logistic',
+        eval_metric = 'auc',
+        #scale_pos_weight = pos_weight_adj, # adjust positive weight
+        max_depth = 20,
+        subsample = 1,
+        colsample_bytree = 1,
+        alpha = 0,
+        lambda =0,
+        eta = 1,
+        maximize = TRUE)
+    seed = 10038
+    res = xgb_fit_transform(data_X, params, seed, labels, weights,
+                            data_score,
+                            max_iters=5000, nfolds=10, save_xgb_models=TRUE,
+                            keep_train_preditions = TRUE,
+                            model_persist_dir = NULL,
+                            model_persist_name = NULL)
+    pROC::auc(response=labels, predictor=res$train_oob_predictions)
+    pROC::auc(response=labels_raw[(n/2+1):n], predictor=res$data_score)
+}
+
+
+###########################################################################
+# COMMONLY USED FUNCTIONS
 cross_validate_prediciton <- function(data_X,  params,  seed,  n_iters,  nfolds,
                                     labels,  weights, save_cv_models=TRUE,
                                     model_persist_dir = NULL,
