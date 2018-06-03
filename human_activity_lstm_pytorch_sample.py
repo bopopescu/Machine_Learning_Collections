@@ -341,4 +341,19 @@ for epoch in range(100):  # again, normally you would NOT do 300 epochs, it is t
     print('\nTest set: Epoch {}, Average loss: {:.4f}, Accuracy: {:.4f} ({:.0f}%)\n'.format(
         epoch, test_loss, correct, 100. * correct))
     model.batch_size = BATCHSIZE
+    ###### Save Or Load Model ######
+    best_metric = np.inf
+    if test_loss < best_metric:
+        best_metric = test_loss + 0.0
+        torch.save(model.state_dict(), "state_human_activity_torch_lstm.tar")
+        torch.save(model, "model_human_activity_torch_lstm.tar")
+    if False:
+        # two methods of loading model, but the first one by loading model state is more
+        # reliable in case if the model class is not easily serizlied
+        # second method is more straightforward method for saving and loading model
+        # but for some model structure, it might run into risk of being broken
+        model_loaded1 = torch.load('./model_human_activity_torch_lstm.tar')
+        model_loaded2 = LSTMClassifier(input_dim=3, hidden_dim=200, num_layers=2, dropout=0.5,
+                              bidirectional=True, num_classes=6, batch_size = BATCHSIZE)
+        model_loaded2.load_state_dict(torch.load("state_human_activity_torch_lstm.tar"))
 
