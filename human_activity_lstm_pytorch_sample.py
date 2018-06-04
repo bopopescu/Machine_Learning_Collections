@@ -317,7 +317,7 @@ for epoch in range(100):  # again, normally you would NOT do 300 epochs, it is t
         loss.backward()
         optimizer.step()
         lookback_ = (-1) * zips_size
-        if batch_counter % max(1,int(zips_size/10)) == 0:
+        if batch_counter % max(1,int(zips_size/20)) == 0:
             print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
                 epoch, batch_counter, zips_size,
                 100. * batch_counter / zips_size,
