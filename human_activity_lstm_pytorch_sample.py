@@ -220,7 +220,7 @@ allids = df.cnt1.unique()
 segments = []
 labels = []
 N_TIME_STEPS = 200  # short than 1000 data points will be filtered out
-step = 100  # smaller the better, the data will be large
+step = 10  # smaller the better, the data will be large
 for i in allids:
     df_ = df.query("cnt1 == " + str(i))
     for j in range(0, len(df_) - N_TIME_STEPS, step):
@@ -262,14 +262,15 @@ for obj_ in ["model", "optimizer", "loss_function", "loss_history", "loss"]:
     except:
         pass
 # 3 dimension data as input dimension
-BATCHSIZE = 512
-model = LSTMClassifier(input_dim=3, hidden_dim=200, num_layers=2, dropout=0.5,
+BATCHSIZE = 32
+model = LSTMClassifier(input_dim=3, hidden_dim=64, num_layers=2, dropout=0.05,
                       bidirectional=True, num_classes=6, batch_size = BATCHSIZE)
 # Make sure the input length is multiple of batch_size
 #loss_function = nn.NLLLoss()
 loss_function = nn.CrossEntropyLoss() # use a Classification Cross-Entropy loss
 #optimizer = optim.SGD(model.parameters(), lr=0.1, momentum=0.99)
-optimizer = optim.Adam(model.parameters(), weight_decay = 1e-6)
+#optimizer = optim.Adam(model.parameters(), weight_decay = 1e-6)
+optimizer = optim.Adamax(model.parameters(), weight_decay = 1e-6)
 
 # See what the scores are before training
 # Here we don't need to train, so the code is wrapped in torch.no_grad()
