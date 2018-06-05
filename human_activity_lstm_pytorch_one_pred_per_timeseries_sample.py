@@ -257,6 +257,53 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 print((X_train.shape, X_test.shape))
 
+"""
+## Another cleaner way to split the train test is to create the data from the completley
+#  different trips so that the train and test do not have any overlapping information
+#  The split above still has a lot of time series where their major bodies have a lot of
+#  data overlapping
+allids = df.cnt1.unique()
+X_train=[]
+X_test=[]
+y_train=[]
+y_test=[]
+N_TIME_STEPS = 200  # short than 1000 data points will be filtered out
+step = 10  # smaller the better, the data will be large
+N_FEATURES = 3  # x,y,z-axis
+
+ids_ = np.random.choice(allids, size = int(np.round(0.4 * len(allids),0)))  # 40% of them are randomly selected as test
+ids_train, ids_test = np.setdiff1d(allids, ids_), ids_
+
+for i in ids_train:
+    df_ = df.query("cnt1 == " + str(i))
+    for j in range(0, len(df_) - N_TIME_STEPS, step):
+        xs = df_['x_axis'].values[j: j + N_TIME_STEPS]
+        ys = df_['y_axis'].values[j: j + N_TIME_STEPS]
+        zs = df_['z_axis'].values[j: j + N_TIME_STEPS]
+        label = df_['activity'].values[j: j + N_TIME_STEPS] # use each data point's label
+        X_train.append([xs, ys, zs])
+        y_train.append(stats.mode(encode_label2(label))[0][0])  # get the single label value based on mode
+    del df_
+
+for i in ids_test:
+    df_ = df.query("cnt1 == " + str(i))
+    for j in range(0, len(df_) - N_TIME_STEPS, step):
+        xs = df_['x_axis'].values[j: j + N_TIME_STEPS]
+        ys = df_['y_axis'].values[j: j + N_TIME_STEPS]
+        zs = df_['z_axis'].values[j: j + N_TIME_STEPS]
+        label = df_['activity'].values[j: j + N_TIME_STEPS] # use each data point's label
+        X_test.append([xs, ys, zs])
+        y_test.append(stats.mode(encode_label2(label))[0][0])  # get the single label value based on mode
+    del df_
+
+X_train = np.asarray(X_train, dtype= np.float32)
+X_train = X_train.reshape(-1, N_TIME_STEPS, N_FEATURES)
+y_train = np.asarray(y_train, dtype = np.int)
+X_test = np.asarray(X_test, dtype= np.float32)
+X_test = X_test.reshape(-1, N_TIME_STEPS, N_FEATURES)
+y_test = np.asarray(y_test, dtype = np.int)
+print((X_train.shape, X_test.shape, y_train.shape, y_test.shape))
+"""
 
 ####################################################################################################
 # ### Model Building
