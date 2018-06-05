@@ -269,7 +269,7 @@ for obj_ in ["model", "optimizer", "loss_function", "loss_history", "loss"]:
         pass
 # 3 dimension data as input dimension
 BATCHSIZE = 32
-model = LSTMClassifier(input_dim=3, hidden_dim=64, num_layers=2, dropout=0.05,
+model = LSTMClassifier(input_dim=3, hidden_dim=64, num_layers=3, dropout=0.25,
                       bidirectional=True, num_classes=6, batch_size = BATCHSIZE)
 # Make sure the input length is multiple of batch_size
 #loss_function = nn.NLLLoss()
