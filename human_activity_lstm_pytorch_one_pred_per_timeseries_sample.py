@@ -309,7 +309,7 @@ N_TIME_STEPS = 200  # short than 1000 data points will be filtered out
 step = 10  # smaller the better, the data will be large
 N_FEATURES = 3  # x,y,z-axis
 
-ids_ = np.random.choice(allids, size = int(np.round(0.4 * len(allids),0)))  # 40% of them are randomly selected as test
+ids_ = np.random.choice(allids, size = int(np.round(0.4 * len(allids),0)), replace=False)  # 40% of them are randomly selected as test
 ids_train, ids_test = np.setdiff1d(allids, ids_), ids_
 
 for i in ids_train:
