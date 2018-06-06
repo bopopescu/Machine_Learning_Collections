@@ -112,6 +112,44 @@ def encode_label2(x):
     res[x == "Standing"] = 5
     return res
 
+###### Score and Validation Functions #######
+def split_ts_to_moving_windows(X_Score):
+    # X_Score is dataframe that needs to have at least x_axis, y_aixs and z_axis columns
+    # X_Score = df.query("cnt1 == " + str(10))
+    res = None
+    N_TIME_STEPS = 200
+    step = 180
+    ts = []
+    if X_Score.shape[0] >= N_TIME_STEPS:  # at least to make sure it has more than 200 data points
+        # Check if the x,y,z axis data are in the score data frame
+        for c_ in ["x_axis", "y_axis", "z_axis", "activity"]:
+            if not(c_ in X_Score.columns.values): raise ValueError('could not find {} in score data frame'.format(c_))
+        for j in range(0, len(X_Score) - N_TIME_STEPS, step):
+            xs = X_Score['x_axis'].values[j: j + N_TIME_STEPS]
+            ys = X_Score['y_axis'].values[j: j + N_TIME_STEPS]
+            zs = X_Score['z_axis'].values[j: j + N_TIME_STEPS]
+            ts.append([xs, ys, zs])
+            res = np.asarray(ts).reshape(-1, N_TIME_STEPS, 3)
+    return res
+
+def predict(X_Score):
+    # Score X_Score data frame, here X_Score is the dataframe with x,y,z-axis data
+    ts = split_ts_to_moving_windows(X_Score)
+    if ts is None:
+        return None
+    else:
+        ts = torch.tensor(ts, dtype=torch.float32)
+        model.zero_grad()
+        BATCHSIZE_TEST = ts.shape[0]
+        model.batch_size = BATCHSIZE_TEST
+        res = []
+        with torch.no_grad():
+            model.hidden = model.init_hidden()
+            output = model(ts)
+            output = output.numpy()
+            output = np.exp(output).mean(axis=0)
+            res = output.argmax(axis=0)
+        return res
 
 # ### Classification by PyTorch (LSTM Deep Learning model) using sensor data (accelerometer) to detect the bus ride or not
 #
@@ -400,4 +438,20 @@ for epoch in range(100):  # again, normally you would NOT do 300 epochs, it is t
         model_loaded2 = LSTMClassifier(input_dim=3, hidden_dim=200, num_layers=2, dropout=0.5,
                               bidirectional=True, num_classes=6, batch_size = BATCHSIZE)
         model_loaded2.load_state_dict(torch.load("state_human_activity_torch_lstm.tar"))
+
+        
+#######################################  SCORE AND VALIDATION  #######################################
+score_history = []
+for i in ids_train:
+    print("Processing id {}".format(i))
+    df_ = df.query("cnt1 == " + str(i))
+    if len(df_) > 200:
+        label = df_['activity'].values
+        label = stats.mode(encode_label2(label))[0][0]
+        pred = predict(df_)
+        if pred != None:
+            score_history.append((i, pred == label))
+
+score_accuracy = np.sum(np.asarray(list(map(lambda x: x[1] * 1, score_history)))) / len(score_history)
+print("The accuracy on validation set is {:.4}%".format(score_accuracy * 100.))
 
