@@ -190,6 +190,7 @@ for index, (train_indices, val_indices) in enumerate(skf.split(range(len(allids)
     # (test_crossentropy, test_accuracy) = model.evaluate(xval, yval, batch_size=32)
     history.append(modelhist.history['val_acc'])
 
+history = np.array(history)
 best_mean = 0
 best_epoch = 0
 for i in range(history.shape[1]):
@@ -199,6 +200,7 @@ for i in range(history.shape[1]):
         best_epoch = i + 1
 print("Best Cross Validated Accruacy is {:.4}% at epoch {}".format(best_mean*100., best_epoch))
 # "Log: Best Cross Validated Accruacy is 93.34% at epoch 4 with reg = 1e-2"
+# "Log: Best Cross Validated Accruacy is 94.47% at epoch 10 with reg = 4e-3"
 
 # Load in the pre-buitl model
 model2 = load_model('best_CNN_keras_model.hdf5')
