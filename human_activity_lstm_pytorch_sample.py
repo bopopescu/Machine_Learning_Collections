@@ -91,6 +91,40 @@ def replace2(x):
         res = np.float(re.sub('[;]', '', x))
     return res
 
+def faster_index_df_by_id(df, id_column):
+    """ This function is to create the index for each id value, for example if 
+        id='ajdlosafjas' are on indices, the function returns the min/max of
+        indices for the id='ajdlosafjas'
+        The pandas data frame needs to be sorted by the id column first
+    Parameters:
+    -----------
+    df: pandas data frame
+        The data frame that is already sorted by id_column
+    id_column: str
+        The id column for the data frame df
+    Returns:
+    -----------
+    Tuple. (ids, min_max_indices)
+    Example:
+    -----------
+    > df = pd.DataFrame({"journey_id":['a','a','b','c','c','d'], 'values':np.zeros(6)}, index=[9,1,2,29,19,0])
+    > faster_index_df_by_id(df, id_column = "journey_id")
+    > idxtple = faster_index_df_by_id(df, id_column="journey_id")
+    > # search for the id value and find the rows in df that have this value
+    > idvalue = 'a'
+    > df.iloc[(idxtple[1][idxtple[0]==idvalue][0][0]):(idxtple[1][idxtple[0]==idvalue][0][1]+1)]
+    """
+    df2 = df[[id_column]]
+    df2.reset_index(inplace=True)
+    df2 = df2[[id_column]]
+    df2.reset_index(inplace=True)
+    idindx = df2.groupby(id_column).agg([min, max])
+    idindx.columns = idindx.columns.droplevel()
+    idindx.reset_index(inplace=True)
+    ids = idindx.journey_id.values
+    min_max_indices = np.array(list(zip(idindx['min'].values, idindx['max'].values)))
+    return (ids, min_max_indices)
+
 def encode_label(x):
     # x being a numpy object vector
     res = np.zeros((len(x), 6))
