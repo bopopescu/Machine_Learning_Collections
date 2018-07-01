@@ -1,0 +1,8 @@
+scp -i ThermalCam.pem data.tar ubuntu@ec2-107-23-137-232.compute-1.amazonaws.com:~
+
+
+scp -i ThermalCam.pem ubuntu@ec2-107-23-137-232.compute-1.amazonaws.com:~/model.tar.gz ~/Desktop
+
+
+ssh -i "ThermalCam.pem" ssh -i "ThermalCam.pem" ubuntu@ec2-107-23-137-232.compute-1.amazonaws.com
+
