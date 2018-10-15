@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!-- saved from url=(0077)https://medium.com/media/dd355cf137c0ac3be4533cb02a43de72?postId=6241635ae130 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>plot_label_dist.py – Medium</title><meta name="description" content="GitHub is where people build software. More than 27 million people use GitHub to discover, fork, and contribute to over 80 million projects."><meta name="twitter:widgets:csp" content="on"><meta name="robots" content="noindex"><!--<base target="_blank">--><base href="." target="_blank"><style>body {text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-family: "ff-tisa-web-pro", Georgia, Cambria, "Times New Roman", Times, serif; font-weight: 400; color: #333332; font-size: 18px; line-height: 1.4; margin: 0; background-color: white; overflow: hidden;}iframe {max-width: 100%;}</style></head><body><style>.gist .gist-file { margin-bottom: 0 !important; }.gist { text-rendering: auto; }</style><script src="./b65d1046d98ebe358e9a7f5c6a21f948.js" charset="utf-8"></script><link rel="stylesheet" href="./gist-embed-2c768148c4d27cab10fe818942078e18.css"><div id="gist88957256" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-plot_label_dist-py" class="file">
+    
+
+  <div itemprop="text" class="blob-wrapper data type-python ">
+      <table class="highlight tab-size js-file-line-container" data-tab-size="8">
+      <tbody><tr>
+        <td id="file-plot_label_dist-py-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-plot_label_dist-py-LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-k">import</span> pathlib</td>
+      </tr>
+      <tr>
+        <td id="file-plot_label_dist-py-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-plot_label_dist-py-LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-k">import</span> pandas <span class="pl-k">as</span> pd</td>
+      </tr>
+      <tr>
+        <td id="file-plot_label_dist-py-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-plot_label_dist-py-LC3" class="blob-code blob-code-inner js-file-line"><span class="pl-k">import</span> matplotlib.pyplot <span class="pl-k">as</span> plt</td>
+      </tr>
+      <tr>
+        <td id="file-plot_label_dist-py-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-plot_label_dist-py-LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-k">import</span> seaborn <span class="pl-k">as</span> sns</td>
+      </tr>
+      <tr>
+        <td id="file-plot_label_dist-py-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-plot_label_dist-py-LC5" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-plot_label_dist-py-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-plot_label_dist-py-LC6" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">#</span> use pathlib to load path</span></td>
+      </tr>
+      <tr>
+        <td id="file-plot_label_dist-py-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-plot_label_dist-py-LC7" class="blob-code blob-code-inner js-file-line">data_root <span class="pl-k">=</span> pathlib.Path(<span class="pl-s"><span class="pl-pds">'</span>./<span class="pl-pds">'</span></span>)</td>
+      </tr>
+      <tr>
+        <td id="file-plot_label_dist-py-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-plot_label_dist-py-LC8" class="blob-code blob-code-inner js-file-line">df <span class="pl-k">=</span> pd.read_csv(data_root<span class="pl-k">/</span><span class="pl-s"><span class="pl-pds">'</span>Sentiment Analysis Dataset.csv<span class="pl-pds">'</span></span>, <span class="pl-v">error_bad_lines</span><span class="pl-k">=</span><span class="pl-c1">False</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-plot_label_dist-py-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-plot_label_dist-py-LC9" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-plot_label_dist-py-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-plot_label_dist-py-LC10" class="blob-code blob-code-inner js-file-line">fig <span class="pl-k">=</span> plt.figure(<span class="pl-v">figsize</span><span class="pl-k">=</span>(<span class="pl-c1">8</span>,<span class="pl-c1">5</span>))</td>
+      </tr>
+      <tr>
+        <td id="file-plot_label_dist-py-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-plot_label_dist-py-LC11" class="blob-code blob-code-inner js-file-line">ax <span class="pl-k">=</span> sns.barplot(<span class="pl-v">x</span><span class="pl-k">=</span>df.Sentiment.unique(),<span class="pl-v">y</span><span class="pl-k">=</span>df.Sentiment.value_counts())<span class="pl-bu">;</span></td>
+      </tr>
+      <tr>
+        <td id="file-plot_label_dist-py-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-plot_label_dist-py-LC12" class="blob-code blob-code-inner js-file-line">ax.set(<span class="pl-v">xlabel</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">'</span>Labels<span class="pl-pds">'</span></span>)</td>
+      </tr>
+</tbody></table>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/hpanwar08/b65d1046d98ebe358e9a7f5c6a21f948/raw/952bc259dc8f0812513cd3e0e52aa237d3200ffb/plot_label_dist.py" style="float:right">view raw</a>
+        <a href="https://gist.github.com/hpanwar08/b65d1046d98ebe358e9a7f5c6a21f948#file-plot_label_dist-py">plot_label_dist.py</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+<script>var height = -1; var delayMs = 200;function notifyResize(height) {height = height ? height : document.documentElement.offsetHeight; var resized = false; if (window.donkey && donkey.resize) {donkey.resize(height); resized = true;}if (parent && parent._resizeIframe) {var obj = {iframe: window.frameElement, height: height}; parent._resizeIframe(obj); resized = true;}if (window.location && window.location.hash === "#amp=1" && window.parent && window.parent.postMessage) {window.parent.postMessage({sentinel: "amp", type: "embed-size", height: height}, "*");}if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.resize) {window.webkit.messageHandlers.resize.postMessage(height); resized = true;}return resized;}function maybeResize() {if (document.documentElement.offsetHeight != height && notifyResize()) {height = document.documentElement.offsetHeight;}delayMs = Math.min(delayMs * 2, 1000000); setTimeout(maybeResize, delayMs);}maybeResize();</script></body></html>

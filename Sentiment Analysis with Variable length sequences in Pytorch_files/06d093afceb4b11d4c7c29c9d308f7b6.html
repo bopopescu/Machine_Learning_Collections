@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<!-- saved from url=(0077)https://medium.com/media/06d093afceb4b11d4c7c29c9d308f7b6?postId=6241635ae130 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>simple_ds.py – Medium</title><meta name="description" content="GitHub is where people build software. More than 27 million people use GitHub to discover, fork, and contribute to over 80 million projects."><meta name="twitter:widgets:csp" content="on"><meta name="robots" content="noindex"><!--<base target="_blank">--><base href="." target="_blank"><style>body {text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-family: "ff-tisa-web-pro", Georgia, Cambria, "Times New Roman", Times, serif; font-weight: 400; color: #333332; font-size: 18px; line-height: 1.4; margin: 0; background-color: white; overflow: hidden;}iframe {max-width: 100%;}</style></head><body><style>.gist .gist-file { margin-bottom: 0 !important; }.gist { text-rendering: auto; }</style><script src="./70850752973d06de7c24a4e4eda05818.js" charset="utf-8"></script><link rel="stylesheet" href="./gist-embed-2c768148c4d27cab10fe818942078e18.css"><div id="gist88957797" class="gist">
+    <div class="gist-file">
+      <div class="gist-data">
+        <div class="js-gist-file-update-container js-task-list-container file-box">
+  <div id="file-simple_ds-py" class="file">
+    
+
+  <div itemprop="text" class="blob-wrapper data type-python ">
+      <table class="highlight tab-size js-file-line-container" data-tab-size="8">
+      <tbody><tr>
+        <td id="file-simple_ds-py-L1" class="blob-num js-line-number" data-line-number="1"></td>
+        <td id="file-simple_ds-py-LC1" class="blob-code blob-code-inner js-file-line"><span class="pl-k">import</span> torch</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L2" class="blob-num js-line-number" data-line-number="2"></td>
+        <td id="file-simple_ds-py-LC2" class="blob-code blob-code-inner js-file-line"><span class="pl-k">import</span> torch.nn <span class="pl-k">as</span> nn</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L3" class="blob-num js-line-number" data-line-number="3"></td>
+        <td id="file-simple_ds-py-LC3" class="blob-code blob-code-inner js-file-line"><span class="pl-k">import</span> torch.optim <span class="pl-k">as</span> optim</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L4" class="blob-num js-line-number" data-line-number="4"></td>
+        <td id="file-simple_ds-py-LC4" class="blob-code blob-code-inner js-file-line"><span class="pl-k">import</span> torch.nn.functional <span class="pl-k">as</span> F</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L5" class="blob-num js-line-number" data-line-number="5"></td>
+        <td id="file-simple_ds-py-LC5" class="blob-code blob-code-inner js-file-line"><span class="pl-k">from</span> torch.utils.data <span class="pl-k">import</span> Dataset, DataLoader</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L6" class="blob-num js-line-number" data-line-number="6"></td>
+        <td id="file-simple_ds-py-LC6" class="blob-code blob-code-inner js-file-line"><span class="pl-k">from</span> torch.nn.utils.rnn <span class="pl-k">import</span> pack_padded_sequence, pad_packed_sequence</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L7" class="blob-num js-line-number" data-line-number="7"></td>
+        <td id="file-simple_ds-py-LC7" class="blob-code blob-code-inner js-file-line"><span class="pl-k">from</span> torch.autograd <span class="pl-k">import</span> Variable</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L8" class="blob-num js-line-number" data-line-number="8"></td>
+        <td id="file-simple_ds-py-LC8" class="blob-code blob-code-inner js-file-line">
+</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L9" class="blob-num js-line-number" data-line-number="9"></td>
+        <td id="file-simple_ds-py-LC9" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">#</span> subclass the custom dataset class with torch.utils.data.Dataset</span></td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L10" class="blob-num js-line-number" data-line-number="10"></td>
+        <td id="file-simple_ds-py-LC10" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">#</span> implement __len__ and __getitem__ function</span></td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L11" class="blob-num js-line-number" data-line-number="11"></td>
+        <td id="file-simple_ds-py-LC11" class="blob-code blob-code-inner js-file-line"><span class="pl-k">class</span> <span class="pl-en">VectorizeData</span>(<span class="pl-e">Dataset</span>):</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L12" class="blob-num js-line-number" data-line-number="12"></td>
+        <td id="file-simple_ds-py-LC12" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">def</span> <span class="pl-c1">__init__</span>(<span class="pl-smi"><span class="pl-smi">self</span></span>, <span class="pl-smi">df_path</span>):</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L13" class="blob-num js-line-number" data-line-number="13"></td>
+        <td id="file-simple_ds-py-LC13" class="blob-code blob-code-inner js-file-line">        <span class="pl-c1">self</span>.df <span class="pl-k">=</span> pd.read_csv(df_path, <span class="pl-v">error_bad_lines</span><span class="pl-k">=</span><span class="pl-c1">False</span>)</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L14" class="blob-num js-line-number" data-line-number="14"></td>
+        <td id="file-simple_ds-py-LC14" class="blob-code blob-code-inner js-file-line">        <span class="pl-c1">self</span>.df[<span class="pl-s"><span class="pl-pds">'</span>SentimentText<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-c1">self</span>.df.SentimentText.progress_apply(<span class="pl-k">lambda</span> <span class="pl-smi">x</span>: x.strip())</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L15" class="blob-num js-line-number" data-line-number="15"></td>
+        <td id="file-simple_ds-py-LC15" class="blob-code blob-code-inner js-file-line">        <span class="pl-c1">self</span>.df[<span class="pl-s"><span class="pl-pds">'</span>sentimentidx<span class="pl-pds">'</span></span>] <span class="pl-k">=</span> <span class="pl-c1">self</span>.df.SentimentText.progress_apply(indexer)</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L16" class="blob-num js-line-number" data-line-number="16"></td>
+        <td id="file-simple_ds-py-LC16" class="blob-code blob-code-inner js-file-line">        </td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L17" class="blob-num js-line-number" data-line-number="17"></td>
+        <td id="file-simple_ds-py-LC17" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">def</span> <span class="pl-c1">__len__</span>(<span class="pl-smi"><span class="pl-smi">self</span></span>):</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L18" class="blob-num js-line-number" data-line-number="18"></td>
+        <td id="file-simple_ds-py-LC18" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">return</span> <span class="pl-c1">self</span>.df.shape[<span class="pl-c1">0</span>]</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L19" class="blob-num js-line-number" data-line-number="19"></td>
+        <td id="file-simple_ds-py-LC19" class="blob-code blob-code-inner js-file-line">    </td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L20" class="blob-num js-line-number" data-line-number="20"></td>
+        <td id="file-simple_ds-py-LC20" class="blob-code blob-code-inner js-file-line">    <span class="pl-k">def</span> <span class="pl-c1">__getitem__</span>(<span class="pl-smi"><span class="pl-smi">self</span></span>, <span class="pl-smi">idx</span>):</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L21" class="blob-num js-line-number" data-line-number="21"></td>
+        <td id="file-simple_ds-py-LC21" class="blob-code blob-code-inner js-file-line">        X <span class="pl-k">=</span> <span class="pl-c1">self</span>.df.sentimentidx[idx]</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L22" class="blob-num js-line-number" data-line-number="22"></td>
+        <td id="file-simple_ds-py-LC22" class="blob-code blob-code-inner js-file-line">        y <span class="pl-k">=</span> <span class="pl-c1">self</span>.df.Sentiment[idx]</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L23" class="blob-num js-line-number" data-line-number="23"></td>
+        <td id="file-simple_ds-py-LC23" class="blob-code blob-code-inner js-file-line">        <span class="pl-k">return</span> X,y</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L24" class="blob-num js-line-number" data-line-number="24"></td>
+        <td id="file-simple_ds-py-LC24" class="blob-code blob-code-inner js-file-line">      </td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L25" class="blob-num js-line-number" data-line-number="25"></td>
+        <td id="file-simple_ds-py-LC25" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">#</span> create instance of custom dataset</span></td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L26" class="blob-num js-line-number" data-line-number="26"></td>
+        <td id="file-simple_ds-py-LC26" class="blob-code blob-code-inner js-file-line">ds <span class="pl-k">=</span> VectorizeData(data_root<span class="pl-k">/</span><span class="pl-s"><span class="pl-pds">'</span>Sentiment Analysis Dataset.csv<span class="pl-pds">'</span></span>)</td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L27" class="blob-num js-line-number" data-line-number="27"></td>
+        <td id="file-simple_ds-py-LC27" class="blob-code blob-code-inner js-file-line"><span class="pl-c"><span class="pl-c">#</span> get first 4 samples</span></td>
+      </tr>
+      <tr>
+        <td id="file-simple_ds-py-L28" class="blob-num js-line-number" data-line-number="28"></td>
+        <td id="file-simple_ds-py-LC28" class="blob-code blob-code-inner js-file-line"><span class="pl-c1">print</span>(ds[:<span class="pl-c1">4</span>])</td>
+      </tr>
+</tbody></table>
+
+
+  </div>
+
+  </div>
+</div>
+
+      </div>
+      <div class="gist-meta">
+        <a href="https://gist.github.com/hpanwar08/70850752973d06de7c24a4e4eda05818/raw/70d1834bf3144d58b5829c589d40998297c11b20/simple_ds.py" style="float:right">view raw</a>
+        <a href="https://gist.github.com/hpanwar08/70850752973d06de7c24a4e4eda05818#file-simple_ds-py">simple_ds.py</a>
+        hosted with ❤ by <a href="https://github.com/">GitHub</a>
+      </div>
+    </div>
+</div>
+<script>var height = -1; var delayMs = 200;function notifyResize(height) {height = height ? height : document.documentElement.offsetHeight; var resized = false; if (window.donkey && donkey.resize) {donkey.resize(height); resized = true;}if (parent && parent._resizeIframe) {var obj = {iframe: window.frameElement, height: height}; parent._resizeIframe(obj); resized = true;}if (window.location && window.location.hash === "#amp=1" && window.parent && window.parent.postMessage) {window.parent.postMessage({sentinel: "amp", type: "embed-size", height: height}, "*");}if (window.webkit && window.webkit.messageHandlers && window.webkit.messageHandlers.resize) {window.webkit.messageHandlers.resize.postMessage(height); resized = true;}return resized;}function maybeResize() {if (document.documentElement.offsetHeight != height && notifyResize()) {height = document.documentElement.offsetHeight;}delayMs = Math.min(delayMs * 2, 1000000); setTimeout(maybeResize, delayMs);}maybeResize();</script></body></html>
