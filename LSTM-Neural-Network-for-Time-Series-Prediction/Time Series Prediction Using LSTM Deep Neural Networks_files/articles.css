@@ -1,0 +1,109 @@
+#particles-js {
+	position: absolute;
+	width: 100%;
+	height: 450px;
+}
+
+code {
+	font-size: 11px;
+}
+
+#header-container {
+	text-align: center;
+	padding-top: 160px;
+	height: 450px;
+
+	background: #341353; /* Old browsers */
+	background: -moz-linear-gradient(45deg, #341353 0%, #20095b 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(45deg, #341353 0%,#20095b 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(45deg, #341353 0%,#20095b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#26aa64', endColorstr='#20095b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+#header-container-article {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	margin-left: -15px !important;
+	padding-top: 20%;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+#article-title {
+	background-color: rgba(0, 0, 0, 0.4);
+	position: relative;
+	max-width: 900px;
+	text-align: center;
+	margin: 0 auto;
+	margin-top: 15%;
+	padding: 60px;
+	z-index: 11 !important;
+}
+
+#article-title hr {
+	width: 80px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	border-color: rgba(255, 255, 255, 0.4);
+}
+
+.text-container {
+	margin-top: 60px;
+	margin-bottom: 80px;
+	line-height: 25px;
+	text-align: justify;
+}
+
+#description-text-article {
+	background-color: #FFF;
+	margin: 0 auto;
+	margin-top: 15%;
+	margin-bottom: 80px;
+	line-height: 25px;
+	padding: 30px 60px;
+	max-width: 900px;
+	text-align: justify;
+}
+
+#description-text-article h2 {
+	margin-top: 30px;
+}
+
+#description-text-article a {
+	color: #26aa99;
+}
+
+#description-text-article a:hover {
+	text-decoration: underline;
+}
+
+.article-box {
+	margin-top: 40px;
+    margin-bottom: 70px;
+}
+
+.article-box:hover {
+	cursor: pointer;
+}
+
+.article-box .article-img {
+    object-fit: cover;
+    max-width: 250px;
+    height: 250px;
+}
+
+.article-box h1 {
+    font-family: "Fira Sans";
+    text-transform: none;
+    font-weight: bold;
+    font-size: 26px;
+}
+
+.article-box a {
+    text-decoration: none;
+    font-weight: normal;
+    color: #21252a;	
+}

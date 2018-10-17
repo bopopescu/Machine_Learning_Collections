@@ -1,0 +1,388 @@
+/* Fonts */
+
+@font-face {
+	font-family: "Fira Sans";
+	src: url('Fira_Sans/FiraSans-Regular.ttf');
+}
+
+@font-face {
+	font-family: "Fira Sans Light";
+	src: url('Fira_Sans/FiraSans-Light.ttf');
+}
+
+@font-face {
+	font-family: "Fira Sans Medium";
+	src: url('Fira_Sans/FiraSans-Medium.ttf');
+}
+
+@font-face {
+	font-family: "Fira Sans Bold";
+	src: url('Fira_Sans/FiraSans-Bold.ttf');
+}
+
+@font-face {
+    font-family: "Raleway";
+    src: url('Raleway/Raleway-Regular.ttf');
+}
+
+/* Colour Palette */
+
+.fg-green {
+    color: #26aa99;
+}
+
+.bg-green {
+    background-color: #26aa99;
+}
+
+.fg-red {
+    color: #f65a61;
+}
+
+.bg-red {
+    background-color: #f65a61;
+}
+
+.fg-dark {
+    color: #21252a;
+}
+
+.bg-dark {
+    background-color: #21252a;
+}
+
+.fg-white {
+    color: #FFF;
+}
+
+.bg-white {
+    background-color: #FFF;
+}
+
+.bg-gradient {
+    background: #26aa64; /* Old browsers */
+    background: -moz-linear-gradient(45deg, #26aa99 0%, #26aa64 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(45deg, #26aa99 0%,#26aa64 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(45deg, #26aa99 0%,#26aa64 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#26aa99', endColorstr='#26aa64',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.bg-gradient-purple {
+	background: #341353; /* Old browsers */
+	background: -moz-linear-gradient(45deg, #341353 0%, #20095b 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(45deg, #341353 0%,#20095b 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(45deg, #341353 0%,#20095b 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#26aa64', endColorstr='#20095b',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+.green {
+	color: #26aa99;
+}
+
+.dark {
+	color: #21252a;
+}
+
+.white {
+	color: #FFF;
+}
+
+.white-bg {
+	background-color: #FFF;
+}
+
+/* Link Style */
+a:link {
+    color: #FFF;
+	text-decoration: none;
+	font-weight: bold;
+}
+a:visited {
+    color: #FFF;
+	text-decoration: none;
+}
+a:hover {
+    color: #26aa99;
+	text-decoration: none;
+}
+a:active {
+    color: #FFF;
+	text-decoration: none;
+}
+
+a.green {
+	color: #26aa99;
+}
+
+a.green:hover {
+	color: #26aa99;
+	text-decoration: underline;	
+}
+
+/* General Styling Elements */
+
+body {
+	font-family: "Fira Sans", Helvetica, Calibri, sans-serif;
+	color: #21252a;		
+	margin: 0;
+	padding: 0;
+}
+
+img {
+	max-width: 100%;
+}
+
+#modal-loading {
+	display: none;
+}
+
+#modal-error-message {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	padding: 10px;
+	color: #FFF;
+	background-color: #e0415b;
+	z-index: 10;
+}
+
+.no-pd {
+	padding: 0;
+}
+
+.no-mg {
+	margin: 0;
+}
+
+.italic { 
+    font-style:italic;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.center {
+	text-align: center !important;
+}
+
+nav a {
+	color: #FFF;
+	text-decoration: none;
+	letter-spacing: 1px;
+	font-weight: normal !important;
+}
+
+nav a:hover {
+	color: #26aa99;
+	text-decoration: none;
+}
+
+header {
+    position: relative;
+    color: rgba(255,255,255,0.7);
+    background-color: #21252a;
+    padding: 13px 50px 13px 100px;
+    text-align: right;
+    min-height: 65px;
+    z-index: 10;
+}
+
+header a {
+    font-family: Raleway;
+    font-weight: normal !important;
+}
+
+header a .button {
+    font-family: "Fira Sans" !important;
+}
+
+header #ul-lg li {
+	list-style: none;
+	display: inline-block;
+	padding: 8px 20px 0 20px;
+}
+
+header #ul-sm li {
+	list-style: none;
+	text-align: center;
+	margin: 30px 0 30px 0;
+	padding: 0;
+}
+
+header #ul-lg #logo-nav {
+	position: absolute;
+	opacity: 0.6;
+	left: 40px;
+	top: -5px;
+}
+
+header #ul-sm #logo-nav {
+	opacity: 0.6;
+}
+
+header #ul-sm #logo-nav:hover, #ul-lg #logo-nav:hover {
+	opacity: 1.0;
+}
+
+header #icon-menu {
+	max-height: 36px;
+	cursor: pointer;
+}
+
+header #icon-menu:hover {
+	opacity: 0.6;
+}
+
+header #menu-sm {
+	display: none;
+	text-align: center;
+	background-color: #21252a;
+	z-index: 11
+}
+
+footer {
+	position: relative;
+	background-color: #21252a;
+	padding-top: 60px;
+	padding-bottom: 5px;
+	z-index: 10;
+}
+
+footer #footer-nav-container {
+	position: relative;
+	margin: 0;
+	padding: 0;
+}
+
+footer li {
+	list-style: none;
+	font-size: 14px;
+	margin-top: 20px;
+}
+
+footer #copylogo {
+	margin-top: 40px;
+	width: 100%;
+	text-align: center;
+	line-height: 40px;
+	opacity: 0.5;
+	font-size: 12px;
+}
+
+h1, h2 {
+	font-family: "Fira Sans Light", Helvetica, Calibri, sans-serif;
+	text-transform: uppercase;
+	text-align: left;
+}
+
+h1 {
+	font-size: 34px;
+	line-height: 44px;
+	padding-bottom: 15px;
+}
+
+h2 {
+	font-size: 34px;
+	line-height: 44px;
+	padding-bottom: 15px;
+}
+
+input[type=text], input[type=password], select {
+	padding: 10px 10px;
+    margin-bottom: 10px;
+    width: 420px;
+    border: 1px #DDD solid;
+    color: #26aa99;
+    -webkit-box-shadow: 0px 2px 4px 0 rgba(0,0,0,0.2);
+    box-shadow: 0px 1px 4px 0 rgba(0,0,0,0.2);
+}
+
+textarea {
+	padding: 10px 10px;
+    margin-bottom: 10px;
+    width: 420px;
+    height: 100px;
+    border: 1px #DDD solid;
+    color: #26aa99;
+    -webkit-box-shadow: 0px 2px 4px 0 rgba(0,0,0,0.2);
+    box-shadow: 0px 1px 4px 0 rgba(0,0,0,0.2);
+}
+
+#default-header {
+	color: #FFF;
+	height: 450px;
+	padding-top: 150px;
+
+	background: #26aa64; /* Old browsers */
+	background: -moz-linear-gradient(45deg, #26aa64 0%, #26aa99 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(45deg, #26aa64 0%,#26aa99 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(45deg, #26aa64 0%,#26aa99 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#26aa64', endColorstr='#26aa99',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+
+img.round {
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+}
+
+.button {
+    text-transform: uppercase;
+    font-weight: normal;
+    padding: 10px 15px 10px 15px;
+    border: none;
+    border-radius: 4px; 
+}
+
+.button:hover {
+    cursor: pointer;
+    transform: translateY(-3px);
+    -webkit-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.25);
+	-moz-box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.25);
+	box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.25);
+}
+
+.button:active {
+    outline: 0;
+    transform: translateY(0);
+    border: none;
+}
+
+.button:focus {
+    outline: 0;
+}
+
+.button .icon {
+    width: 24px;
+}
+
+.button-icon {
+    width: 32px;
+}
+
+.text-container {
+	margin: 0 auto;
+	max-width: 600px;
+	text-align: justify;
+}
+
+/* Individual Static Pages */
+
+#privacypolicy {
+	padding: 60px;
+	font-size: 12px;
+}
+
+#invest-container {
+	padding: 0;
+	background-color: #368f84;
+}
+
+#career-container {
+	height: 850px;
+	padding: 0;
+	text-align: center;
+	background-color: #f19322;
+}

@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<!-- saved from url=(0099)https://www.altumintelligence.com/articles/a/Time-Series-Prediction-Using-LSTM-Deep-Neural-Networks -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script type="text/javascript" async="" src="./Time Series Prediction Using LSTM Deep Neural Networks_files/analytics.js"></script><script async="" src="./Time Series Prediction Using LSTM Deep Neural Networks_files/js"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-99745491-1');
+    </script>
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=0.7">
+
+    <style type="text/css">svg:not(:root).svg-inline--fa{overflow:visible}.svg-inline--fa{display:inline-block;font-size:inherit;height:1em;overflow:visible;vertical-align:-.125em}.svg-inline--fa.fa-lg{vertical-align:-.225em}.svg-inline--fa.fa-w-1{width:.0625em}.svg-inline--fa.fa-w-2{width:.125em}.svg-inline--fa.fa-w-3{width:.1875em}.svg-inline--fa.fa-w-4{width:.25em}.svg-inline--fa.fa-w-5{width:.3125em}.svg-inline--fa.fa-w-6{width:.375em}.svg-inline--fa.fa-w-7{width:.4375em}.svg-inline--fa.fa-w-8{width:.5em}.svg-inline--fa.fa-w-9{width:.5625em}.svg-inline--fa.fa-w-10{width:.625em}.svg-inline--fa.fa-w-11{width:.6875em}.svg-inline--fa.fa-w-12{width:.75em}.svg-inline--fa.fa-w-13{width:.8125em}.svg-inline--fa.fa-w-14{width:.875em}.svg-inline--fa.fa-w-15{width:.9375em}.svg-inline--fa.fa-w-16{width:1em}.svg-inline--fa.fa-w-17{width:1.0625em}.svg-inline--fa.fa-w-18{width:1.125em}.svg-inline--fa.fa-w-19{width:1.1875em}.svg-inline--fa.fa-w-20{width:1.25em}.svg-inline--fa.fa-pull-left{margin-right:.3em;width:auto}.svg-inline--fa.fa-pull-right{margin-left:.3em;width:auto}.svg-inline--fa.fa-border{height:1.5em}.svg-inline--fa.fa-li{width:2em}.svg-inline--fa.fa-fw{width:1.25em}.fa-layers svg.svg-inline--fa{bottom:0;left:0;margin:auto;position:absolute;right:0;top:0}.fa-layers{display:inline-block;height:1em;position:relative;text-align:center;vertical-align:-.125em;width:1em}.fa-layers svg.svg-inline--fa{-webkit-transform-origin:center center;transform-origin:center center}.fa-layers-counter,.fa-layers-text{display:inline-block;position:absolute;text-align:center}.fa-layers-text{left:50%;top:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);-webkit-transform-origin:center center;transform-origin:center center}.fa-layers-counter{background-color:#ff253a;border-radius:1em;color:#fff;height:1.5em;line-height:1;max-width:5em;min-width:1.5em;overflow:hidden;padding:.25em;right:0;text-overflow:ellipsis;top:0;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:top right;transform-origin:top right}.fa-layers-bottom-right{bottom:0;right:0;top:auto;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:bottom right;transform-origin:bottom right}.fa-layers-bottom-left{bottom:0;left:0;right:auto;top:auto;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:bottom left;transform-origin:bottom left}.fa-layers-top-right{right:0;top:0;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:top right;transform-origin:top right}.fa-layers-top-left{left:0;right:auto;top:0;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:top left;transform-origin:top left}.fa-lg{font-size:1.33333em;line-height:.75em;vertical-align:-.0667em}.fa-xs{font-size:.75em}.fa-sm{font-size:.875em}.fa-1x{font-size:1em}.fa-2x{font-size:2em}.fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}.fa-6x{font-size:6em}.fa-7x{font-size:7em}.fa-8x{font-size:8em}.fa-9x{font-size:9em}.fa-10x{font-size:10em}.fa-fw{text-align:center;width:1.25em}.fa-ul{list-style-type:none;margin-left:2.5em;padding-left:0}.fa-ul>li{position:relative}.fa-li{left:-2em;position:absolute;text-align:center;width:2em;line-height:inherit}.fa-border{border:solid .08em #eee;border-radius:.1em;padding:.2em .25em .15em}.fa-pull-left{float:left}.fa-pull-right{float:right}.fa.fa-pull-left,.fab.fa-pull-left,.fal.fa-pull-left,.far.fa-pull-left,.fas.fa-pull-left{margin-right:.3em}.fa.fa-pull-right,.fab.fa-pull-right,.fal.fa-pull-right,.far.fa-pull-right,.fas.fa-pull-right{margin-left:.3em}.fa-spin{-webkit-animation:fa-spin 2s infinite linear;animation:fa-spin 2s infinite linear}.fa-pulse{-webkit-animation:fa-spin 1s infinite steps(8);animation:fa-spin 1s infinite steps(8)}@-webkit-keyframes fa-spin{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes fa-spin{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}.fa-rotate-90{-webkit-transform:rotate(90deg);transform:rotate(90deg)}.fa-rotate-180{-webkit-transform:rotate(180deg);transform:rotate(180deg)}.fa-rotate-270{-webkit-transform:rotate(270deg);transform:rotate(270deg)}.fa-flip-horizontal{-webkit-transform:scale(-1,1);transform:scale(-1,1)}.fa-flip-vertical{-webkit-transform:scale(1,-1);transform:scale(1,-1)}.fa-flip-horizontal.fa-flip-vertical{-webkit-transform:scale(-1,-1);transform:scale(-1,-1)}:root .fa-flip-horizontal,:root .fa-flip-vertical,:root .fa-rotate-180,:root .fa-rotate-270,:root .fa-rotate-90{-webkit-filter:none;filter:none}.fa-stack{display:inline-block;height:2em;position:relative;width:2em}.fa-stack-1x,.fa-stack-2x{bottom:0;left:0;margin:auto;position:absolute;right:0;top:0}.svg-inline--fa.fa-stack-1x{height:1em;width:1em}.svg-inline--fa.fa-stack-2x{height:2em;width:2em}.fa-inverse{color:#fff}.sr-only{border:0;clip:rect(0,0,0,0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.sr-only-focusable:active,.sr-only-focusable:focus{clip:auto;height:auto;margin:0;overflow:visible;position:static;width:auto}</style><link rel="icon" href="https://www.altumintelligence.com/images/favicons/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://www.altumintelligence.com/images/favicons/favicon.ico" type="image/x-icon">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://www.altumintelligence.com/images/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://www.altumintelligence.com/images/favicons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://www.altumintelligence.com/images/favicons/favicon-16x16.png">
+    
+    <!-- JQuery -->
+    <script src="./Time Series Prediction Using LSTM Deep Neural Networks_files/jquery.min.js"></script>
+    
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="./Time Series Prediction Using LSTM Deep Neural Networks_files/bootstrap.min.css">
+    <link rel="stylesheet" href="./Time Series Prediction Using LSTM Deep Neural Networks_files/bootstrap-theme.min.css">
+    <script src="./Time Series Prediction Using LSTM Deep Neural Networks_files/bootstrap.min.js"></script>
+    
+    <!-- Highcharts -->
+    <script src="./Time Series Prediction Using LSTM Deep Neural Networks_files/highstock.js"></script>
+    <script src="./Time Series Prediction Using LSTM Deep Neural Networks_files/exporting.js"></script>
+
+    <!-- FontAwesome -->
+    <script defer="" src="./Time Series Prediction Using LSTM Deep Neural Networks_files/all.js"></script>
+
+    <!-- HighlightJS -->
+    <link rel="stylesheet" href="./Time Series Prediction Using LSTM Deep Neural Networks_files/railscasts.min.css">
+    <script src="./Time Series Prediction Using LSTM Deep Neural Networks_files/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <link rel="stylesheet" type="text/css" href="./Time Series Prediction Using LSTM Deep Neural Networks_files/site.css">
+
+    <title>Time Series Prediction Using LSTM Deep Neural Networks</title>
+    <meta property="og:type" content="article">
+						  <meta property="og:title" content="Time Series Prediction Using LSTM Deep Neural Networks">
+						  <meta property="og:description" content="This article focuses on using an LSTM neural network architecture to provide time series forecasting using Keras and Tensorflow � specifically on stock market datasets to provide momentum indicators of stock price.">
+						  <meta property="og:image" content="http://www.altumintelligence.com/assets/time-series-prediction-using-lstm-deep-neural-networks/og.jpg">
+    <script>
+    function expandSmMenu() {
+        $('#menu-sm').slideToggle();
+    }
+    </script>
+</head>
+ 
+<body>
+<header>
+    <div class="col-md-12 hidden-md hidden-lg">
+        <img id="icon-menu" onclick="expandSmMenu()" src="./Time Series Prediction Using LSTM Deep Neural Networks_files/icon-menu-white.png">
+        <div id="menu-sm">
+            <ul id="ul-sm" class="no-pd no-mg">
+                <li><a href="https://www.altumintelligence.com/"><img id="logo-nav" src="./Time Series Prediction Using LSTM Deep Neural Networks_files/logo-nav.png"></a></li>
+                <li><a href="https://www.altumintelligence.com/machine-intelligence">Machine Intelligence</a></li>
+                <li><a href="https://www.altumintelligence.com/about-us">About Us</a></li>
+                <li><a href="https://www.altumintelligence.com/articles">Articles &amp; Research</a></li>
+                <li><a href="https://www.altumintelligence.com/api-docs">API Documentation</a></li>
+                <li><a href="https://www.altumintelligence.com/careers">Careers</a></li>
+                <li><a href="https://www.altumintelligence.com/contact">Contact</a></li>
+                <li><a href="https://www.altumintelligence.com/dashboard"><button style="margin-top: -8px;" class="button fg-white bg-gradient">Login</button></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-12 visible-md visible-lg">
+        <ul id="ul-lg">
+            <li><a href="https://www.altumintelligence.com/"><img id="logo-nav" src="./Time Series Prediction Using LSTM Deep Neural Networks_files/logo-nav.png"></a></li>
+            <li><a href="https://www.altumintelligence.com/machine-intelligence">Machine Intelligence</a></li>
+            <li><a href="https://www.altumintelligence.com/about-us">About Us</a></li>
+            <li><a href="https://www.altumintelligence.com/articles">Articles &amp; Research</a></li>
+            <li><a href="https://www.altumintelligence.com/api-docs">API Documentation</a></li>
+            <li><a href="https://www.altumintelligence.com/careers">Careers</a></li>
+            <li><a href="https://www.altumintelligence.com/contact">Contact</a></li>
+            <li><a href="https://www.altumintelligence.com/dashboard"><button style="margin-top: -8px;" class="button fg-white bg-gradient">Login</button></a></li>
+        </ul>
+    </div>
+</header>
+
+<div class="container-fluid">
+    <link rel="stylesheet" type="text/css" href="./Time Series Prediction Using LSTM Deep Neural Networks_files/articles.css">
+
+<div id="article-title" class="white">
+	<h1 class="white center">Time Series Prediction Using LSTM Deep Neural Networks</h1>
+	<hr>
+	<h4>Jakob Aungiers</h4>
+	<p>1st September 2018</p>
+</div>
+
+<div class="row" id="header-container-article" style="background-image: url(&#39;/assets/time-series-prediction-using-lstm-deep-neural-networks/bg.jpg&#39;)"></div>
+
+<div class="row">
+	<div class="col-lg-2"></div>
+	<div class="col-lg-8">
+		<div id="description-text-article">
+			<p>
+	This article focuses on using a Deep LSTM Neural Network architecture to provide multidimensional time series forecasting using Keras and Tensorflow - specifically on stock market datasets to provide momentum indicators of stock price.
+</p>
+<p>
+	The code for this framework can be found in the following GitHub repo (it assumes python version 3.5.x and the requirement versions in the requirements.txt file. Deviating from these versions might cause errors): <a href="https://github.com/jaungiers/LSTM-Neural-Network-for-Time-Series-Prediction" target="_blank">https://github.com/jaungiers/LSTM-Neural-Network-for-Time-Series-Prediction</a>
+</p>
+<p>
+	The following article sections will briefly touch on LSTM neuron cells, give a toy example of predicting a sine wave then walk through the application to a stochastic time series. The article assumes a basic working knowledge of simple deep neural networks.
+</p>
+
+<br>
+<h2>What Are LSTM Neurons?</h2>
+
+<p>
+	One of the fundamental problems which plagued traditional neural network architectures for a long time was the ability to interpret sequences of inputs which relied on each other for information and context. This information could be previous words in a sentence to allow for a context to predict what the next word might be, or it could be temporal information of a sequence which would allow for context on the time based elements of that sequence.
+</p>
+<p>
+	Simply put, traditional neural networks take in a stand-alone data vector each time and have no concept of memory to help them on tasks that need memory.
+</p>
+<p>
+	An early attempt to tackle this was to use a simple feedback type approach for neurons in the network where the output was fed-back into the input to provide context on the last seen inputs. These were called Recurrent Neural Networks (RNNs). Whilst these RNNs worked to an extent, they had a rather large downfall that any significant uses of them lead to a problem called the Vanishing Gradient Problem. We will not expand on the vanishing gradient issue any further than to say that RNNs are poorly suited in most real-world problems due to this issue, hence, another way to tackle context memory needed to be found.
+</p>
+<p>
+	This is where the Long Short Term Memory (LSTM) neural network came to the rescue. Like RNN neurons, LSTM neurons kept a context of memory within their pipeline to allow for tackling sequential and temporal problems without the issue of the vanishing gradient affecting their performance.
+</p>
+<p>
+	Many research papers and articles can be found online which discuss the workings of LSTM cells in great mathematical detail. In this article however we will not discuss the complex workings of LSTMs as we are more concerned about their use for our problems.
+</p>
+<p>
+	For context, below is a diagram of the typical inner workings of an LSTM neuron. It consists of several layers, and pointwise operations which act as gates for data input, output and forget which feed the LSTM cell state. This cell state is what keeps the long-term memory and context across the network and inputs.
+</p>
+<p style="text-align: center;">
+	<img src="./Time Series Prediction Using LSTM Deep Neural Networks_files/lstm_cell.png">
+</p>
+
+<br>
+<h2>A Simple Sine Wave Example</h2>
+
+<p>
+	To demonstrate the use of LSTM neural networks in predicting a time series let us start with the most basic thing we can think of that's a time series: the trusty sine wave. And let us create the data we will need to model many oscillations of this function for the LSTM network to train over.
+</p>
+<p>
+	The data provided in the code's data folder contains a sinewave.csv file we created which contains 5001 time periods of a sine wave with amplitude and frequency of 1 (giving an angular frequency of 6.28) and a time delta of 0.01. The result of this, when plotted looks like this:
+</p>
+<p style="text-align: center;">
+	<img src="./Time Series Prediction Using LSTM Deep Neural Networks_files/sindata.png">
+	<br><span style="font-style: italic; font-weight: bold;">Dataset for a sinewave</span>
+</p>
+	Now that we have the data, what are we actually trying to achieve? Well, simply we want the LSTM to learn the sine wave from a set window size of data that we will feed it and hopefully we can ask the LSTM to predict the next N-steps in the series and it will keep outputting a sine wave.
+<p></p>
+<p>
+	We will start by transforming and loading the data from the CSV file to a pandas dataframe which will then be used to output a numpy array that will feed the LSTM. The way Keras LSTM layers work is by taking in a numpy array of 3 dimensions (N, W, F) where N is the number of training sequences, W is the sequence length and F is the number of features of each sequence. We chose to go with a sequence length (read window size) of 50 which allows for the network so get glimpses of the shape of the sine wave at each sequence and hence will hopefully teach itself to build up a pattern of the sequences based on the prior window received.
+</p>
+<p>
+	The sequences themselves are sliding windows and hence shift by 1 each time, causing a constant overlap with the prior windows. A typical training window of sequence length 50, when plotted, is shown below:
+</p>
+<p style="text-align: center;">
+	<img src="./Time Series Prediction Using LSTM Deep Neural Networks_files/sinwindow.png">
+	<br><span style="font-style: italic; font-weight: bold;">Sinewave dataset training window</span>
+</p>
+<p>
+	For loading this data we created a DataLoader class in our code to provide an abstraction for the data loading layer. You will notice that upon initialization of a DataLoader object, the filename is passed in, along with a split variable which determines the percentage of the data to use for training vs. testing and a columns variable which allows for selecting one or more columns of data for single dimensional or multidimensional analysis.
+</p>
+
+<pre><code class="python hljs" style="font-size: 11px"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DataLoader</span><span class="hljs-params">()</span>:</span>
+
+	<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, filename, split, cols)</span>:</span>
+		dataframe = pd.read_csv(filename)
+		i_split = int(len(dataframe) * split)
+		self.data_train = dataframe.get(cols).values[:i_split]
+		self.data_test  = dataframe.get(cols).values[i_split:]
+		self.len_train  = len(self.data_train)
+		self.len_test   = len(self.data_test)
+		self.len_train_windows = <span class="hljs-keyword">None</span>
+
+	<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_train_data</span><span class="hljs-params">(self, seq_len, normalise)</span>:</span>
+		data_x = []
+		data_y = []
+		<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(self.len_train - seq_len):
+			x, y = self._next_window(i, seq_len, normalise)
+			data_x.append(x)
+			data_y.append(y)
+		<span class="hljs-keyword">return</span> np.array(data_x), np.array(data_y)
+</code>
+</pre>
+
+<p>
+	After we have a data object which allows for us to load the data we will need to build the deep neural network model. Again for abstraction our code framework uses a Model class alongside a config.json file to easily build an instance of our model given a required architecture and hyperparameters stored in the config file. The main function which builds our network is the build_model() functions that takes in the parsed configs file.
+</p>
+<p>
+	This function code can be seen below and can easily be extended for future use on more complex architectures.
+</p>
+
+<pre><code class="python hljs" style="font-size: 11px"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Model</span><span class="hljs-params">()</span>:</span>
+
+	<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self)</span>:</span>
+		self.model = Sequential()
+
+	<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">build_model</span><span class="hljs-params">(self, configs)</span>:</span>
+		timer = Timer()
+		timer.start()
+
+		<span class="hljs-keyword">for</span> layer <span class="hljs-keyword">in</span> configs[<span class="hljs-string">'model'</span>][<span class="hljs-string">'layers'</span>]:
+			neurons = layer[<span class="hljs-string">'neurons'</span>] <span class="hljs-keyword">if</span> <span class="hljs-string">'neurons'</span> <span class="hljs-keyword">in</span> layer <span class="hljs-keyword">else</span> <span class="hljs-keyword">None</span>
+			dropout_rate = layer[<span class="hljs-string">'rate'</span>] <span class="hljs-keyword">if</span> <span class="hljs-string">'rate'</span> <span class="hljs-keyword">in</span> layer <span class="hljs-keyword">else</span> <span class="hljs-keyword">None</span>
+			activation = layer[<span class="hljs-string">'activation'</span>] <span class="hljs-keyword">if</span> <span class="hljs-string">'activation'</span> <span class="hljs-keyword">in</span> layer <span class="hljs-keyword">else</span> <span class="hljs-keyword">None</span>
+			return_seq = layer[<span class="hljs-string">'return_seq'</span>] <span class="hljs-keyword">if</span> <span class="hljs-string">'return_seq'</span> <span class="hljs-keyword">in</span> layer <span class="hljs-keyword">else</span> <span class="hljs-keyword">None</span>
+			input_timesteps = layer[<span class="hljs-string">'input_timesteps'</span>] <span class="hljs-keyword">if</span> <span class="hljs-string">'input_timesteps'</span> <span class="hljs-keyword">in</span> layer <span class="hljs-keyword">else</span> <span class="hljs-keyword">None</span>
+			input_dim = layer[<span class="hljs-string">'input_dim'</span>] <span class="hljs-keyword">if</span> <span class="hljs-string">'input_dim'</span> <span class="hljs-keyword">in</span> layer <span class="hljs-keyword">else</span> <span class="hljs-keyword">None</span>
+
+			<span class="hljs-keyword">if</span> layer[<span class="hljs-string">'type'</span>] == <span class="hljs-string">'dense'</span>:
+				self.model.add(Dense(neurons, activation=activation))
+			<span class="hljs-keyword">if</span> layer[<span class="hljs-string">'type'</span>] == <span class="hljs-string">'lstm'</span>:
+				self.model.add(LSTM(neurons, input_shape=(input_timesteps, input_dim), return_sequences=return_seq))
+			<span class="hljs-keyword">if</span> layer[<span class="hljs-string">'type'</span>] == <span class="hljs-string">'dropout'</span>:
+				self.model.add(Dropout(dropout_rate))
+
+		self.model.compile(loss=configs[<span class="hljs-string">'model'</span>][<span class="hljs-string">'loss'</span>], optimizer=configs[<span class="hljs-string">'model'</span>][<span class="hljs-string">'optimizer'</span>])
+
+		print(<span class="hljs-string">'[Model] Model Compiled'</span>)
+		timer.stop()
+</code>
+</pre>
+
+<p>
+	With the data loaded and the model built we can now progress onto training the model with our training data. For this we create a separate run module which will utilize our Model and DataLoader abstractions to combine them for training, output and visualizations.
+</p>
+<p>
+	Below is the general run thread code to train our model.
+</p>
+
+<pre><code class="python hljs" style="font-size: 11px">configs = json.load(open(<span class="hljs-string">'config.json'</span>, <span class="hljs-string">'r'</span>))
+
+data = DataLoader(
+	os.path.join(<span class="hljs-string">'data'</span>, configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'filename'</span>]),
+	configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'train_test_split'</span>],
+	configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'columns'</span>]
+)
+
+model = Model()
+model.build_model(configs)
+x, y = data.get_train_data(
+	seq_len = configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'sequence_length'</span>],
+	normalise = configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'normalise'</span>]
+)
+
+model.train(
+	x,
+	y,
+	epochs = configs[<span class="hljs-string">'training'</span>][<span class="hljs-string">'epochs'</span>],
+	batch_size = configs[<span class="hljs-string">'training'</span>][<span class="hljs-string">'batch_size'</span>]
+)
+
+x_test, y_test = data.get_test_data(
+	seq_len = configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'sequence_length'</span>],
+	normalise = configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'normalise'</span>]
+)
+</code>
+</pre>
+
+<p>
+	For output we will run two types of predictions: the first will be predicting in a point-by-point way, that is we are only predicting a single point ahead each time, plotting this point as a prediction, then taking the next window along with the full testing data and predicting the next point along once again.
+</p>
+<p>
+	The second prediction we will do is to predict a full sequence, by this we only initialize a training window with the first part of the training data once. The model then predicts the next point and we shift the window, as with the point-by-point method. The difference is we then predict using the data that we predicted in the prior prediction. In the second step this will mean only one data point (the last point) will be from the prior prediction. In the third prediction the last two data points will be from prior predictions and so forth. After 50 predictions our model will subsequently be predicting on its own prior predictions. This allows us to use the model to forecast many time steps ahead, but as it is predicting on predictions which can then in turn be based on predictions this will increase the error rate of the predictions the further ahead we predict.
+</p>
+<p>
+	Below we can see the code and respective outputs for both the point-by-point predictions and the full sequence predictions.
+</p>
+
+<pre><code class="python hljs" style="font-size: 11px"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">predict_point_by_point</span><span class="hljs-params">(self, data)</span>:</span>
+	<span class="hljs-comment">#Predict each timestep given the last sequence of true data, in effect only predicting 1 step ahead each time</span>
+	predicted = self.model.predict(data)
+	predicted = np.reshape(predicted, (predicted.size,))
+	<span class="hljs-keyword">return</span> predicted
+
+<span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">predict_sequence_full</span><span class="hljs-params">(self, data, window_size)</span>:</span>
+	<span class="hljs-comment">#Shift the window by 1 new prediction each time, re-run predictions on new window</span>
+	curr_frame = data[<span class="hljs-number">0</span>]
+	predicted = []
+	<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> range(len(data)):
+		predicted.append(self.model.predict(curr_frame[newaxis,:,:])[<span class="hljs-number">0</span>,<span class="hljs-number">0</span>])
+		curr_frame = curr_frame[<span class="hljs-number">1</span>:]
+		curr_frame = np.insert(curr_frame, [window_size<span class="hljs-number">-2</span>], predicted[<span class="hljs-number">-1</span>], axis=<span class="hljs-number">0</span>)
+	<span class="hljs-keyword">return</span> predicted
+
+predictions_pointbypoint = model.predict_point_by_point(x_test)
+plot_results(predictions_pointbypoint, y_test)
+
+predictions_fullseq = model.predict_sequence_full(x_test, configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'sequence_length'</span>])
+plot_results(predictions_fullseq, y_test)
+</code>
+</pre>
+
+<p style="text-align: center;">
+	<img src="./Time Series Prediction Using LSTM Deep Neural Networks_files/sinwave_pointbypoint.png">
+	<br><span style="font-style: italic; font-weight: bold;">Sinewave point-by-point prediction</span>
+</p>
+<p style="text-align: center;">
+	<img src="./Time Series Prediction Using LSTM Deep Neural Networks_files/sinwave_full_seq.png">
+	<br><span style="font-style: italic; font-weight: bold;">Sinewave full sequence prediction</span>
+</p>
+<p>
+	For reference the network architecture and hyperparameters used for the sinewave example can be seen in the below config file.
+</p>
+
+<pre><code class="json hljs" style="font-size: 11px">{
+	<span class="hljs-attr">"data"</span>: {
+		<span class="hljs-attr">"filename"</span>: <span class="hljs-string">"sinewave.csv"</span>,
+		<span class="hljs-attr">"columns"</span>: [
+			<span class="hljs-string">"sinewave"</span>
+		],
+		<span class="hljs-attr">"sequence_length"</span>: <span class="hljs-number">50</span>,
+		<span class="hljs-attr">"train_test_split"</span>: <span class="hljs-number">0.8</span>,
+		<span class="hljs-attr">"normalise"</span>: <span class="hljs-literal">false</span>
+	},
+	<span class="hljs-attr">"training"</span>: {
+		<span class="hljs-attr">"epochs"</span>: <span class="hljs-number">2</span>,
+		<span class="hljs-attr">"batch_size"</span>: <span class="hljs-number">32</span>
+	},
+	<span class="hljs-attr">"model"</span>: {
+		<span class="hljs-attr">"loss"</span>: <span class="hljs-string">"mse"</span>,
+		<span class="hljs-attr">"optimizer"</span>: <span class="hljs-string">"adam"</span>,
+		<span class="hljs-attr">"layers"</span>: [
+			{
+				<span class="hljs-attr">"type"</span>: <span class="hljs-string">"lstm"</span>,
+				<span class="hljs-attr">"neurons"</span>: <span class="hljs-number">50</span>,
+				<span class="hljs-attr">"input_timesteps"</span>: <span class="hljs-number">49</span>,
+				<span class="hljs-attr">"input_dim"</span>: <span class="hljs-number">1</span>,
+				<span class="hljs-attr">"return_seq"</span>: <span class="hljs-literal">true</span>
+			},
+			{
+				<span class="hljs-attr">"type"</span>: <span class="hljs-string">"dropout"</span>,
+				<span class="hljs-attr">"rate"</span>: <span class="hljs-number">0.05</span>
+			},
+			{
+				<span class="hljs-attr">"type"</span>: <span class="hljs-string">"lstm"</span>,
+				<span class="hljs-attr">"neurons"</span>: <span class="hljs-number">100</span>,
+				<span class="hljs-attr">"return_seq"</span>: <span class="hljs-literal">false</span>
+			},
+			{
+				<span class="hljs-attr">"type"</span>: <span class="hljs-string">"dropout"</span>,
+				<span class="hljs-attr">"rate"</span>: <span class="hljs-number">0.05</span>
+			},
+			{
+				<span class="hljs-attr">"type"</span>: <span class="hljs-string">"dense"</span>,
+				<span class="hljs-attr">"neurons"</span>: <span class="hljs-number">1</span>,
+				<span class="hljs-attr">"activation"</span>: <span class="hljs-string">"linear"</span>
+			}
+		]
+	}
+}
+</code>
+</pre>
+
+<p>
+	Overlaid with the true data we can see that with just 1 epoch and a reasonably small training set of data the LSTM deep neural network has already done a pretty good job of predicting the sine function.
+</p>
+<p>
+	You can see that as we predict more and more into the future the error margin increases as the errors in the prior predictions are amplified more and more when they are used for future predictions. As such we see that in the full sequence example, the further into the future we predict the less accurate the frequency and amplitude of the predictions is compared to the true data. However as the sin function is a very easy oscillating function with zero noise it can still predict it to a good degree without overfitting - this is important, as we could easily overfit the model by increasing the epochs and taking out the dropout layers to make it almost perfectly accurate on this training data, which is of the same pattern as the test data, but for other real-world examples overfitting the model onto the training data would cause the test accuracy to plummet as the model would not be generalizing.
+</p>
+<p>
+	In the next step we will try to use the model on such real-world data to see the effects.
+</p>
+
+<br>
+<h2>The Not-So-Simple Stock Market</h2>
+
+<p>
+	We predicted a several hundred time steps of a sine wave on an accurate point-by-point basis. So we can now just do the same on a stock market time series and make immediate profit, right? Unfortunately in the real-world this is not quite that simple.
+</p>
+<p>
+	Unlike a sinewave, a stock market time series is not any sort of specific static function which can be mapped. The best property to describe the motion of a stock market time series would be a random walk. As a stochastic process, a true random walk has no predictable patterns and so attempting to model it would be pointless. Fortunately there are on-going arguments by many sides to say that a stock market isn't a pure stochastic process, which allows us to theorize that the time series may well have some kind of hidden pattern. And it is these hidden patterns that LSTM deep networks are prime candidates to predict.
+</p>
+<p>
+	The data this example will be using is the sp500.csv file in the data folder. This file contains the Open, High, Low, Close prices as well as the daily Volume of the S&amp;P 500 Equity Index from January 2000 to September 2018.
+</p>
+<p>
+	In the first instance we will only create a single dimensional model using the Close price only. Adapting the config.json file to reflect the new data we will keep most of the parameters the same. One change which is needed however is that, unlike the sinewave which only had numerical ranges between -1 to +1 the close price is a constantly moving absolute price of the stock market. This means that if we tried to train the model on this without normalizing it, it would never converge.
+</p>
+<p>
+	To combat this we will take each n-sized window of training/testing data and normalize each one to reflect percentage changes from the start of that window (so the data at point i=0 will always be 0). We'll use the following equations to normalize and subsequently de-normalize at the end of the prediction process to get a real world number out of the prediction:
+</p>
+<br>
+<p style="font-style: italic;">
+	n = normalized list [window] of price changes<br>
+	p = raw list [window] of adjusted daily return prices
+</p>
+<br>
+<p>
+	Normalization:
+	<img src="./Time Series Prediction Using LSTM Deep Neural Networks_files/svg.latex">
+</p>
+<p>
+	De-Normalization:
+	<img src="./Time Series Prediction Using LSTM Deep Neural Networks_files/svg(1).latex">
+</p>
+<br>
+
+<p>
+	We have added the normalise_windows() function to our DataLoader class to do this transformation, and a Boolean normalise flag is contained in the config file which denotes the normalization of these windows.
+</p>
+<pre><code class="python hljs" style="font-size: 11px"><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">normalise_windows</span><span class="hljs-params">(self, window_data, single_window=False)</span>:</span>
+	<span class="hljs-string">'''Normalise window with a base value of zero'''</span>
+	normalised_data = []
+	window_data = [window_data] <span class="hljs-keyword">if</span> single_window <span class="hljs-keyword">else</span> window_data
+	<span class="hljs-keyword">for</span> window <span class="hljs-keyword">in</span> window_data:
+		normalised_window = []
+		<span class="hljs-keyword">for</span> col_i <span class="hljs-keyword">in</span> range(window.shape[<span class="hljs-number">1</span>]):
+			normalised_col = [((float(p) / float(window[<span class="hljs-number">0</span>, col_i])) - <span class="hljs-number">1</span>) <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> window[:, col_i]]
+			normalised_window.append(normalised_col)
+                <span class="hljs-comment"># reshape and transpose array back into original multidimensional format</span>
+		normalised_window = np.array(normalised_window).T				
+		normalised_data.append(normalised_window)
+	<span class="hljs-keyword">return</span> np.array(normalised_data)
+</code>
+</pre>
+
+<p>
+	With the windows normalized, we can now run the model in the same way that we ran it against out sinewave data. We have however made an important change when running this data; instead of using our framework's model.train() method, we are instead using the model.train_generator() method which we have created. We are doing this because we have found that it is easy to run out of memory when trying to train large datasets, as the model.train() function loads the full dataset into memory, then applies the normalizations to each window in-memory, easily causing a memory overflow. So instead we utilized the fit_generator() function from Keras to allow for dynamic training of the dataset using a python generator to draw the data, which means memory utilization will be minimized dramatically. The code below details the new run thread for running three types of predictions (point-by-point, full sequence and multiple sequence).
+</p>
+
+<pre><code class="python hljs" style="font-size: 11px">configs = json.load(open(<span class="hljs-string">'config.json'</span>, <span class="hljs-string">'r'</span>))
+
+data = DataLoader(
+	os.path.join(<span class="hljs-string">'data'</span>, configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'filename'</span>]),
+	configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'train_test_split'</span>],
+	configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'columns'</span>]
+)
+
+model = Model()
+model.build_model(configs)
+x, y = data.get_train_data(
+	seq_len = configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'sequence_length'</span>],
+	normalise = configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'normalise'</span>]
+)
+
+<span class="hljs-comment"># out-of memory generative training</span>
+steps_per_epoch = math.ceil((data.len_train - configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'sequence_length'</span>]) / configs[<span class="hljs-string">'training'</span>][<span class="hljs-string">'batch_size'</span>])
+model.train_generator(
+	data_gen = data.generate_train_batch(
+		seq_len = configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'sequence_length'</span>],
+		batch_size = configs[<span class="hljs-string">'training'</span>][<span class="hljs-string">'batch_size'</span>],
+		normalise = configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'normalise'</span>]
+	),
+	epochs = configs[<span class="hljs-string">'training'</span>][<span class="hljs-string">'epochs'</span>],
+	batch_size = configs[<span class="hljs-string">'training'</span>][<span class="hljs-string">'batch_size'</span>],
+	steps_per_epoch = steps_per_epoch
+)
+
+x_test, y_test = data.get_test_data(
+	seq_len = configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'sequence_length'</span>],
+	normalise = configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'normalise'</span>]
+)
+
+predictions_multiseq = model.predict_sequences_multiple(x_test, configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'sequence_length'</span>], configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'sequence_length'</span>])
+predictions_fullseq = model.predict_sequence_full(x_test, configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'sequence_length'</span>])
+predictions_pointbypoint = model.predict_point_by_point(x_test)        
+
+plot_results_multiple(predictions_multiseq, y_test, configs[<span class="hljs-string">'data'</span>][<span class="hljs-string">'sequence_length'</span>])
+plot_results(predictions_fullseq, y_test)
+plot_results(predictions_pointbypoint, y_test)
+</code>
+</pre>
+
+<pre><code class="json hljs" style="font-size: 11px">{
+	<span class="hljs-attr">"data"</span>: {
+		<span class="hljs-attr">"filename"</span>: <span class="hljs-string">"sp500.csv"</span>,
+		<span class="hljs-attr">"columns"</span>: [
+			<span class="hljs-string">"Close"</span>
+		],
+		<span class="hljs-attr">"sequence_length"</span>: <span class="hljs-number">50</span>,
+		<span class="hljs-attr">"train_test_split"</span>: <span class="hljs-number">0.85</span>,
+		<span class="hljs-attr">"normalise"</span>: <span class="hljs-literal">true</span>
+	},
+	<span class="hljs-attr">"training"</span>: {
+		<span class="hljs-attr">"epochs"</span>: <span class="hljs-number">1</span>,
+		<span class="hljs-attr">"batch_size"</span>: <span class="hljs-number">32</span>
+	},
+	<span class="hljs-attr">"model"</span>: {
+		<span class="hljs-attr">"loss"</span>: <span class="hljs-string">"mse"</span>,
+		<span class="hljs-attr">"optimizer"</span>: <span class="hljs-string">"adam"</span>,
+		<span class="hljs-attr">"layers"</span>: [
+			{
+				<span class="hljs-attr">"type"</span>: <span class="hljs-string">"lstm"</span>,
+				<span class="hljs-attr">"neurons"</span>: <span class="hljs-number">100</span>,
+				<span class="hljs-attr">"input_timesteps"</span>: <span class="hljs-number">49</span>,
+				<span class="hljs-attr">"input_dim"</span>: <span class="hljs-number">1</span>,
+				<span class="hljs-attr">"return_seq"</span>: <span class="hljs-literal">true</span>
+			},
+			{
+				<span class="hljs-attr">"type"</span>: <span class="hljs-string">"dropout"</span>,
+				<span class="hljs-attr">"rate"</span>: <span class="hljs-number">0.2</span>
+			},
+			{
+				<span class="hljs-attr">"type"</span>: <span class="hljs-string">"lstm"</span>,
+				<span class="hljs-attr">"neurons"</span>: <span class="hljs-number">100</span>,
+				<span class="hljs-attr">"return_seq"</span>: <span class="hljs-literal">true</span>
+			},
+			{
+				<span class="hljs-attr">"type"</span>: <span class="hljs-string">"lstm"</span>,
+				<span class="hljs-attr">"neurons"</span>: <span class="hljs-number">100</span>,
+				<span class="hljs-attr">"return_seq"</span>: <span class="hljs-literal">false</span>
+			},
+			{
+				<span class="hljs-attr">"type"</span>: <span class="hljs-string">"dropout"</span>,
+				<span class="hljs-attr">"rate"</span>: <span class="hljs-number">0.2</span>
+			},
+			{
+				<span class="hljs-attr">"type"</span>: <span class="hljs-string">"dense"</span>,
+				<span class="hljs-attr">"neurons"</span>: <span class="hljs-number">1</span>,
+				<span class="hljs-attr">"activation"</span>: <span class="hljs-string">"linear"</span>
+			}
+		]
+	}
+}
+</code>
+</pre>
+
+<p>
+	Running the data on a single point-by-point prediction as mentioned above gives something that matches the returns pretty closely. But this is slightly deceptive. Upon a closer examination, the prediction line is made up of singular prediction points that have had the whole prior true history window behind them. Because of that, the network doesn't need to know much about the time series itself other than that each next point most likely won't be too far from the last point. So even if it gets the prediction for the point wrong, the next prediction will then factor in the true history and disregard the incorrect prediction, yet again allowing for an error to be made.
+</p>
+<p>
+	Whilst this might not initially sound promising for exact forecasts of the next price point, it does have some important uses. Whilst it doesn't know what the exact next price will be, it does give a very accurate representation of the range that the next price should be in.
+</p>
+<p>
+	This information can be used in applications like volatility forecasting (being able to predict a period of high or low volatility in the market can be extremely advantageous for a particular trading strategy), or moving away from trading this could also be used as a good indicator for anomaly detection. Anomaly detection could be achieved by predicting the next point, then comparing it to the true data when it comes in, and if the true data value is significantly different to the predicted point an anomaly flag could be raised for that data point.
+</p>
+<p style="text-align: center;">
+	<img src="./Time Series Prediction Using LSTM Deep Neural Networks_files/sp500_pointbypoint.png">
+	<br><span style="font-style: italic; font-weight: bold;">S&amp;P500 point-by-point prediction</span>
+</p>
+<p>
+	Moving on to the full sequence prediction it seems like this proves to be the least useful prediction for this type of time series (at least trained on this model with these hyperparameters). We can see a slight bump on the start of the prediction where the model followed a momentum of some sorts, however very quickly we can see the model decided that the most optimal pattern was to converge onto some equilibrium of the time series. At this stage this might seem like it doesn't offer much value, however mean reversion traders might step in there to proclaim that the model is simply finding the mean that the price series will revert to when volatility is removed.
+</p>
+<p style="text-align: center;">
+	<img src="./Time Series Prediction Using LSTM Deep Neural Networks_files/sp500_full.png">
+	<br><span style="font-style: italic; font-weight: bold;">S&amp;P500 full sequence prediction</span>
+</p>
+<p>
+	Lastly we have made a third type of prediction for this model, something I call a multi-sequence prediction. This is a blend of the full sequence prediction in the sense that it still initializes the testing window with test data, predicts the next point over that and makes a new window with the next point. However, once it reaches a point where the input window is made up fully of past predictions it stops, shifts forward one full window length, resets the window with the true test data, and starts the process again. In essence this gives multiple trend-line like predictions over the test data to be able to analyze how well the model can pick up future momentum trends.
+</p>
+<p style="text-align: center;">
+	<img src="./Time Series Prediction Using LSTM Deep Neural Networks_files/sp500_multi.png">
+	<br><span style="font-style: italic; font-weight: bold;">S&amp;P500 multi-sequence prediction</span>
+</p>
+<p>
+	We can see from the multi-sequence predictions that the network does appear to be correctly predicting the trends (and amplitude of trends) for a good majority of the time series. Whilst not perfect, it does give an indication of the usefulness of LSTM deep neural networks in sequential and time series problems. Greater accuracy could most certainly be achieved with careful hyperparameter tuning.
+</p>
+
+<br>
+<h2>Multidimensional LSTM Prediction</h2>
+
+<p>
+	So far our model has only taken in single dimensional inputs (the "Close" price in the case of our S&amp;P500 dataset). But with more complex datasets there naturally exists many different dimensions for sequences which can be used to enhance the dataset and hence enhance the accuracy of our model.
+</p>
+<p>
+	In the case of our S&amp;P500 dataset we can see we have Open, High, Low, Close and Volume that make up five possible dimensions. The framework we have developed allows for multi-dimensional input datasets to be used, so all we need to do to utilise this is to edit the columns and lstm first layer input_dim values appropriately to run our model. In this case I will run the model using two dimensions; "Close" and "Volume".
+</p>
+
+<pre><code class="json hljs" style="font-size: 11px">{
+	<span class="hljs-attr">"data"</span>: {
+		<span class="hljs-attr">"filename"</span>: <span class="hljs-string">"sp500.csv"</span>,
+		<span class="hljs-attr">"columns"</span>: [
+			<span class="hljs-string">"Close"</span>,
+			<span class="hljs-string">"Volume"</span>
+		],
+		<span class="hljs-attr">"sequence_length"</span>: <span class="hljs-number">50</span>,
+		<span class="hljs-attr">"train_test_split"</span>: <span class="hljs-number">0.85</span>,
+		<span class="hljs-attr">"normalise"</span>: <span class="hljs-literal">true</span>
+	},
+	<span class="hljs-attr">"training"</span>: {
+		<span class="hljs-attr">"epochs"</span>: <span class="hljs-number">1</span>,
+		<span class="hljs-attr">"batch_size"</span>: <span class="hljs-number">32</span>
+	},
+	<span class="hljs-attr">"model"</span>: {
+		<span class="hljs-attr">"loss"</span>: <span class="hljs-string">"mse"</span>,
+		<span class="hljs-attr">"optimizer"</span>: <span class="hljs-string">"adam"</span>,
+		<span class="hljs-attr">"layers"</span>: [
+			{
+				<span class="hljs-attr">"type"</span>: <span class="hljs-string">"lstm"</span>,
+				<span class="hljs-attr">"neurons"</span>: <span class="hljs-number">100</span>,
+				<span class="hljs-attr">"input_timesteps"</span>: <span class="hljs-number">49</span>,
+				<span class="hljs-attr">"input_dim"</span>: <span class="hljs-number">2</span>,
+				<span class="hljs-attr">"return_seq"</span>: <span class="hljs-literal">true</span>
+			},
+			{
+				<span class="hljs-attr">"type"</span>: <span class="hljs-string">"dropout"</span>,
+				<span class="hljs-attr">"rate"</span>: <span class="hljs-number">0.2</span>
+			},
+			{
+				<span class="hljs-attr">"type"</span>: <span class="hljs-string">"lstm"</span>,
+				<span class="hljs-attr">"neurons"</span>: <span class="hljs-number">100</span>,
+				<span class="hljs-attr">"return_seq"</span>: <span class="hljs-literal">true</span>
+			},
+			{
+				<span class="hljs-attr">"type"</span>: <span class="hljs-string">"lstm"</span>,
+				<span class="hljs-attr">"neurons"</span>: <span class="hljs-number">100</span>,
+				<span class="hljs-attr">"return_seq"</span>: <span class="hljs-literal">false</span>
+			},
+			{
+				<span class="hljs-attr">"type"</span>: <span class="hljs-string">"dropout"</span>,
+				<span class="hljs-attr">"rate"</span>: <span class="hljs-number">0.2</span>
+			},
+			{
+				<span class="hljs-attr">"type"</span>: <span class="hljs-string">"dense"</span>,
+				<span class="hljs-attr">"neurons"</span>: <span class="hljs-number">1</span>,
+				<span class="hljs-attr">"activation"</span>: <span class="hljs-string">"linear"</span>
+			}
+		]
+	}
+}
+
+</code>
+</pre>
+
+<p style="text-align: center;">
+	<img src="./Time Series Prediction Using LSTM Deep Neural Networks_files/sp500_multi_2d.png">
+	<br><span style="font-style: italic; font-weight: bold;">S&amp;P500 multi-dimensional multi-sequence prediction using "Close" &amp; "Volume"</span>
+</p>
+
+<p>
+	We can see with the second "Volume" dimension added alongside the "Close" that the output prediction gets more granular. The predictor trend lines seem to have more accuracy in them to predict slight upcoming dips, not only the prevailing trend from the start and the accuracy of the trend lines also seems to improve in this particular case.
+</p>
+
+<br>
+<h2>Conclusion</h2>
+
+<p>
+	Whilst this article aims to give a working example of LSTM deep neural networks in practice, it has only scratched the surface of their potential and application in sequential and temporal problems.
+</p>
+<p>
+	As of writing, LSTMs have been successfully used in a multitude of real-world problems from classical time series issues as described here, to text auto-correct, anomaly detection and fraud detection, to having a core in self-driving car technologies being developed.
+</p>
+<p>
+	There are currently some limitations with using the vanilla LSTMs described above, specifically in the use of a financial time series, the series itself has non-stationary properties which is very hard to model (although advancements have been made in using Bayesian Deep Neural Network methods for tackling non-stationarity of time series). Also for some applications it has also been found that newer advancements in attention based mechanisms for neural networks have out-performed LSTMs (and LSTMs coupled with these attention based mechanisms have outperformed either on their own).
+</p>
+<p>
+	As of now however, LSTMs provide significant advancements on more classical statistical time series approaches in being able to model the relationships non-linearly and being able to process data with multiple dimensions in a non-linear fashion.
+</p>
+<p>
+	The full source code of the framework we have developed can be found under an MIT license on the following GitHub page (we ask that credit is clearly attributed as "Jakob Aungiers, Altum Intelligence ltd" wherever this code is re-used): <a href="https://github.com/jaungiers/LSTM-Neural-Network-for-Time-Series-Prediction" target="_blank">https://github.com/jaungiers/LSTM-Neural-Network-for-Time-Series-Prediction</a>
+</p>        </div>
+	</div>
+	<div class="col-lg-2"></div>
+</div></div>
+
+<footer class="white">
+    <div class="row" id="footer-nav-container">
+        <div class="col-lg-3"></div>
+        
+        <div class="col-lg-2">
+            <ul>
+                <a href="https://www.altumintelligence.com/"><li>Home</li></a>
+                <a href="https://www.altumintelligence.com/machine-intelligence"><li>Machine Intelligence</li></a>
+                <a href="https://www.altumintelligence.com/about-us"><li>About Us</li></a>
+            </ul>
+        </div>
+
+        <div class="col-lg-2">
+            <ul>
+                <a href="https://www.altumintelligence.com/careers"><li>Careers</li></a>
+                <a href="https://www.altumintelligence.com/contact"><li>Contact</li></a>
+                <a href="https://www.altumintelligence.com/contact"><li>Press</li></a>
+            </ul>
+        </div>
+
+        <div class="col-lg-2">
+            <ul>
+                <a href="https://www.altumintelligence.com/invest"><li>Investors</li></a>
+                <a href="https://www.altumintelligence.com/termsconditions"><li>Terms &amp; Conditions</li></a>
+                <a href="https://www.altumintelligence.com/privacypolicy"><li>Privacy Policy</li></a>
+            </ul>
+        </div>
+
+        <div class="col-lg-3"></div>
+    </div>
+
+    <div id="copylogo">
+        <p><img src="./Time Series Prediction Using LSTM Deep Neural Networks_files/logo-footer.png"></p>
+        <p>© 2017 Altum Intelligence</p>
+    </div>
+</footer>
+
+</body></html>
