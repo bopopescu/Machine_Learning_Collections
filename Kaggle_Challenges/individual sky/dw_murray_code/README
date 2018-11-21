@@ -1,0 +1,129 @@
+All files in this tar-ball distribution may be distributed according to the
+terms of the GPL v3, found in COPYING.
+
+
+Main code
+---------
+
+This directory holds the code for my first submission, which according to the
+website, would have also placed in 2nd place.
+
+The code is as run (bugs and all), although I've made a small number of cosmetic
+changes (slightly improving comments and filenames), and a couple of tweaks to
+make it run in Octave as well as Matlab. I imagine Matlab v7.x is required
+(I used 7.11). It seems to run (albeit slowly) in Octave 3.2.4.
+
+Instructions:
+
+1. Copy the challenge .csv files into ./data
+2. Run ./prepare_data.sh
+   This script should work on a Unix-like system with bash and python.
+   It trivially rewrites the data for loading into Matlab/Octave with minimum fuss.
+3. In Matlab or Octave (slower, but free software), run do_all
+
+*Eventually* you'll get test_stab.csv -- it won't be quite the same as my test
+submission because of differences in random seeds.
+
+
+What does what:
+
+do_all runs:
+    test_sample.m -- generate approximate posterior samples by slice sampling
+    test_fit_pred.m -- hackily fit point prediction to local optimum of cost function
+    test_write_pred.m -- write out a .csv file suitable for submission to kaggle
+
+The log-posterior, up to a constant, is specified in flex_ll.m, which is passed
+to the generic MCMC sampling code slice_sample.m. My slice sampling code is very
+much a baseline demonstration method. I notice that John Skilling's "production
+code" BayeSys (multivariate slice sampling, with additional heuristics and
+annealing) has already been hooked up to lenstool: http://arxiv.org/abs/0706.0048
+(At the time of writing, I have not read this paper however.)
+
+The fitted predictions for an individual sky try to improve the cost function
+evaluated by dw_metric.m, on the posterior samples. The optimizer is horrific:
+hack_opt.m -- not only is it not a good method, I've just noticed a bug (marked
+FIXME), which won't have helped it's performance. In short, don't adopt this
+code! Use the ideas, but derive the gradients for the cost function and use
+off-the-shelf optimizers (I believe the winner did these things). Given a large
+number of posterior samples, I would probably go for stochastic gradient
+descent, but a) I didn't make time to get the gradients; b) the cost function
+(not separating across examples) is a bit weird, and so it wasn't immediately
+clear to me what to do.
+
+
+Where the model came from
+-------------------------
+
+The Matlab/Octave scripts in ./examine_singletons log the very quick
+visualization of the training data that I did. I only looked at the skies with a
+single halo, as I wrongly assumed that all the halos would be like this. As a
+result, I initially fixed the r_0 cut-off radius and masses, as the singleton
+halos all seemed to be suspiciously similar. It quickly became clear that the
+other skies weren't like this, and I made the r_0's and halo masses uncertain
+and sampled them in my model.
+
+The .csv files available from the kaggle site are required in ./data. Then run
+    cd ./examine_singletons
+    python munge1.py ; python munge2.py
+Each of the play{1..4}.m files has some text at the top saying what I looked at.
+
+
+Bodging together more submissions
+---------------------------------
+
+I don't honestly think there's much more of interest, but for completeness here
+is where my other submissions came from:
+
+I'd initially allocated ~1 day to the competition, and was fully intending to
+just do the one submission above. However, when it seemed to do so horribly on
+the leaderboard, I decided to hack together some more submissions. Rather than
+parameterizing the above code, and managing it properly, I just took a bunch of
+copies, and reran them across many machines. Tweaking some of the copies.
+(Ouch. I know, I know. Sorry.)
+
+For most later submissions I included a significant "noise" term inside the halo core:
+    1. I commented out the line marked TODO in flex_ll and replaced it with the line below it.
+    2. I also swapped the "width = " line used in test_sample.m
+
+I also varied the amount of compute time I threw at the problem. I did runs
+with the following changes to test_fit_pred:
+
+    val_sub = 1:1000; % also used 4000, 16000
+    
+    for tt = 1:200 % also used 1:1000, 1:2000
+    
+        n_subset = 10; % also used 50, 100
+
+And in test_sample:
+
+    N = 1000; % also used 5000, 20000
+    burn = 100; % also used 1000
+    % ...
+        for i = 1:4000 % also used 1:40000, 1:100000
+
+Then, given multiple tsamples and tpred directories, I merged together the
+predictions, by concatenating the samples, and picking the prediction that did
+best on all of them. The script used for my final submission was:
+    other_code/test_merge_final.m
+(relying on a bunch of tpred and tsample directories, copied in from various
+machines).
+
+
+Other code
+----------
+
+I've also put some scripts in ./other_code -- before attempting to run it, this
+code should be moved up a directory. I moved it out of the way for this
+tar-ball, to make it clear what was actually used to make the first test
+submission.
+
+For the training data, I sampled halo params for known positions, to get a sense
+of what's sensible:
+    play_halo_params.m using flex_ll_known_pos.m
+But my fixed uniform priors are lame, and a poor replacement for proper
+hierarchical or informed models.
+
+I also wrote out fantasy ground-truth .csv files so I could see what my
+performance might be like (if my model wasn't too far off). I wrote these with:
+    test_sanity.m
+
