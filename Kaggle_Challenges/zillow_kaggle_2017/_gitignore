@@ -1,0 +1,21 @@
+# History files
+.Rhistory
+
+# Example code in package build process
+*-Ex.R
+
+# R data files from 
+*.RData
+*.p
+zzz*.csv
+source_data/*
+submissions/*
+__obsolete__/*.csv
+_to_be_deleted_/*
+*.npz
+*.npy
+log.log
+full_non_predictors.csv
+full.csv
+*.7z
+*.zip
