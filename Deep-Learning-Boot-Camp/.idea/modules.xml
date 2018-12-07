@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/../../../blog/shlomo/2018/.idea/2018.iml" filepath="$PROJECT_DIR$/../../../blog/shlomo/2018/.idea/2018.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/Data-Science-PyCUDA-GPU.iml" filepath="$PROJECT_DIR$/.idea/Data-Science-PyCUDA-GPU.iml" />
-    </modules>
-  </component>
-</project>
